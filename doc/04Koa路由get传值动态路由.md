@@ -54,3 +54,12 @@ router.get('/news/content',async(ctx)=>{
 })
 
 ```
+
+3、动态路由
+
+```
+router.get('/news/:id',async(ctx)=>{
+    console.log(ctx.params) //http://localhost:3001/news/123 { id: '123' }
+    ctx.body="新闻详情";
+})
+```
