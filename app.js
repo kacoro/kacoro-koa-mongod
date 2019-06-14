@@ -2,7 +2,6 @@ var Koa = require("koa")
 
 var app = new Koa()
 
-
 //配置路由
 
 //中间件
@@ -12,3 +11,4 @@ app.use(async(ctx)=>{
 
 app.listen(3001)
 console.log('运行http://localhost:3001')
+
