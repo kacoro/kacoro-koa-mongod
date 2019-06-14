@@ -32,6 +32,11 @@ router.get('/news/:id',async(ctx)=>{
     ctx.body="新闻详情";
 })
 
+router.get('/news/:cid/:id',async(ctx)=>{
+    console.log(ctx.params) http://localhost:3001/news/123/123 { cid: '123', id: '123' }
+    ctx.body="新闻详情";
+})
+
 //启动路由
 app.use(router.routes()) // 作用
 app.use(router.allowedMethods());//官方推荐使用，用在routers之后，当所有路由中间件最后调用。此时根据ctx.status设置response响应头
