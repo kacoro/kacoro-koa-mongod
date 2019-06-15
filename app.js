@@ -21,6 +21,12 @@ app.use(bodyparser())
 
 //配置路由
 router.get('/',async(ctx)=>{ //ctx 上下文 context包含了 requeset 和response等信息
+    let userinfo = '张四'
+    ctx.cookies.set('userinfo',new Buffer(userinfo).toString('base64'),{  //无法直接存中文 TypeError: argument value is invalid
+        maxAge:3600*1000,
+        httpOnly:false //fasle客户端可以访问，
+    })
+  
     let title = "你好ejs"
     await ctx.render('index',{title})
 })
@@ -37,11 +43,12 @@ querystring：返回的是请求字符串
 
 //匹配到news路由以后继续向下匹配路由
 router.get('/news',async(ctx)=>{
+    let userinfo = new Buffer(ctx.cookies.get('userinfo'),'base64').toString();
     // ctx.body="新闻";
     let arr = ['1111','222','3333']
     let content = '<h2>这是一段html</h2>'
     let num = 14
-    await ctx.render('news',{title:"新闻",list:arr,content,num})
+    await ctx.render('news',{title:"新闻",list:arr,content,num,userinfo})
 })
 
 router.get('/login',async(ctx)=>{
