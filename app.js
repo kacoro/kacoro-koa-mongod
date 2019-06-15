@@ -1,18 +1,23 @@
-const Koa = require("koa")
-const router = require("koa-router")()//引用并实例化
-const views = require("koa-views");
-const bodyparser = require("koa-bodyparser");
-const static = require("koa-static");
-
+const Koa = require("koa"),
+     router = require("koa-router")(),//引用并实例化
+     views = require("koa-views"),
+     bodyparser = require("koa-bodyparser"),
+     static = require("koa-static"),
+     render = require('koa-art-template'),
+     path = require('path')
 const app = new Koa()
+render(app,{
+    root:path.join(__dirname,'views'), //视图的位置
+    extname:'.html', //后缀名
+    debug:process.env.NODE_ENV !== 'production' //是否开启调试模式
+})
 
 // app.use(static('static')) //静态资源托管
 
 app.use(static(__dirname+'/static')) //静态资源托管
 app.use(bodyparser())
-app.use(views('views',{
-    extension:'ejs'  //
-}))
+
+
 
 //配置路由
 router.get('/',async(ctx)=>{ //ctx 上下文 context包含了 requeset 和response等信息
@@ -32,7 +37,6 @@ querystring：返回的是请求字符串
 
 //匹配到news路由以后继续向下匹配路由
 router.get('/news',async(ctx)=>{
-    console.log("执行顺序3")
     // ctx.body="新闻";
     let arr = ['1111','222','3333']
     let content = '<h2>这是一段html</h2>'
