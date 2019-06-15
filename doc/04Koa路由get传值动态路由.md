@@ -1,4 +1,4 @@
-# 04 Koa路由 get传值 动态路由_转
+# 04 Koa路由 get传值 动态路由
 
 1、路由
 一个Uri 和一个特定的http方法（GET、POST等）组成，涉及到应用如何响应客户端对某个网站节点的访问。
@@ -62,4 +62,10 @@ router.get('/news/:id',async(ctx)=>{
     console.log(ctx.params) //http://localhost:3001/news/123 { id: '123' }
     ctx.body="新闻详情";
 })
+
+router.get('/news/:cid/:id',async(ctx)=>{
+    console.log(ctx.params) http://localhost:3001/news/123/123 { cid: '123', id: '123' }
+    ctx.body="新闻详情";
+})
+
 ```
