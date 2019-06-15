@@ -1,10 +1,17 @@
-var Koa = require("koa")
-var router = require("koa-router")()//引用并实例化
-var app = new Koa()
+const Koa = require("koa")
+const router = require("koa-router")()//引用并实例化
+const views = require("koa-views");
+
+const app = new Koa()
+
+app.use(views('views',{
+    extension:'ejs'  //
+}))
 
 //配置路由
 router.get('/',async(ctx)=>{ //ctx 上下文 context包含了 requeset 和response等信息
-    ctx.body='首页'; //返回数据，原生 res.writeHead() res.end()
+    let title = "你好ejs"
+    await ctx.render('index',{title})
 })
 
 
@@ -20,7 +27,11 @@ querystring：返回的是请求字符串
 //匹配到news路由以后继续向下匹配路由
 router.get('/news',async(ctx)=>{
     console.log("执行顺序3")
-    ctx.body="新闻详情";
+    // ctx.body="新闻";
+    let arr = ['1111','222','3333']
+    let content = '<h2>这是一段html</h2>'
+    let num = 14
+    await ctx.render('news',{title:"新闻",list:arr,content,num})
 })
 
 // 匹配路由之前打印日期
@@ -31,18 +42,13 @@ app.use(async(ctx,next)=>{ //可以匹配任何路由
 })
 
 
-// 错误处理中间件
+// 匹配路由之前打印日期
 app.use(async(ctx,next)=>{ //可以匹配任何路由
-    console.log('执行顺序2')
-    next()
-    console.log('执行顺序4')
-    if(ctx.status==404){
-        ctx.body = "这是一个 404 页面"
-    }else{
-        console.log(ctx.url)
-    }
-    // await next(); //路由匹配完成以后继续向下匹配
+    ctx.state.siteTitle= 'kacoro'
+    await next(); //路由匹配完成以后继续向下匹配
+   
 })
+
 
 //启动路由
 app.use(router.routes()) // 作用
@@ -56,9 +62,25 @@ app.use(router.allowedMethods());//官方推荐使用，用在routers之后，�
 // })
 
 // 匹配路由之前打印日期
-app.use(async(ctx,next)=>{ //可以匹配任何路由
+app.use(async (ctx,next)=>{ //可以匹配任何路由
     console.log(new Date())
     await next(); //路由匹配完成以后继续向下匹配
+})
+//写一个中间件配置公共信息
+app.use(async (ctx,next)=>{ //可以匹配任何路由
+    console.log(new Date())
+    await next(); //路由匹配完成以后继续向下匹配
+})
+app.use(async(ctx,next)=>{ //可以匹配任何路由
+    console.log('执行顺序2')
+    next()
+    console.log('执行顺序4')
+    if(ctx.status==404){
+        ctx.body = "这是一个 404 页面"
+    }else{  
+        console.log(ctx.url)
+    }
+    // await next(); //路由匹配完成以后继续向下匹配
 })
 
 
