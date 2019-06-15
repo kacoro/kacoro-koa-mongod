@@ -15,23 +15,35 @@ querystring：返回的是请求字符串
 */
 
 //匹配到路由以后继续向下匹配路由
-router.get('/news',async(ctx,next)=>{
-    console.log(ctx.query)
-    console.log(ctx.params) //http://localhost:3001/news/123 { id: '123' }
-    // ctx.body="新闻详情455";
-    await next()
-})
+
 
 //匹配到news路由以后继续向下匹配路由
 router.get('/news',async(ctx)=>{
-    ctx.body="新闻详情2";
+    console.log("执行顺序3")
+    ctx.body="新闻详情";
 })
 
 // 匹配路由之前打印日期
 app.use(async(ctx,next)=>{ //可以匹配任何路由
-    console.log(new Date())
+    console.log("执行顺序1：",new Date()) 
     await next(); //路由匹配完成以后继续向下匹配
+    console.log('执行顺序5')
 })
+
+
+// 错误处理中间件
+app.use(async(ctx,next)=>{ //可以匹配任何路由
+    console.log('执行顺序2')
+    next()
+    console.log('执行顺序4')
+    if(ctx.status==404){
+        ctx.body = "这是一个 404 页面"
+    }else{
+        console.log(ctx.url)
+    }
+    // await next(); //路由匹配完成以后继续向下匹配
+})
+
 //启动路由
 app.use(router.routes()) // 作用
 app.use(router.allowedMethods());//官方推荐使用，用在routers之后，当所有路由中间件最后调用。此时根据ctx.status设置response响应头

@@ -41,3 +41,62 @@ router.get('/news',async(ctx)=>{
     ctx.body="新闻详情2";
 })
 ```
+
+3、错误处理中间件
+```
+//匹配到news路由以后继续向下匹配路由
+router.get('/news',async(ctx)=>{
+    console.log("执行顺序3")
+    ctx.body="新闻详情";
+})
+
+// 匹配路由之前打印日期
+app.use(async(ctx,next)=>{ //可以匹配任何路由
+    console.log("执行顺序1：",new Date()) 
+    await next(); //路由匹配完成以后继续向下匹配
+})
+
+
+// 错误处理中间件
+app.use(async(ctx,next)=>{ //可以匹配任何路由
+    console.log('这是一个错误页面中间件')
+    next()
+    if(ctx.status==404){
+        ctx.body = "这是一个 404 页面"
+    }else{
+        console.log(ctx.url)
+    }
+    // await next(); //路由匹配完成以后继续向下匹配
+})
+```
+
+4、洋葱执行流程 从外向内，再从内向外
+```
+//匹配到news路由以后继续向下匹配路由
+router.get('/news',async(ctx)=>{
+    console.log("执行顺序3")
+    ctx.body="新闻详情";
+})
+
+// 匹配路由之前打印日期
+app.use(async(ctx,next)=>{ //可以匹配任何路由
+    console.log("执行顺序1：",new Date()) 
+    await next(); //路由匹配完成以后继续向下匹配
+    console.log('执行顺序5')
+})
+
+
+// 错误处理中间件
+app.use(async(ctx,next)=>{ //可以匹配任何路由
+    console.log('执行顺序2')
+    next()
+    console.log('执行顺序4')
+    if(ctx.status==404){
+        ctx.body = "这是一个 404 页面"
+    }else{
+        console.log(ctx.url)
+    }
+    // await next(); //路由匹配完成以后继续向下匹配
+})
+
+```
