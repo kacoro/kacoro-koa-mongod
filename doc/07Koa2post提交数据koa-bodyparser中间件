@@ -51,3 +51,13 @@ router.post('/login',async(ctx)=>{
     ctx.body = data;
 })
 ```
+
+2、koa-bodyparser获取表单数据
+```
+const bodyparser = require("koa-bodyparser");
+app.use(bodyparser())
+router.post('/login',async(ctx)=>{
+    ctx.body=ctx.request.body //获取表单数据
+})
+```
+

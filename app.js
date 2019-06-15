@@ -1,9 +1,11 @@
 const Koa = require("koa")
 const router = require("koa-router")()//引用并实例化
 const views = require("koa-views");
-const common = require("./module/common.js");
+const bodyparser = require("koa-bodyparser");
+
 const app = new Koa()
 
+app.use(bodyparser())
 app.use(views('views',{
     extension:'ejs'  //
 }))
@@ -41,9 +43,7 @@ router.get('/login',async(ctx)=>{
 
 //接受post
 router.post('/login',async(ctx)=>{
-    //原生nodejs 在koa中获取表单提交的数据
-    var data = await common.getPostData(ctx);
-    ctx.body = data;
+    ctx.body=ctx.request.body //获取表单数据
 })
 
 // 匹配路由之前打印日期
