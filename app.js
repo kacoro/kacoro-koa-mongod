@@ -2,9 +2,13 @@ const Koa = require("koa")
 const router = require("koa-router")()//引用并实例化
 const views = require("koa-views");
 const bodyparser = require("koa-bodyparser");
+const static = require("koa-static");
 
 const app = new Koa()
 
+// app.use(static('static')) //静态资源托管
+
+app.use(static(__dirname+'/static')) //静态资源托管
 app.use(bodyparser())
 app.use(views('views',{
     extension:'ejs'  //
