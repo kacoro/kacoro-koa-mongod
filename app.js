@@ -4,7 +4,8 @@ const Koa = require("koa"),
      bodyparser = require("koa-bodyparser"),
      static = require("koa-static"),
      render = require('koa-art-template'),
-     path = require('path')
+     path = require('path'),
+     session = require('koa-session')
 const app = new Koa()
 render(app,{
     root:path.join(__dirname,'views'), //视图的位置
@@ -13,20 +14,26 @@ render(app,{
 })
 
 // app.use(static('static')) //静态资源托管
-
+app.keys = ['newest secret key', 'older secret key']; //Error: .keys required for signed cookies
 app.use(static(__dirname+'/static')) //静态资源托管
 app.use(bodyparser())
-
+app.use(session({
+    keys:'koa:sess',
+    signed: true,
+    maxAge:86400000, //cookies过期时间
+    rolling:false, //每次访问都强制设置cookie，这将重置cookie过期时间 默认false
+    renew:true //是否当快过期时重新设置
+},app))
 
 
 //配置路由
 router.get('/',async(ctx)=>{ //ctx 上下文 context包含了 requeset 和response等信息
-    let userinfo = '张四'
-    ctx.cookies.set('userinfo',new Buffer(userinfo).toString('base64'),{  //无法直接存中文 TypeError: argument value is invalid
+    let userinfo = '张三'
+    ctx.cookies.set('userinfo',Buffer.from(userinfo).toString('base64'),{  //无法直接存中文 TypeError: argument value is invalid
         maxAge:3600*1000,
         httpOnly:false //fasle客户端可以访问，
     })
-  
+   
     let title = "你好ejs"
     await ctx.render('index',{title})
 })
@@ -43,12 +50,19 @@ querystring：返回的是请求字符串
 
 //匹配到news路由以后继续向下匹配路由
 router.get('/news',async(ctx)=>{
-    let userinfo = new Buffer(ctx.cookies.get('userinfo'),'base64').toString();
+    var userinfo = ctx.cookies.get('userinfo');
+    if(userinfo){
+        userinfo = Buffer.from(ctx.cookies.get('userinfo'),'base64').toString();
+    }
+    
     // ctx.body="新闻";
     let arr = ['1111','222','3333']
     let content = '<h2>这是一段html</h2>'
     let num = 14
-    await ctx.render('news',{title:"新闻",list:arr,content,num,userinfo})
+    let username = ctx.session.username
+    await ctx.render('news',{title:"新闻",list:arr,content,num,userinfo,
+        username
+    })
 })
 
 router.get('/login',async(ctx)=>{
@@ -58,7 +72,10 @@ router.get('/login',async(ctx)=>{
 
 //接受post
 router.post('/login',async(ctx)=>{
-    ctx.body=ctx.request.body //获取表单数据
+    // ctx.body=ctx.request.body //获取表单数据
+    //    console.log(ctx.session.username)
+    ctx.session.username = "李四"
+    ctx.body="登录成功"
 })
 
 // 匹配路由之前打印日期
