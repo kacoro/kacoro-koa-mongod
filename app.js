@@ -29,10 +29,7 @@ app.use(session({
 
 //配置路由
 router.get('/',async(ctx)=>{ //ctx 上下文 context包含了 requeset 和response等信息
-    console.time('start')
     var result = await DB.find('user',{});
-    console.timeEnd('start')
-    // console.log(result)
     let userinfo = '张三'
     ctx.cookies.set('userinfo',Buffer.from(userinfo).toString('base64'),{  //无法直接存中文 TypeError: argument value is invalid
         maxAge:3600*1000,
@@ -40,7 +37,7 @@ router.get('/',async(ctx)=>{ //ctx 上下文 context包含了 requeset 和respon
     })
    
     let title = "你好ejs"
-    await ctx.render('index',{title})
+    await ctx.render('index',{title,list:result})
 })
 
 
@@ -55,9 +52,7 @@ querystring：返回的是请求字符串
 
 //匹配到news路由以后继续向下匹配路由
 router.get('/news',async(ctx)=>{
-    console.time('start')
     var result = await DB.find('user',{});
-    console.timeEnd('start')
     var userinfo = ctx.cookies.get('userinfo');
     if(userinfo){
         userinfo = Buffer.from(ctx.cookies.get('userinfo'),'base64').toString();
@@ -74,13 +69,31 @@ router.get('/news',async(ctx)=>{
 })
 
 router.get('/add',async(ctx)=>{
+   
+   await ctx.render('add',{title:"添加"})
+})
+
+//增加学员
+router.post('/doAdd',async(ctx)=>{
+    console.log(ctx.request.body)
     
-    let data = await DB.insert('user',{username:"赵柳66","age":22,"sex":"女","status":2})
+    let data = await DB.insert('user',ctx.request.body)
     console.log(data.result);
     ctx.body = "添加数据"
+    try{
+        if(data.result.ok){
+            ctx.redirect('/')
+        }else{
+    
+        }
+    }catch(err){
+        ctx.redirect('/add')
+    }
+   
     // await ctx.render('add',{title:"添加"})
 })
 
+//编辑学员
 router.get('/update',async(ctx)=>{
     
     let data = await DB.update('user',{username:'赵柳66'},{username:"赵柳6677","age":22,"sex":"女","status":2})
@@ -89,6 +102,7 @@ router.get('/update',async(ctx)=>{
     // await ctx.render('add',{title:"添加"})
 })
 
+//删除学员
 router.get('/remove',async(ctx)=>{
     
     let data = await DB.remove('user',{username:'test'})
