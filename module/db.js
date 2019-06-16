@@ -59,37 +59,4 @@ class Db {
     }
 }
 
-console.log("MyDb")
-var MyDb = Db.getInstance()
-
-setTimeout(function(){
-    console.time('start')
-    MyDb.find('user',{}).then((data)=>{
-        // console.log("查询",data)
-        console.timeEnd('start')
-    })
-},1000)
-setTimeout(function(){
-    console.time('start2')
-    MyDb.find('user',{}).then((data)=>{
-        // console.log("查询",data)
-        console.timeEnd('start2')
-    })
-},1000)
-
-var MyDb2 = Db.getInstance()
-
-setTimeout(function(){
-    console.time('start3')
-    MyDb2.find('user',{}).then((data)=>{
-        // console.log("查询",data)
-        console.timeEnd('start3')
-    })
-},1000)
-setTimeout(function(){
-    console.time('start4')
-    MyDb2.find('user',{}).then((data)=>{
-        // console.log("查询",data)
-        console.timeEnd('start4')
-    })
-},1000)
+module.exports = Db.getInstance()

@@ -6,9 +6,7 @@ const Koa = require("koa"),
      render = require('koa-art-template'),
      path = require('path'),
      session = require('koa-session'),
-     MongoClient = require('mongodb').MongoClient,
-     assert = require('assert'),
-     config = require('./config')
+     Db = require('./module/db')
 const app = new Koa()
 render(app,{
     root:path.join(__dirname,'views'), //视图的位置
@@ -31,6 +29,10 @@ app.use(session({
 
 //配置路由
 router.get('/',async(ctx)=>{ //ctx 上下文 context包含了 requeset 和response等信息
+    console.time('start')
+    var result = await Db.find('user',{});
+    console.timeEnd('start')
+    // console.log(result)
     let userinfo = '张三'
     ctx.cookies.set('userinfo',Buffer.from(userinfo).toString('base64'),{  //无法直接存中文 TypeError: argument value is invalid
         maxAge:3600*1000,
@@ -53,6 +55,9 @@ querystring：返回的是请求字符串
 
 //匹配到news路由以后继续向下匹配路由
 router.get('/news',async(ctx)=>{
+    console.time('start')
+    var result = await Db.find('user',{});
+    console.timeEnd('start')
     var userinfo = ctx.cookies.get('userinfo');
     if(userinfo){
         userinfo = Buffer.from(ctx.cookies.get('userinfo'),'base64').toString();
@@ -130,43 +135,6 @@ app.use(async(ctx,next)=>{ //可以匹配任何路由
     // await next(); //路由匹配完成以后继续向下匹配
 })
 
-// Connection URL
-const url = `mongodb://${config.dbUsername}:${encodeURIComponent(config.dbPassword)}@${config.dbhost}/${config.dbName}`;
-
-// Database Name
-const dbName = config.dbName;
-
-// Create a new MongoClient
-const client = new MongoClient(url,{ useNewUrlParser: true });
-console.time('start')
-// Use connect method to connect to the Server
-client.connect(function(err) {
-  assert.equal(null, err);
-
-  console.log("Connected successfully to server");
-
-  const db = client.db(dbName);
-  console.timeEnd('start') 
-  // 增加数据 
-  console.time('startinsert')
-  db.collection('user').insertOne({'username':'test',age:23,sex:'男',status:1},function(err,result){
-    if(!err){
-        console.log('增加数据成功')
-        console.timeEnd('startinsert')
-    }
-  })
-
-  //查询数据
-  console.time('startfind')
-  var result = db.collection('user').find({})
-  result.toArray((err,docs)=>{
-    console.log(docs)
-    console.timeEnd('startfind')
-  })
-
-  client.close();
-
-});
 
 app.listen(3001)
 console.log('运行http://localhost:3001')
