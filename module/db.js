@@ -4,26 +4,42 @@ const MongoClient = require('mongodb').MongoClient,
      config = require('../config')
 
 class Db {
+    static getInstance(){  //单例 多次实例化，实例不共享的问题
+        if(!Db.instance){
+            Db.instance = new Db()
+        }
+        return Db.instance
+    }
     constructor(){
+        this.dbClient='' //属性 放DBClient
         this.connect()
     }
     connect(){ //链接数据库
         // Connection URL
-        console.log("数据库连接中...")
+        
+        let _that = this;
         return new Promise((resolve,reject)=>{
-            const url = `mongodb://${config.dbUsername}:${encodeURIComponent(config.dbPassword)}@${config.dbhost}/${config.dbName}`;
-            // Create a new MongoClient
-            const client = new MongoClient(url,{ useNewUrlParser: true });
-            client.connect(err=>{
-                if(err){
-                    console.log("数据库连接失败！")
-                    reject(err)
-                }else{
-                    console.log("数据库连接成功！")
-                    const db = client.db(config.dbName);
-                    resolve(db)
-                }
-            });
+            if(!_that.dbClient){  //解决数据库多次连接的问题
+                console.log("数据库连接中...")
+                const url = `mongodb://${config.dbUsername}:${encodeURIComponent(config.dbPassword)}@${config.dbhost}/${config.dbName}`;
+                 // Create a new MongoClient
+                const client = new MongoClient(url,{ useNewUrlParser: true });
+                client.connect(err=>{
+                    if(err){
+                        console.log("数据库连接失败！")
+                        reject(err)
+                    }else{
+                        console.log("数据库连接成功！")
+                        const db = client.db(config.dbName);
+                        _that.dbClient = db;
+                        resolve(_that.dbClient)
+                    }
+                });
+            }else{
+                console.log("数据库已实例化！")
+                resolve(_that.dbClient)
+            }
+            
         })
     }
 
@@ -44,14 +60,36 @@ class Db {
 }
 
 console.log("MyDb")
-var MyDb = new Db()
-console.time('start')
-MyDb.find('user',{}).then((data)=>{
-    // console.log("查询",data)
-    console.timeEnd('start')
-})
-console.time('start2')
-MyDb.find('user',{}).then((data)=>{
-    // console.log("查询",data)
-    console.timeEnd('start2')
-})
+var MyDb = Db.getInstance()
+
+setTimeout(function(){
+    console.time('start')
+    MyDb.find('user',{}).then((data)=>{
+        // console.log("查询",data)
+        console.timeEnd('start')
+    })
+},1000)
+setTimeout(function(){
+    console.time('start2')
+    MyDb.find('user',{}).then((data)=>{
+        // console.log("查询",data)
+        console.timeEnd('start2')
+    })
+},1000)
+
+var MyDb2 = Db.getInstance()
+
+setTimeout(function(){
+    console.time('start3')
+    MyDb2.find('user',{}).then((data)=>{
+        // console.log("查询",data)
+        console.timeEnd('start3')
+    })
+},1000)
+setTimeout(function(){
+    console.time('start4')
+    MyDb2.find('user',{}).then((data)=>{
+        // console.log("查询",data)
+        console.timeEnd('start4')
+    })
+},1000)
