@@ -6,7 +6,7 @@ const Koa = require("koa"),
      render = require('koa-art-template'),
      path = require('path'),
      session = require('koa-session'),
-     Db = require('./module/db')
+     DB = require('./module/db')
 const app = new Koa()
 render(app,{
     root:path.join(__dirname,'views'), //视图的位置
@@ -30,7 +30,7 @@ app.use(session({
 //配置路由
 router.get('/',async(ctx)=>{ //ctx 上下文 context包含了 requeset 和response等信息
     console.time('start')
-    var result = await Db.find('user',{});
+    var result = await DB.find('user',{});
     console.timeEnd('start')
     // console.log(result)
     let userinfo = '张三'
@@ -56,7 +56,7 @@ querystring：返回的是请求字符串
 //匹配到news路由以后继续向下匹配路由
 router.get('/news',async(ctx)=>{
     console.time('start')
-    var result = await Db.find('user',{});
+    var result = await DB.find('user',{});
     console.timeEnd('start')
     var userinfo = ctx.cookies.get('userinfo');
     if(userinfo){
@@ -73,6 +73,29 @@ router.get('/news',async(ctx)=>{
     })
 })
 
+router.get('/add',async(ctx)=>{
+    
+    let data = await DB.insert('user',{username:"赵柳66","age":22,"sex":"女","status":2})
+    console.log(data.result);
+    ctx.body = "添加数据"
+    // await ctx.render('add',{title:"添加"})
+})
+
+router.get('/update',async(ctx)=>{
+    
+    let data = await DB.update('user',{username:'赵柳66'},{username:"赵柳6677","age":22,"sex":"女","status":2})
+    console.log(data.result);
+    ctx.body = "更新数据"
+    // await ctx.render('add',{title:"添加"})
+})
+
+router.get('/remove',async(ctx)=>{
+    
+    let data = await DB.remove('user',{username:'test'})
+    console.log(data.result);
+    ctx.body = "删除数据"
+    // await ctx.render('add',{title:"添加"})
+})
 router.get('/login',async(ctx)=>{
     //接受数据
     await ctx.render('login',{title:"登录"})
