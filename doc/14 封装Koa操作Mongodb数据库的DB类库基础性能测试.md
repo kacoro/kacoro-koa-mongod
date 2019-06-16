@@ -33,3 +33,24 @@ client.connect(function(err) {
   client.close();
 });
 ```
+
+
+```
+  // 增加数据 
+  console.time('startinsert')
+  db.collection('user').insertOne({'username':'test',age:23,sex:'男',status:1},function(err,result){
+    if(!err){
+        console.log('增加数据成功')
+        console.timeEnd('startinsert')
+    }
+  })
+
+  //查询数据
+  console.time('startfind')
+  var result = db.collection('user').find({})
+  result.toArray((err,docs)=>{
+    console.log(docs)
+    console.timeEnd('startfind')
+  })
+```
+

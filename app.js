@@ -138,7 +138,7 @@ const dbName = config.dbName;
 
 // Create a new MongoClient
 const client = new MongoClient(url,{ useNewUrlParser: true });
-
+console.time('start')
 // Use connect method to connect to the Server
 client.connect(function(err) {
   assert.equal(null, err);
@@ -146,8 +146,26 @@ client.connect(function(err) {
   console.log("Connected successfully to server");
 
   const db = client.db(dbName);
+  console.timeEnd('start') 
+  // 增加数据 
+  console.time('startinsert')
+  db.collection('user').insertOne({'username':'test',age:23,sex:'男',status:1},function(err,result){
+    if(!err){
+        console.log('增加数据成功')
+        console.timeEnd('startinsert')
+    }
+  })
+
+  //查询数据
+  console.time('startfind')
+  var result = db.collection('user').find({})
+  result.toArray((err,docs)=>{
+    console.log(docs)
+    console.timeEnd('startfind')
+  })
 
   client.close();
+
 });
 
 app.listen(3001)
