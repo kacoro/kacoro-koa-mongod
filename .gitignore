@@ -11,3 +11,4 @@ run/
 typings/
 .nyc_output/
 .vscode/
+config.js

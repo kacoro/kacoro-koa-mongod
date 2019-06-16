@@ -5,7 +5,10 @@ const Koa = require("koa"),
      static = require("koa-static"),
      render = require('koa-art-template'),
      path = require('path'),
-     session = require('koa-session')
+     session = require('koa-session'),
+     MongoClient = require('mongodb').MongoClient,
+     assert = require('assert'),
+     config = require('./config')
 const app = new Koa()
 render(app,{
     root:path.join(__dirname,'views'), //视图的位置
@@ -127,6 +130,25 @@ app.use(async(ctx,next)=>{ //可以匹配任何路由
     // await next(); //路由匹配完成以后继续向下匹配
 })
 
+// Connection URL
+const url = `mongodb://${config.dbUsername}:${encodeURIComponent(config.dbPassword)}@${config.dbhost}/${config.dbName}`;
+
+// Database Name
+const dbName = config.dbName;
+
+// Create a new MongoClient
+const client = new MongoClient(url,{ useNewUrlParser: true });
+
+// Use connect method to connect to the Server
+client.connect(function(err) {
+  assert.equal(null, err);
+
+  console.log("Connected successfully to server");
+
+  const db = client.db(dbName);
+
+  client.close();
+});
 
 app.listen(3001)
 console.log('运行http://localhost:3001')
