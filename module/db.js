@@ -1,5 +1,6 @@
 //DB库
 const MongoClient = require('mongodb').MongoClient,
+     ObjectID = require('mongodb').ObjectID,
      assert = require('assert'),
      config = require('../config')
 
@@ -97,6 +98,10 @@ class Db {
                 })
              }))
         })
+    }
+
+    getObjectID(id){
+        return new ObjectID(id)
     }
 }
 

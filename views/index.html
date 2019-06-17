@@ -10,7 +10,6 @@
         <h2>用户管理</h2>  
          
         <a href="/add">增加用户</a>
-        <a href="/remove">删除用户</a>
 </br></br>
         <table border="1">
             <tr>
@@ -28,7 +27,7 @@
                 <td>{{$value.age}}</td>
                 <td>{{$value.sex}}</td>
                 <td>{{$value.status}}</td>
-                <td><a href="">删除</a> <a href="">编辑</a></td>
+                <td><a href="/remove?id={{@ $value._id}}">删除</a> <a href="/edit?id={{@ $value._id}}">编辑</a></td>
             </tr>
             {{/each}}
         </table>
