@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%=siteTitle%></title>
+</head>
+<body>
+    <form action="/doEdit" method="post">
+        <input type="hidden" name="id" value="{{@list._id}}"> <br><br>
+        用户名：<input type="text" name="username" value="{{list.username}}"> <br><br>
+        年龄：<input type="text" name="age" value="{{list.age}}"><br><br>
+        性别：男<input type="radio" name="sex"  {{if list.sex == '男' }} checked="checked" {{/if}} value="男" > 
+        女<input type="radio" name="sex"  {{if list.sex == '女' }} checked="checked" {{/if}} value="女" ><br><br>
+        状态：启用<input type="radio" name="status" {{if list.status == 0 }} checked="checked" {{/if}} value="0" > 
+        禁用<input type="radio" name="status" {{if list.status == 1 }} checked="checked" {{/if}}  value="1" ><br><br>
+        <button type="submit">提交</button>
+    </form>
+</body>
+</html>

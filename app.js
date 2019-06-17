@@ -1,14 +1,25 @@
-const Koa = require('koa')
+const Koa = require('koa'),
+views = require('koa-views'),
+json = require('koa-json'),
+onerror = require('koa-onerror'),
+bodyparser = require('koa-bodyparser'),
+logger = require('koa-logger'),
+router = require('koa-router')(),
+render = require('koa-art-template'),
+path = require('path'),
+index = require('./routes/index'),
+admin = require('./routes/admin'),
+api = require('./routes/api')
+
 const app = new Koa()
-const views = require('koa-views')
-const json = require('koa-json')
-const onerror = require('koa-onerror')
-const bodyparser = require('koa-bodyparser')
-const logger = require('koa-logger')
-const router = require('koa-router')()
-const index = require('./routes/index')
-const admin = require('./routes/admin')
-const api = require('./routes/api')
+//art-template render
+render(app,{
+    root:path.join(__dirname,'views'), //视图的位置
+    extname:'.html', //后缀名
+    extension: 'pug',
+    debug:process.env.NODE_ENV !== 'production' //是否开启调试模式
+})
+
 // error handler
 onerror(app)
 
@@ -18,11 +29,11 @@ app.use(bodyparser({
 }))
 app.use(json())
 app.use(logger())
-app.use(require('koa-static')(__dirname + '/public'))
+app.use(require('koa-static')(__dirname + '/static'))
 
-app.use(views(__dirname + '/views', {
-  extension: 'pug'
-}))
+// app.use(views(__dirname + '/views', {
+//   extension: 'pug'
+// }))
 
 // logger
 app.use(async (ctx, next) => {
@@ -33,13 +44,11 @@ app.use(async (ctx, next) => {
 })
 
 // routes
-// app.use(index.routes(), index.allowedMethods())
-// app.use(admin.routes(), admin.allowedMethods())
-// app.use(api.routes(), api.allowedMethods())
 router.use(index)
 router.use(admin)
 router.use(api)
 app.use(router.routes()).use(router.allowedMethods())
+
 // error-handling
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)
