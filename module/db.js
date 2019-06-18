@@ -42,11 +42,24 @@ class Db {
             
         })
     }
-
-    find(collectionName,json){
+    count(collectionName){
         return new Promise((resolve,reject)=>{
             this.connect().then((db=>{
-                var result =  db.collection(collectionName).find(json)
+                var result =  db.collection(collectionName).countDocuments((err,result)=>{
+                    if(err){
+                        reject(err)
+                    }else{
+                        resolve(result)
+                    }
+                })
+                
+             }))
+        })
+    }
+    find(collectionName,json,options){
+        return new Promise((resolve,reject)=>{
+            this.connect().then((db=>{
+                var result =  db.collection(collectionName).find(json,options ||{})
                 result.toArray((err,docs)=>{
                     if(err){
                         reject(err)

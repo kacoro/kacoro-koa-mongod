@@ -1,18 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><%=siteTitle%></title>
-</head>
-<body>
-    <form action="/doAdd" method="post">
-        用户名：<input type="text" name="username" value=""><br><br>
-        年龄：<input type="text" name="age" value=""><br><br>
-        性别：男<input type="radio" name="sex" value="男"  > 女<input type="radio" name="sex" value="女" ><br><br>
-        状态：启用<input type="radio" name="status" value="0" > 禁用<input type="radio" name="status" value="1" ><br><br>
-        <button type="submit">提交</button>
+{{include '../public/header'}}
+{{include '../public/nav'}}
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+  <h2 class="page-header">用户管理</h2>
+    <form action="/api/users/add" method="post">
+      <div class="form-group">
+        <label for="username">用户名：</label>
+        <input
+          type="email"
+          class="form-control"
+          name="username"
+          value=""
+          id="username"
+          placeholder="请输入邮箱地址"
+        />
+      </div>
+      <div class="form-group">
+        <label for="nickname">昵称：</label>
+        <input
+          type="text"
+          class="form-control"
+          name="nickname"
+          id="nickname"
+          placeholder="昵称"
+        />
+      </div>
+      <div class="form-group">
+        <label for="password">密码：</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          name="password"
+          placeholder="密码"
+          minlength="6"
+          maxlength="20"
+          required
+        />
+      </div>
+      <div class="form-group">
+            <label for="exampleInputPassword1">年龄：</label>
+            <input
+              type="number"
+              class="form-control"
+              name="age"
+              placeholder="年龄"
+              max="100"
+              
+            />
+          </div>
+      <div class="form-group">
+       <label >性别：</label>
+      <label class="radio-inline">
+           <input type="radio" name="sex"   value="男"> 男
+          </label>
+          <label class="radio-inline">
+            <input class="btn btn-primary " type="radio" name="sex"  value="女"> 女
+          </label>
+        </div>   
+      
+      
+      <div class="checkbox">
+        <label> <input type="checkbox" name="status" /> 启用 </label>
+      </div>
+      <button type="submit" class="btn btn-default">提交</button>
     </form>
-</body>
-</html>
+</div>
+
+{{include '../public/footer'}}

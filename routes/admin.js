@@ -6,8 +6,8 @@ const focus = require('./admin/focus')
 //配置admin的子路由
 router.prefix('/admin')
 
-router.get('/', function (ctx, next) {
-  ctx.body = '后台管理'
+router.get('/', async (ctx)=> {
+  await ctx.render('admin/index')
 })
 
 router.use(users)

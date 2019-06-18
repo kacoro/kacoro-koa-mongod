@@ -1,0 +1,35 @@
+
+<div class="col-sm-3 col-md-2 sidebar">
+        <ul class="nav nav-sidebar">
+                <li {{if (currentNav=="/admin")}} class="active" {{/if}}>
+                  <a  href="/admin">首页</a>
+                </li>
+                <li {{if (currentNav=="/admin/users")}} class="active" {{/if}} >
+                  <a href="/admin/users">用户管理</a>
+                </li>
+                <li {{if (currentNav=="/admin/news")}} class="active" {{/if}}>
+                  <a href="/admin/news">新闻管理</a>
+                </li>
+                <li {{if (currentNav=="/admin/")}} class="active" {{/if}}>
+                  <a href="/admin/newscate">新闻分类管理</a>
+                </li>
+                <li {{if (currentNav=="/admin/products")}} class="active" {{/if}}>
+                  <a href="/admin/products">产品管理</a>
+                </li>
+                <li {{if (currentNav=="/admin/focus")}} class="active" {{/if}}>
+                  <a href="/admin/focus">轮播图管理</a>
+                </li>
+                <li {{if (currentNav=="/admin/flinks")}} class="active" {{/if}}>
+                  <a href="/admin/flinks">友情链接设置</a>
+                </li>
+                <li {{if (currentNav=="/admin/navs")}} class="active" {{/if}}>
+                  <a href="/admin/navs">导航管理</a>
+                </li>
+                <li {{if (currentNav=="/admin/settings")}} class="active" {{/if}}>
+                  <a class="nav-link disabled" href="/admin/settings">系统设置</a>
+                </li>
+              </ul>
+              
+</div>
+
+
