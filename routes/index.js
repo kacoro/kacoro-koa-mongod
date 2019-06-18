@@ -2,7 +2,7 @@ const router = require('koa-router')()
 DB = require('../module/db')
 
 router.get('/', async (ctx) => {
-  let result = await DB.find('user',{});
+  let result = await DB.find('news',{},{limit:4});
   let title = "首页"
   await ctx.render('default/index',{title,list:result})
 })

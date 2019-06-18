@@ -9,16 +9,22 @@ render = require('koa-art-template'),
 path = require('path'),
 index = require('./routes/index'),
 admin = require('./routes/admin'),
-api = require('./routes/api')
+api = require('./routes/api'),
+artFilter = require('./module/artFilter')
+
 
 const app = new Koa()
 //art-template render
+new artFilter();
+
 render(app,{
     root:path.join(__dirname,'views'), //视图的位置
     extname:'.html', //后缀名
     extension: 'pug',
     debug:process.env.NODE_ENV !== 'production' //是否开启调试模式
 })
+
+
 
 // error handler
 onerror(app)
