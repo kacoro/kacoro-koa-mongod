@@ -12,7 +12,7 @@
             <h1>
                 <a href="/news/detail?id={{@ $value._id}}">{{ $value.title}}</a></br>
             </h1>
-            <h4 >{{ $value.addTime | dateFormat 'YYYY-MM-DD HH:mm:ss'}}</h4>
+            <h4 >{{ $value.addTime | dateFormat 'YYYY年MM月DD日 HH:mm:ss'}}</h4>
             <p class="lead">{{ $value.note | slice 60}}</p>
           </div>
           <div class="col-md-4 {{if $index%2!=0}} col-md-pull-8 {{/if}}" >
