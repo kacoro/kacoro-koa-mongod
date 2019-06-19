@@ -24,7 +24,6 @@ class ArtFilter{
             return moment(date).format(fmt);   
         };
         defaults.imports.slice = function(str,length){ 
-            console.log(str)
           if(str.length>length){
             return str.slice(0,length) + '...'
           }

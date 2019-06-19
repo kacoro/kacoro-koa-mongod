@@ -10,12 +10,17 @@ path = require('path'),
 index = require('./routes/index'),
 admin = require('./routes/admin'),
 api = require('./routes/api'),
-artFilter = require('./module/artFilter')
+passport = require('./module/passport'),
+artFilter = require('./module/artFilter'),
+session = require('koa-session'),
+RedisStore = require('koa-redis')
 
 
 const app = new Koa()
+app.keys = ['newkey','oldkey']
 //art-template render
 new artFilter();
+
 
 render(app,{
     root:path.join(__dirname,'views'), //视图的位置
@@ -33,6 +38,14 @@ onerror(app)
 app.use(bodyparser({
   enableTypes:['json', 'form', 'text']
 }))
+app.use(session({
+  cookie: {secure: false, maxAge:86400000},
+  //store: RedisStore(redisConf.session)
+}, app))
+//passport
+app.use(passport.initialize())
+app.use(passport.session())
+
 app.use(json())
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/static'))
@@ -63,7 +76,10 @@ app.use(async (ctx, next) => {
 router.use(index)
 router.use(admin)
 router.use(api)
+
 app.use(router.routes()).use(router.allowedMethods())
+
+
 
 // error-handling
 app.on('error', (err, ctx) => {

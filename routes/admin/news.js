@@ -8,10 +8,7 @@ router.get('/',  async (ctx) => {
 
   let title = "首页"
   let totle = await DB.count('news');//表总记录数
-  console.log('totle:'+totle)
         //koa-bodyparser解析前端参数
-        console.log(ctx.query)
-        console.log(ctx)
         let reqParam= ctx.query;
         let page = Number(reqParam.page) || 1;//当前第几页
         let size = Number(reqParam.size) || 10;//每页显示的记录条数
@@ -33,7 +30,6 @@ router.get('/edit', async (ctx) => {
   //获取用户信息
   let id = ctx.query.id;
   let data = await DB.find('news',{_id:DB.getObjectID(id)});
- console.log(data[0])
   await ctx.render('admin/news/edit',{list:data[0],currentNav:'/admin/news'})
 })
 

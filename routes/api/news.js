@@ -6,7 +6,6 @@ DB = require('../../module/db')
 router.prefix('/news')
 router.post('/add',  async (ctx) => {
     let data = await DB.insert('news',Object.assign(ctx.request.body,{addTime:new Date()}))
-    console.log(data.result);
     ctx.body = data.result
     // try{
     //     if(data.result.ok){

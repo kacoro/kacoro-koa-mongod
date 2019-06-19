@@ -6,6 +6,18 @@ const focus = require('./admin/focus')
 //配置admin的子路由
 router.prefix('/admin')
 
+router.get('*', async(ctx, next) => {
+  console.log("ctx.isAuthenticated",ctx.isAuthenticated())
+  if(ctx.isAuthenticated()) {
+    await next()
+  } else {
+    ctx.redirect('/login')
+  //  ctx.status = 401
+  //  ctx.body = {
+  //    msg: '没有权限访问'
+  //  }
+ }
+})
 router.get('/', async (ctx)=> {
   await ctx.render('admin/index')
 })
