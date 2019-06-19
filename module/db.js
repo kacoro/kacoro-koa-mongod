@@ -69,6 +69,20 @@ class Db {
              }))
         })
     }
+    findOne(collectionName,json,options,sortOpitons){
+        return new Promise((resolve,reject)=>{
+            this.connect().then((db=>{
+                 db.collection(collectionName).findOne(json,(err,result)=>{
+                    if(err){
+                        reject(err)
+                    }else{
+                        resolve(result)
+                    }
+                })
+               
+             }))
+        })
+    }
     insert(collectionName,json){
         return new Promise((resolve,reject)=>{
             this.connect().then((db=>{

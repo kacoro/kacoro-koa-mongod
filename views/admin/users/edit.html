@@ -2,8 +2,8 @@
 {{include '../public/nav'}}
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
   <h2 class="page-header">用户管理</h2>
-    <form action="/api/users/edit" method="post">
-      <input type="hidden" name="id" value="{{@list._id}}">
+    <form action="#" method="post" id="formModal">
+      <input type="hidden" name="id" value="{{@list._id}}"  novalidate="novalidate">
       <div class="form-group">
         <label for="username">用户名：</label>
         <input
@@ -26,12 +26,12 @@
           placeholder="昵称"
         />
       </div>
-      <div class="form-group">
-        <label for="password">密码：</label>
+      <!-- <div class="form-group">
+        <label for="password">旧密码：</label>
         <input
           type="password"
           class="form-control"
-          value="{{list.password}}"
+          value=""
           id="password"
           name="password"
           placeholder="密码"
@@ -39,7 +39,21 @@
           maxlength="20"
           required
         />
-      </div>
+      </div> -->
+      <div class="form-group">
+          <label for="newPwd">新密码：</label>
+          <input
+            type="password"
+            class="form-control"
+            value=""
+            id="newPwd"
+            name="newPwd"
+            placeholder="密码"
+            minlength="6"
+            maxlength="20"
+            required
+          />
+        </div>
       <div class="form-group">
             <label for="exampleInputPassword1">年龄：</label>
             <input
@@ -68,5 +82,62 @@
       <button type="submit" class="btn btn-default">提交</button>
     </form>
 </div>
-
+<script>
+    $(function(){
+      var formModal = $('#formModal');
+			formModal.validate({
+					 messages: {
+							 title:{
+									 required: "请输入标题"
+							 },
+							 content:{
+									 required: "请输入内容",
+							 },
+					 },
+					 rules: {
+							//  username:{
+							// 		 required: true,
+							//  },
+							//  password: {
+							// 		 required: true
+							//  },
+							//  verify: {
+							// 		 required: true
+							//  }
+					 },
+					 highlight: function (element) { // hightlight error inputs
+							 $(element).closest('.form-group').addClass('has-error'); // set error class to the control group
+					 },
+		
+					 unhighlight: function (element) { // revert the change done by hightlight
+							 $(element).closest('.form-group').removeClass('has-error'); // set error class to the control group
+					 },
+					 success: function (label) {
+							 label.closest('.form-group').removeClass('has-error'); // set success class to the control group
+							 return true;
+					 },
+					 submitHandler: function() {
+               var url = '/api/users/edit';
+							 $.ajax({
+									 url:url,
+									 type:'post',
+									 dataType: 'json',
+									 data:formModal.serialize(),
+									 async: false,
+									 success:function(data){
+										 if(data.ok){
+                       console.log(data)
+                      window.location = "/admin/users"
+											console.log('成功！')
+										 }else{
+                       alert(data)
+                        console.log('失败！')
+										 }
+									 }
+							 });
+							 return false;
+					 }
+			});
+    })
+</script>
 {{include '../public/footer'}}

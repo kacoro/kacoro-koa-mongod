@@ -1,8 +1,8 @@
 // passport.js
 const  passport = require('koa-passport'),
        LocalStrategy = require('passport-local').Strategy,
-       DB = require('./db')
-
+       DB = require('./db'),
+       md5 = require('md5')
 
 // 序列化ctx.login()触发
 passport.serializeUser(function(user, done) {
@@ -11,7 +11,7 @@ passport.serializeUser(function(user, done) {
 })
 // 反序列化（请求时，session中存在"passport":{"user":"1"}触发）
 passport.deserializeUser(async function(user, done) {
-  console.log('deserializeUser: ', user)
+//   console.log('deserializeUser: ', user)
 //   var user = {id: 1, username: 'admin', password: '123456'}
   done(null, user)
 })
@@ -20,11 +20,18 @@ passport.use(new LocalStrategy({
   // usernameField: 'email',
   // passwordField: 'passwd'
 }, async(username, password, done)=> {
-    result = await DB.find('user',{username:username,password:password});
+    var result = await DB.findOne('user',{username:username});
     console.log("result",result)
+    var pwdMd5 = md5(md5(password),result.solt).toString()
     if (!result) { return done(null, false); }
-  console.log('LocalStrategy', username, password)
-  done(null, result, {msg: 'this is a test'})
+    if(result.password==pwdMd5){
+        done(null, result, {msg: 'this is a test'})
+        // var  result = await DB.find('user',{username:username});
+    }else{
+        return done(null, false);
+    }
+//   console.log('LocalStrategy', username, password)
+ 
   // done(err, user, info)
 }))
 
