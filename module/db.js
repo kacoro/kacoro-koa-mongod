@@ -69,16 +69,20 @@ class Db {
              }))
         })
     }
-    findOne(collectionName,json,options,sortOpitons){
+    findOne(collectionName,json,sortOpitons){
         return new Promise((resolve,reject)=>{
             this.connect().then((db=>{
-                 db.collection(collectionName).findOne(json,(err,result)=>{
-                    if(err){
-                        reject(err)
-                    }else{
-                        resolve(result)
-                    }
-                })
+                //  db.collection(collectionName).findOne(json,(err,result)=>{
+                //     if(err){
+                //         reject(err)
+                //     }else{
+                //         resolve(result)
+                //     }
+                //   })
+                const result = db.collection(collectionName).findOne(json,sortOpitons) 
+                  result.then((doc)=>{
+                    resolve(doc)
+                 })
                
              }))
         })

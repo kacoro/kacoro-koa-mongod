@@ -46,7 +46,7 @@ quill.on('text-change', function(delta, oldDelta, source) {
     var delta = quill.getContents();
     console.log("A user action triggered this change.");
     console.log(delta)
-    $("#content").val(JSON.stringify(delta.ops))
+    $("#content").val(JSON.stringify(delta))
     $("#note").val(note)
   }
 });

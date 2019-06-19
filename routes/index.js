@@ -23,6 +23,26 @@ router.get('/news', async (ctx) => {
   await ctx.render('default/index')
 })
 
+router.get('/news/detail', async (ctx) => {
+  console.log(ctx.query)
+  const {id} = ctx.query
+  var result = await DB.findOne('news',{_id:DB.getObjectID(id)});
+  var prev = await DB.findOne('news',{addTime:{ '$gt': result.addTime }});
+  var next = await DB.findOne('news',{addTime:{ '$lt': result.addTime }});
+  var prevId = null,
+      nextId = null
+  if(prev){
+    prevId = prev._id
+  }
+  if(next){
+    nextId = next._id
+  }
+  
+    await ctx.render('default/news/detail',{...result,prevId,nextId})
+
+ 
+})
+
 router.get('/about', async (ctx) => {
   await ctx.render('default/about')
 })

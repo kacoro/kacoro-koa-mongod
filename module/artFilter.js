@@ -1,5 +1,6 @@
 const defaults = require('art-template/lib/defaults'),
-moment = require("moment");
+moment = require("moment"),
+quillRender = require('render-quill')
 
 /**
  * 
@@ -20,6 +21,7 @@ class ArtFilter{
         this.imports()
     }
     imports(){
+        const that = this
         defaults.imports.dateFormat = function(date, fmt){ 
             return moment(date).format(fmt);   
         };
@@ -29,7 +31,18 @@ class ArtFilter{
           }
           return str;   
         };
+       
     }
+    
+   
+}
+
+
+
+ async function quill(content){
+        return   quillRender(JSON.parse(content)).then(function(val) {
+            return val;
+        });
 }
 
 
