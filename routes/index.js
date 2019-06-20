@@ -28,14 +28,15 @@ router.get('/news/detail', async (ctx) => {
   const {id} = ctx.query
   var result = await DB.findOne('news',{_id:DB.getObjectID(id)});
   var prev = await DB.findOne('news',{addTime:{ '$gt': result.addTime }});
-  var next = await DB.findOne('news',{addTime:{ '$gt': result.addTime }});
+  var next = await DB.find('news',{addTime:{ '$lt': result.addTime }},{limit:1},{addTime:-1});
   var prevId = null,
       nextId = null
   if(prev){
     prevId = prev._id
   }
-  if(next){
-    nextId = next._id
+  if(next[0]){
+    console.log(next[0])
+    nextId = next[0]._id
   }
   
     await ctx.render('default/news/detail',{...result,prevId,nextId})
