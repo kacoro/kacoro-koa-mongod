@@ -35,7 +35,6 @@ router.get('/news/detail', async (ctx) => {
     prevId = prev._id
   }
   if(next[0]){
-    console.log(next[0])
     nextId = next[0]._id
   }
   

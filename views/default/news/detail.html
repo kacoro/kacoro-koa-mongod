@@ -61,5 +61,11 @@
     
           </div>
 
-
+          <script>
+            $(function(){
+          $("img").lazyload({
+              threshold : 200
+          });
+        });
+          </script>
           {{include '../public/footer'}}
