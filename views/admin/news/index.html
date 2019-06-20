@@ -21,8 +21,8 @@
         {{each list}}
         <tr>
           <td>{{ $index+size*(page-1)+1 }}</td>
-          <td>{{ $value.title }}</td>
-          <td>{{ $value.note | slice 60}}</td>
+          <td>{{ $value.title | slice 20}}</td>
+          <td>{{ $value.note | slice 30}}</td>
           <td>{{@ $value.addTime | dateFormat 'YYYY年MM月DD日 HH:mm:ss' }}</td>
           <td>{{ $value.status }}</td>
           <td>
