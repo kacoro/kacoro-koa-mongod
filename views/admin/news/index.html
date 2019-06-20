@@ -11,9 +11,9 @@
         <tr>
           <th>#</th>
           <th>标题</th>
-          <th>概要</th>
-          <th>发布时间</th>
-          <th>状态</th>
+          <th class="hidden-xs">概要</th>
+          <th class="hidden-xs">发布时间</th>
+          <th class="hidden-xs">状态</th>
           <th>操作</th>
         </tr>
       </thead>
@@ -21,10 +21,10 @@
         {{each list}}
         <tr>
           <td>{{ $index+size*(page-1)+1 }}</td>
-          <td>{{ $value.title | slice 20}}</td>
-          <td>{{ $value.note | slice 30}}</td>
-          <td>{{@ $value.addTime | dateFormat 'YYYY年MM月DD日 HH:mm:ss' }}</td>
-          <td>{{ $value.status }}</td>
+          <td >{{ $value.title | slice 20}}</td>
+          <td class="hidden-xs">{{ $value.note | slice 30}}</td>
+          <td class="hidden-xs" >{{@ $value.addTime | dateFormat 'YYYY年MM月DD日 HH:mm:ss' }}</td>
+          <td class="hidden-xs">{{ $value.status }}</td>
           <td>
             <a href="/admin/news/edit?id={{@ $value._id}}">编辑</a>&nbsp;
             <a href="/admin/news/delete?id={{@ $value._id}}">删除</a>
