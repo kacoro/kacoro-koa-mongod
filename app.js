@@ -69,7 +69,7 @@ app.use(async (ctx, next) => {
   var currentNav = ctx.request.url.replace(reg, "");
   console.log("currentNav",currentNav)
   ctx.state.currentNav= currentNav
-  ctx.state.siteTitle= 'kacoro'
+  ctx.state.siteTitle= `Kacoro's blog`;
   await next()
   const ms = new Date() - start
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
