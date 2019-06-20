@@ -28,7 +28,7 @@ router.get('/news/detail', async (ctx) => {
   const {id} = ctx.query
   var result = await DB.findOne('news',{_id:DB.getObjectID(id)});
   var prev = await DB.findOne('news',{addTime:{ '$gt': result.addTime }});
-  var next = await DB.findOne('news',{addTime:{ '$lt': result.addTime }});
+  var next = await DB.findOne('news',{addTime:{ '$gt': result.addTime }});
   var prevId = null,
       nextId = null
   if(prev){
@@ -50,12 +50,18 @@ router.get('/about', async (ctx) => {
 router.get('/login', async (ctx) => {
   await ctx.render('default/login')
 })
-router.get('/logout',passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/'
-}),async (ctx) => {
+router.get('/logout',async (ctx) => {
   ctx.logout()
-  
+  ctx.redirect('/')
+  // if (!ctx.isAuthenticated()) {
+  //   ctx.body = {
+  //     code:0
+  //   }
+  // } else {
+  //   ctx.body = {
+  //     code:-1
+  //   }
+  // }
 })
 router.post('/login',passport.authenticate('local', {
   successRedirect: '/admin',
