@@ -3,14 +3,14 @@ DB = require('../module/db'),
 passport = require('koa-passport')
 
 router.get('/', async (ctx) => {
-  let totle = await DB.count('news');//表总记录数
+  let totle = await DB.count('news',{status:'on'});//表总记录数
         //koa-bodyparser解析前端参数
         let reqParam= ctx.query;
         let page = Number(reqParam.page) || 1;//当前第几页
-        let size = Number(reqParam.size) || 10;//每页显示的记录条数
+        let size = Number(reqParam.size) || 4;//每页显示的记录条数
         //显示符合前端分页请求的列表查询
         let options = { "limit": size,"skip": (page-1)*size};
-        let result = await DB.find('news',{},options);
+        let result = await DB.find('news',{status:'on'},options);
         //是否还有更多
         let hasMore=totle-(page-1)*size>size?true:false;
         let num = Math.ceil(totle/size)
@@ -26,9 +26,9 @@ router.get('/news', async (ctx) => {
 router.get('/news/detail', async (ctx) => {
   console.log(ctx.query)
   const {id} = ctx.query
-  var result = await DB.findOne('news',{_id:DB.getObjectID(id)});
-  var prev = await DB.findOne('news',{addTime:{ '$gt': result.addTime }});
-  var next = await DB.find('news',{addTime:{ '$lt': result.addTime }},{limit:1},{addTime:-1});
+  var result = await DB.findOne('news',{status:'on',_id:DB.getObjectID(id)});
+  var prev = await DB.findOne('news',{status:'on',addTime:{ '$gt': result.addTime }});
+  var next = await DB.find('news',{status:'on',addTime:{ '$lt': result.addTime }},{limit:1},{addTime:-1});
   var prevId = null,
       nextId = null
   if(prev){
