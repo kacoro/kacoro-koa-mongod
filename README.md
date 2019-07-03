@@ -1,5 +1,5 @@
 # 说明
-v2.0 koa2 mongdb art-template的完成一个企业or个人网站
+koa2 mongdb art-template的完成一个企业or个人网站,当前版本：v2.0.0
 
 demo:http://kacoro.com/
 ## 环境依赖
@@ -9,7 +9,7 @@ demo:http://kacoro.com/
 * pm2
 
 
-# 后台管理计划
+## 后台管理计划
 1. 用户管理 (初步完成)
 2. 新闻管理(初步完成)
 3. 新闻分类管理
@@ -20,7 +20,7 @@ demo:http://kacoro.com/
 8. 菜单管理
 9. 系统设置
 
-# 前台
+## 前台
 1. 首页  (初步完成)
 2. 新闻详情页(初步完成)
 3. 登录页(初步完成)
