@@ -51,6 +51,21 @@ yarn dev
 
 ## 发布 
 ```
+npm install -g pm2
 yarn install 
+
 yarn prd
 ```
+
+## 指定端口号和项目名称发布 
+
+```
+PORT=4000 yarn prd --name kacoro
+```
+删除项目
+
+pm2 delete kacoro
+
+pm2 restart kacoro
+
+
