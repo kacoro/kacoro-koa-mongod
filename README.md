@@ -37,6 +37,11 @@ module.exports = {
 }
 ```
 
+## 安装yarn
+
+[安装yarn](https://www.yarnpkg.com/zh-Hant/docs/install#windows-stable)
+
+安装完成后用命令行执行
 
 ## 开发
 ```
