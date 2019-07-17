@@ -1,4 +1,8 @@
-{{include '../public/header'}}
+{{extend '../public/header' }}
+{{block 'title'}}{{title}}{{/block}}
+{{block 'keywords'}}{{title}}{{/block}}
+{{block 'description'}}{{note}}{{/block}}
+{{block 'content'}}
 <div class="container ">
 <div class="blog-header">
         <h1 class="blog-title">{{title}}</h1>
@@ -10,7 +14,6 @@
               <div class="blog-post">
                 {{@content }}
               </div><!-- /.blog-post -->
-    
               <nav aria-label="...">
                 <ul class="pager">
                     {{if prevId}}
@@ -68,4 +71,5 @@
           });
         });
           </script>
+          {{/block}}
           {{include '../public/footer'}}
