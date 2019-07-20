@@ -93,6 +93,9 @@ h6, .h6 {
   color: #999;
 }
 
+#pop_ad,#feedAv,.module-cmt-footer{
+  display: none;
+}
 
 /*
  * Main column and sidebar layout
