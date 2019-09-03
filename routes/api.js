@@ -3,7 +3,7 @@ const users = require('./api/users')
 const news = require('./api/news')
 const newscate = require('./api/newscate')
 const focus = require('./api/focus')
-
+const upload = require('./api/upload')
 //配置admin的子路由
 router.prefix('/api')
 router.post('/*', async(ctx, next) => {
@@ -25,4 +25,5 @@ router.use(users)
 router.use(news)
 router.use(newscate)
 router.use(focus)
+router.use(upload)
 module.exports = router.routes()
