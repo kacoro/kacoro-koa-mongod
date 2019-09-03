@@ -7,7 +7,7 @@ router.get('/', async (ctx) => {
         //koa-bodyparser解析前端参数
         let reqParam= ctx.query;
         let page = Number(reqParam.page) || 1;//当前第几页
-        let size = Number(reqParam.size) || 4;//每页显示的记录条数
+        let size = Number(reqParam.size) || 9;//每页显示的记录条数
         //显示符合前端分页请求的列表查询
         let options = { "limit": size,"skip": (page-1)*size};
         let result = await DB.find('news',{status:'on'},options);
@@ -69,6 +69,7 @@ router.post('/login',passport.authenticate('local', {
 }), async (ctx)=> {
   return passport.authenticate('local',
     function(err, user, info, status) {
+      console.log("user",user)
       // ctx.body = {user, err, info, status}
       return ctx.login(user)
     })(ctx)

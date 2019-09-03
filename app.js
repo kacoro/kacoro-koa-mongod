@@ -13,7 +13,8 @@ api = require('./routes/api'),
 passport = require('./module/passport'),
 artFilter = require('./module/artFilter'),
 session = require('koa-session'),
-RedisStore = require('koa-redis')
+RedisStore = require('koa-redis'),
+Static = require('koa-static');
 
 
 const app = new Koa()
@@ -52,8 +53,8 @@ app.use(passport.session())
 
 app.use(json())
 app.use(logger())
-app.use(require('koa-static')(__dirname + '/static'))
-
+app.use(Static(__dirname + '/static'))
+app.use(Static(__dirname + '/res'))
 // app.use(views(__dirname + '/views', {
 //   extension: 'pug'
 // }))
