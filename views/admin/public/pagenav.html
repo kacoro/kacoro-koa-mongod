@@ -2,18 +2,18 @@
     <ul class="pagination">
       {{if page>1}}
       <li>
-          <a href="{{currentNav}}?page={{ page-1}}" aria-label="Previous">
+          <a href="{{currentNav}}?page={{ page-1}}&cate_name={{cate_name}}" aria-label="Previous">
             <span aria-hidden="true">上一页</span>
           </a>
         </li>
       {{/if}}
       <% for(var i =1;i<num+1;i++){ %>
-          <li {{if i==page }} class="active" {{/if}}><a href="{{currentNav}}?page={{i}}">{{ i}}</a></li>
+          <li {{if i==page }} class="active" {{/if}}><a href="{{currentNav}}?page={{i}}&cate_name={{cate_name}}">{{ i}}</a></li>
       <% } %>
      
       {{if hasMore}}
         <li >
-          <a href="{{currentNav}}?page={{ page+1}}" aria-label="Next">
+          <a href="{{currentNav}}?page={{ page+1}}&cate_name={{cate_name}}" aria-label="Next">
             <span aria-hidden="true">下一页</span>
           </a>
         </li>

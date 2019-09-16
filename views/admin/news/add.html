@@ -16,9 +16,12 @@
 	  <div class="form-group">
         <label for="title">文章分类：</label>
 		<select class="form-control"  name="cate_id" id='category' >
-			{{each cate}}
-			<option value="{{@ $value._id}}">{{$value.name}}</option>
-			{{/each}}
+				{{each cate}}
+				{{if $value.name==cate_name}}<option value="{{@ $value._id}}"  selected="selected">{{$value.name}}</option>
+				{{else }} 
+				<option value="{{@ $value._id}}" >{{$value.name}}</option>
+				{{/if}}
+				{{/each}}
 		</select>
 	</div>
       <div class="form-group">
@@ -107,7 +110,7 @@ quill.on('text-change', function(delta, oldDelta, source) {
 									 async: false,
 									 success:function(data){
 										 if(data.ok){
-                       window.location = "/admin/news"
+											window.history.go(-1);
 											console.log('成功！')
 										 }else{
                         console.log('失败！')

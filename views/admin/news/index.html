@@ -2,8 +2,21 @@
 {{include '../public/nav'}}
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
   <h1 class="page-header">新闻管理</h1>
+  
   <h2 class="sub-header">
-       <a href="/admin/news/add" class="btn btn-primary " role="button">添加</a>
+       <a href="/admin/news/add?cate_name={{cate_name}}" class="btn btn-primary " role="button">添加</a>
+       {{if cate_name==''}}
+       <a href="/admin/news" class="btn btn-info" role="button">全部</a>
+       {{else}}
+       <a href="/admin/news" class="btn " role="button">全部</a>
+       {{/if}}
+       {{each cate}}
+       {{if cate_name==$value.name}}
+       <a href="/admin/news?&cate_name={{$value.name}}" class="btn btn-info" role="button">{{$value.name}}</a>
+       {{else}}
+       <a href="/admin/news?&cate_name={{$value.name}}" class="btn " role="button">{{$value.name}}</a>
+       {{/if}}
+       {{/each}}
   </h2>
   <div class="table-responsive">
     <table class="table table-striped">
@@ -11,6 +24,7 @@
         <tr>
           <th>#</th>
           <th>标题</th>
+          <th>分类</th>
           <th class="hidden-xs">概要</th>
           <th class="hidden-xs">发布时间</th>
           <th class="hidden-xs">状态</th>
@@ -22,12 +36,13 @@
         <tr>
           <td>{{ $index+size*(page-1)+1 }}</td>
           <td >{{ $value.title | slice 20}}</td>
+          <td >{{ $value.cate_name }}</td>
           <td class="hidden-xs">{{ $value.note | slice 30}}</td>
           <td class="hidden-xs" >{{@ $value.addTime | dateFormat 'YYYY年MM月DD日 HH:mm:ss' }}</td>
           <td class="hidden-xs">{{ $value.status }}</td>
           <td>
-            <a href="/admin/news/edit?id={{@ $value._id}}">编辑</a>&nbsp;
-            <a data-href="/admin/news/delete?id={{@ $value._id}}"   onclick="delDialog('{{@ $value._id}}')">删除</a>
+            <a href="/admin/news/edit?id={{@ $value._id}}&page={{page}}">编辑</a>&nbsp;
+            <a data-href="/admin/news/delete?id={{@ $value._id}}&page={{page}}"   onclick="delDialog('{{@ $value._id}}')">删除</a>
           </td>
         </tr>
         {{/each}}
@@ -52,7 +67,7 @@
       </div>
     </div>
   </div>
-  {{include '../public/pagenav',{page,size,totle,hasMore,num} }}
+  {{include '../public/pagenav',{page,size,totle,hasMore,num,cate_name} }}
 </div>
 
 {{include '../public/footer'}}
