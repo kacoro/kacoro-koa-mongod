@@ -60,7 +60,7 @@ yarn prd
 ## 指定端口号和项目名称发布 
 
 ```
-PORT=4000 yarn prd --name kacoro
+PORT=3000 yarn prd --name kacoro
 ```
 删除项目
 
