@@ -1,18 +1,118 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><%=siteTitle%></title>
-</head>
-<body>
-    <form action="/doAdd" method="post">
-        用户名：<input type="text" name="username" value=""><br><br>
-        年龄：<input type="text" name="age" value=""><br><br>
-        性别：男<input type="radio" name="sex" value="男"  > 女<input type="radio" name="sex" value="女" ><br><br>
-        状态：启用<input type="radio" name="status" value="0" > 禁用<input type="radio" name="status" value="1" ><br><br>
-        <button type="submit">提交</button>
+{{include '../public/header'}}
+{{include '../public/nav'}}
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+  <h2 class="page-header">添加新闻分类</h2>
+  <form action="#" id="formModal"  novalidate="novalidate">
+      <div class="form-group">
+        <label for="title">分类名称：</label>
+        <input
+          type="text"
+          class="form-control"
+          name="name"
+          id="name"
+          placeholder="标题"
+        />
+	  </div>
+	  
+      <div class="form-group">
+          <label for="editor">描述：</label>
+          <div id="editor" style="min-height: 400px">
+           
+          </div>
+        </div> 
+          <input type="hidden" name="content" id="content" value="" />
+          <input type="hidden" name="note" id="note" value=""/>
+      <div class="checkbox">
+        <label> <input type="checkbox" name="status"  checked="checked"/> 启用 </label>
+      </div>
+      
+      <button type="submit" class="btn btn-default">提交</button>
     </form>
-</body>
-</html>
+</div>
+
+<script>
+var quill = new Quill('#editor', {
+    theme: 'snow',
+     modules: {
+        imageDrop: true
+    }
+});
+quill.on('text-change', function(delta, oldDelta, source) {
+  if (source == 'api') {
+
+    console.log("An API call triggered this change.");
+    var delta = quill.getText();
+  } else if (source == 'user') {
+    var note = quill.getText(0,255);
+    var delta = quill.getContents();
+    console.log("A user action triggered this change.");
+    console.log(delta)
+    $("#content").val(JSON.stringify(delta))
+    $("#note").val(note)
+  }
+});
+
+	 $(function(){
+		    //自定义手机码验证
+		    jQuery.validator.addMethod("phone", function(value, element) {
+		    return this.optional(element) || /^1[3|4|5|7|8]\d{9}$/.test(value);
+		    }, "手机号码不正确");
+			 //表单验证
+			var formModal = $('#formModal');
+			formModal.validate({
+					 messages: {
+							 title:{
+									 required: "请输入标题"
+							 },
+							 content:{
+									 required: "请输入内容",
+							 },
+					 },
+					 rules: {
+                     title:{
+									 required: true
+							 },
+							 content: {
+									 required: true
+							 }
+					 },
+					 highlight: function (element) { // hightlight error inputs
+							 $(element).closest('.form-group').addClass('has-error'); // set error class to the control group
+					 },
+		
+					 unhighlight: function (element) { // revert the change done by hightlight
+							 $(element).closest('.form-group').removeClass('has-error'); // set error class to the control group
+					 },
+					 success: function (label) {
+							 label.closest('.form-group').removeClass('has-error'); // set success class to the control group
+							 return true;
+					 },
+					 submitHandler: function() {
+               var url = '/api/newscate/add';
+							 $.ajax({
+									 url:url,
+									 type:'post',
+									 dataType: 'json',
+									 data:formModal.serialize(),
+									 async: false,
+									 success:function(data){
+										 if(data.ok){
+                       window.location = "/admin/newscate"
+											console.log('成功！')
+										 }else{
+                        console.log('失败！')
+										 }
+									 }
+							 });
+							 return false;
+					 }
+		
+			});
+		
+		   
+})
+			
+    	
+    
+</script>
+{{include '../public/footer'}}

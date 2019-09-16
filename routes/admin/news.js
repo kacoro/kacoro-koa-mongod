@@ -18,19 +18,20 @@ router.get('/',  async (ctx) => {
         //是否还有更多
         let hasMore=totle-(page-1)*size>size?true:false;
         let num = Math.ceil(totle/size)
-      
+        
     await ctx.render('admin/news/index',{title,list:result,page,size,hasMore,totle,hasMore,num})
 })
 router.get('/add', async (ctx) => {
-
-  await ctx.render('admin/news/add',{currentNav:'/admin/news'})
+  let cate = await DB.find('news_cate',{},{},{sort:1});
+  await ctx.render('admin/news/add',{currentNav:'/admin/news',cate})
 })
 
 router.get('/edit', async (ctx) => {
   //获取用户信息
   let id = ctx.query.id;
   let data = await DB.find('news',{_id:DB.getObjectID(id)});
-  await ctx.render('admin/news/edit',{list:data[0],currentNav:'/admin/news'})
+  let cate = await DB.find('news_cate',{},{},{sort:1});
+  await ctx.render('admin/news/edit',{list:data[0],currentNav:'/admin/news',cate})
 })
 
 router.get('/delete',  async (ctx) => {

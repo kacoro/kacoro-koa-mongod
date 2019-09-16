@@ -23,10 +23,10 @@ router.post('/add',  async (ctx) => {
 
 router.post('/edit', async (ctx) => {
     // console.log(ctx.request.body)
-    const {id,title,content,note,status} = ctx.request.body
+    const {id,title,content,note,status,cate_id,cate_name} = ctx.request.body
     const delta= await quillRender(content)
     let data = await DB.update('news',{_id:DB.getObjectID(id)},{
-        title,content:delta,note,status
+        title,content:delta,note,status,cate_id,cate_name
     })
     ctx.body = data.result
    

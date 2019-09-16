@@ -1,36 +1,89 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-        <h2>用户管理</h2>  
-         
-        <a href="/admin/users/add">增加用户</a>
-</br></br>
-        <table border="1">
-            <tr>
-                <th>序号</th>
-                <th>姓名</th>
-                <th>年龄</th>
-                <th>性别</th>
-                <th>状态</th>
-                <th>操作</th>
-            </tr>
-            {{each list}}
-            <tr>
-                <td>{{$index}}</td>
-                <td>{{$value.username}}</td>
-                <td>{{$value.age}}</td>
-                <td>{{$value.sex}}</td>
-                <td>{{$value.status}}</td>
-                <td><a href="/remove?id={{@ $value._id}}">删除</a> <a href="/edit?id={{@ $value._id}}">编辑</a></td>
-            </tr>
-            {{/each}}
-        </table>
-       
-</body>
-</html>
+{{include '../public/header'}}
+{{include '../public/nav'}}
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+  <h1 class="page-header">新闻分类管理</h1>
+  <h2 class="sub-header">
+       <a href="/admin/newscate/add" class="btn btn-primary " role="button">添加</a>
+  </h2>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>标题</th>
+          <th class="hidden-xs">排序</th>
+          <th class="hidden-xs">概要</th>
+          <th class="hidden-xs">发布时间</th>
+          <th class="hidden-xs">状态</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{each list}}
+        <tr>
+          <td>{{ $index+size*(page-1)+1 }}</td>
+          <td >{{ $value.name | slice 20}}</td>
+          <td >{{ $value.sort}}</td>
+          <td class="hidden-xs">{{ $value.note | slice 30}}</td>
+          <td class="hidden-xs" >{{@ $value.addTime | dateFormat 'YYYY年MM月DD日 HH:mm:ss' }}</td>
+          <td class="hidden-xs">{{ $value.status }}</td>
+          <td>
+            <a href="/admin/newscate/edit?id={{@ $value._id}}">编辑</a>&nbsp;
+            <a data-href="/admin/newscate/delete?id={{@ $value._id}}"   onclick="delDialog('{{@ $value._id}}')">删除</a>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+  <!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">提示</h4>
+        </div>
+        <div class="modal-body">
+          是否要删除？
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-primary" onclick="del()">确认</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{include '../public/pagenav',{page,size,totle,hasMore,num} }}
+</div>
+
+{{include '../public/footer'}}
+<script>
+  var seletedId;
+  function delDialog(id){
+    seletedId = id
+     $('#myModal').modal('show')  
+   }
+ 
+    function del(){
+      console.log(seletedId)
+    var url = '/api/news/delete';
+							 $.ajax({
+									 url:url,
+									 type:'post',
+									 dataType: 'json',
+									 data:{id:seletedId},
+									 async: false,
+									 success:function(data){
+										 if(data.ok){
+                      location.reload()
+											console.log('成功！')
+										 }else{
+                       console.log('失败！')
+										 }
+									 }
+							 });
+							 return false;
+  }
+
+</script>

@@ -12,7 +12,15 @@
           id="title"
           placeholder="标题"
         />
-      </div>
+	  </div>
+	  <div class="form-group">
+        <label for="title">文章分类：</label>
+		<select class="form-control"  name="cate_id" id='category' >
+			{{each cate}}
+			<option value="{{@ $value._id}}">{{$value.name}}</option>
+			{{/each}}
+		</select>
+	</div>
       <div class="form-group">
           <label for="editor">内容：</label>
           <div id="editor" style="min-height: 400px">
@@ -87,12 +95,15 @@ quill.on('text-change', function(delta, oldDelta, source) {
 							 return true;
 					 },
 					 submitHandler: function() {
-               var url = '/api/news/add';
+						 console.log(formModal.serialize())
+						//  return false;
+						 var category=$("#category option:selected");
+               			var url = '/api/news/add';
 							 $.ajax({
 									 url:url,
 									 type:'post',
 									 dataType: 'json',
-									 data:formModal.serialize(),
+									 data:formModal.serialize()+'&cate_name='+category.text(),
 									 async: false,
 									 success:function(data){
 										 if(data.ok){
