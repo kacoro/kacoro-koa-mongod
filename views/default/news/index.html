@@ -26,11 +26,11 @@
             <ul class="pager">
               
               {{if page>1}}
-              <li class="previous"><a href="{{currentNav}}?page={{ page-1}}"><span aria-hidden="true">&larr;</span> 上一页</a></li>
+              <li class="previous"><a href="{{currentNav}}?page={{ page-1}}&cate_name={{cate_name}}"><span aria-hidden="true">&larr;</span> 上一页</a></li>
              
               {{/if}}
               {{if hasMore}}
-              <li class="next"><a href="{{currentNav}}?page={{ page+1}}">下一页 <span aria-hidden="true">&rarr;</span></a></li>
+              <li class="next"><a href="{{currentNav}}?page={{ page+1}}&cate_name={{cate_name}}">下一页 <span aria-hidden="true">&rarr;</span></a></li>
                {{/if}}
             </ul>
           </nav>

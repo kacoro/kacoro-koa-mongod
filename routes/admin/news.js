@@ -15,7 +15,7 @@ router.get('/',  async (ctx) => {
         //显示符合前端分页请求的列表查询
         var cate_name = reqParam.cate_name || '';
         if(cate_name){
-          filters = Object.assign(filters,{cate_name:reqParam.cate_name})
+          filters = Object.assign(filters,{cate_name:cate_name})
         }
         let options = { "limit": size,"skip": (page-1)*size};
         

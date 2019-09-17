@@ -6,9 +6,9 @@ const {quillRender} = require('../../module/common')
 
 router.prefix('/news')
 router.post('/add',  async (ctx) => {
-    const {content} = ctx.request.body
+    const {content,sort} = ctx.request.body
     const delta= await quillRender(content)
-    let data = await DB.insert('news',Object.assign(ctx.request.body,{content:delta,addTime:new Date()}))
+    let data = await DB.insert('news',Object.assign(ctx.request.body,{content:delta,sort:parseInt(sort),addTime:new Date()}))
     ctx.body = data.result
     // try{
     //     if(data.result.ok){
@@ -23,10 +23,10 @@ router.post('/add',  async (ctx) => {
 
 router.post('/edit', async (ctx) => {
     // console.log(ctx.request.body)
-    const {id,title,content,note,status,cate_id,cate_name} = ctx.request.body
+    const {id,title,content,note,sort,status,cate_id,cate_name} = ctx.request.body
     const delta= await quillRender(content)
     let data = await DB.update('news',{_id:DB.getObjectID(id)},{
-        title,content:delta,note,status,cate_id,cate_name
+        title,content:delta,note,status,cate_id,cate_name,sort:parseInt(sort),updateTime:new Date()
     })
     ctx.body = data.result
    
