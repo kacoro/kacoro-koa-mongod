@@ -92,7 +92,11 @@ h6, .h6 {
   font-size: 20px;
   color: #999;
 }
-
+pre{
+  background-color: #23241f;
+  color: #f8f8f2;
+  overflow: visible;
+}
 #pop_ad,#feedAv,.module-cmt-footer{
   display: none;
 }
