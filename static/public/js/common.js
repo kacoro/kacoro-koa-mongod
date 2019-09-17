@@ -4,6 +4,52 @@ function getUrlParam(name) {
   if (r != null) return decodeURI(r[2]);
   return null; //返回参数值
 }
+
+function quill_img_handler(quill) {
+  let fileInput = this.container.querySelector('input.ql-image[type=file]');
+
+  if (fileInput == null) {
+      fileInput = document.createElement('input');
+      fileInput.setAttribute('type', 'file');
+      fileInput.setAttribute('accept', 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon');
+      fileInput.classList.add('ql-image');
+      fileInput.addEventListener('change', () => {
+          const files = fileInput.files;
+          const range = quill.getSelection(true);
+
+          if (!files || !files.length) {
+              console.log('No files selected');
+              return;
+          }
+
+          const formData = new FormData();
+          formData.append('file', files[0]);
+    console.log(files[0])
+          quill.enable(false);
+    $.ajax({  
+             url: "/api/upload", 
+            method: "POST",
+      data: formData,
+      processData : false, 
+      contentType : false,
+          }).done(function(response) {
+      console.log(response)
+            if (response.filePath) {
+              quill.enable(true);
+                  quill.editor.insertEmbed(range.index, 'image', response.filePath);
+                  quill.setSelection(range.index + 1, Quill.sources.SILENT);
+                  fileInput.value = '';
+            } else {
+      console.log('quill image upload failed');
+              quill.enable(true);
+            }
+          });	   
+      });
+      this.container.appendChild(fileInput);
+  }
+  fileInput.click();
+}
+
 // 初始化Web Uploader
 function uploader(id,list,thumbnails){
   

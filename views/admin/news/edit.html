@@ -64,6 +64,51 @@
 		</div>
       <div class="form-group">
 		  <label for="editor">内容：</label>
+		  <div id="toolbar-container">
+				<span class="ql-formats">
+				  <select class="ql-font"></select>
+				  <select class="ql-size"></select>
+				</span>
+				<span class="ql-formats">
+				  <button class="ql-bold"></button>
+				  <button class="ql-italic"></button>
+				  <button class="ql-underline"></button>
+				  <button class="ql-strike"></button>
+				</span>
+				<span class="ql-formats">
+				  <select class="ql-color"></select>
+				  <select class="ql-background"></select>
+				</span>
+				<span class="ql-formats">
+				  <button class="ql-script" value="sub"></button>
+				  <button class="ql-script" value="super"></button>
+				</span>
+				<span class="ql-formats">
+				  <button class="ql-header" value="1"></button>
+				  <button class="ql-header" value="2"></button>
+				  <button class="ql-blockquote"></button>
+				</span>
+				<span class="ql-formats">
+				  <button class="ql-list" value="ordered"></button>
+				  <button class="ql-list" value="bullet"></button>
+				  <button class="ql-indent" value="-1"></button>
+				  <button class="ql-indent" value="+1"></button>
+				</span>
+				<span class="ql-formats">
+				  <button class="ql-direction" value="rtl"></button>
+				  <select class="ql-align"></select>
+				</span>
+				<span class="ql-formats">
+				  <button class="ql-link"></button>
+				  <button class="ql-image" ></button>
+				  <button class="ql-video"></button>
+				  <button class="ql-formula"></button>
+				</span>
+				<span class="ql-formats">
+					<button class="ql-code-block"></button>
+					 <button class="ql-clean"></button>
+				</span>
+			  </div>
           <div id="editor" style="height: 400px">
 				{{@list.content}}
           </div>
@@ -88,15 +133,58 @@ imagesUploader('#uploader',$('#uploader').attr('data'))
     var quill = new Quill('#editor', {
       theme: 'snow',
       modules: {
-		toolbar: [
-			[{ header: [1, 2, false] }],
-			['bold', 'italic', 'underline'],
-			['image', 'code-block']
-			],
-          imageDrop: true
+		imageDrop: true,
+		formula:true,
+		syntax:true,
+		toolbar: '#toolbar-container'
       }
   });
-  
+  var toolbar = quill.getModule('toolbar');
+toolbar.addHandler('image', quill_img_handler);
+function quill_img_handler() {
+  let fileInput = this.container.querySelector('input.ql-image[type=file]');
+
+  if (fileInput == null) {
+      fileInput = document.createElement('input');
+      fileInput.setAttribute('type', 'file');
+      fileInput.setAttribute('accept', 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon');
+      fileInput.classList.add('ql-image');
+      fileInput.addEventListener('change', () => {
+          const files = fileInput.files;
+          const range = quill.getSelection(true);
+
+          if (!files || !files.length) {
+              console.log('No files selected');
+              return;
+          }
+
+          const formData = new FormData();
+          formData.append('file', files[0]);
+    console.log(files[0])
+          quill.enable(false);
+    $.ajax({  
+             url: "/api/upload", 
+            method: "POST",
+      data: formData,
+      processData : false, 
+      contentType : false,
+          }).done(function(response) {
+      console.log(response)
+            if (response.filePath) {
+              quill.enable(true);
+                  quill.editor.insertEmbed(range.index, 'image', response.filePath);
+                  quill.setSelection(range.index + 1, Quill.sources.SILENT);
+                  fileInput.value = '';
+            } else {
+      console.log('quill image upload failed');
+              quill.enable(true);
+            }
+          });	   
+      });
+      this.container.appendChild(fileInput);
+  }
+  fileInput.click();
+}
   quill.on('text-change', function(delta, oldDelta, source) {
     if (source == 'api') {
       console.log("An API call triggered this change.");
