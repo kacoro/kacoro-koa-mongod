@@ -3,6 +3,7 @@ views = require('koa-views'),
 json = require('koa-json'),
 onerror = require('koa-onerror'),
 bodyparser = require('koa-bodyparser'),
+koaBody = require('koa-body'),
 logger = require('koa-logger'),
 router = require('koa-router')(),
 render = require('koa-art-template'),
@@ -22,6 +23,12 @@ app.keys = ['newkey','oldkey']
 //art-template render
 new artFilter();
 
+app.use(koaBody({
+    multipart: true,
+    formidable: {
+        maxFileSize: 200*1024*1024    // 设置上传文件大小最大限制，默认2M
+    }
+}))
 
 render(app,{
     root:path.join(__dirname,'views'), //视图的位置
@@ -54,6 +61,7 @@ app.use(passport.session())
 app.use(json())
 app.use(logger())
 app.use(Static(__dirname + '/static'))
+app.use(Static(__dirname + '/public'))
 app.use(Static(__dirname + '/res'))
 // app.use(views(__dirname + '/views', {
 //   extension: 'pug'

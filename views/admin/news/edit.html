@@ -26,6 +26,19 @@
 			{{/each}}
 		</select>
 	</div>
+	 <!--dom结构部分-->
+	 <div id="uploader-demo">
+			<!--用来存放item-->
+			<div id="fileList" class="uploader-list clearfix">
+					
+					{{each list.thumbnails}}
+					<div  class="file-item thumbnail pull-left upload-state-done" pathname="{{$value.pathName}}" filename={{$value.fileName}}">
+						<img src="{{$value.pathName}}" width="100px" height="100px"><div class="info">{{$value.fileName}}</div>
+					</div>
+					{{/each}}
+			</div>
+			<div id="filePicker">选择图片</div>
+	</div>
       <div class="form-group">
           <label for="editor">内容：</label>
           <div id="editor" style="height: 400px">
@@ -45,7 +58,7 @@
 
 <script>
 
-
+var _uploader = uploader('#filePicker','#fileList');
 	 $(function(){
     var quill = new Quill('#editor', {
       theme: 'snow',
@@ -114,12 +127,21 @@
 						return false
 					}
 					var category=$("#category option:selected");
+					var thumbnails =[]
+						  $('#fileList .file-item').each(function( index ) {
+							thumbnails.push(
+								{
+									pathName:$( this ).attr('pathName'),
+									fileName:$( this ).attr('fileName')
+								}
+							)		
+						});
                var url = '/api/news/edit';
 							 $.ajax({
 									 url:url,
 									 type:'post',
 									 dataType: 'json',
-									 data:formModal.serialize()+'&cate_name='+category.text(),
+									 data:formModal.serialize()+'&cate_name='+category.text()+'&thumbnails='+JSON.stringify(thumbnails), 
 									 async: false,
 									 success:function(data){
 										 if(data.ok){

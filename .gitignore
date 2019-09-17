@@ -12,4 +12,5 @@ typings/
 .nyc_output/
 .vscode/
 config.js
+public/upload
 res

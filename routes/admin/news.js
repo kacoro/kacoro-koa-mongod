@@ -18,8 +18,6 @@ router.get('/',  async (ctx) => {
           filters = Object.assign(filters,{cate_name:cate_name})
         }
         let options = { "limit": size,"skip": (page-1)*size};
-        
-        
         let totle = await DB.count('news',filters);//表总记录数
         let result = await DB.find('news',filters,options);
         //是否还有更多
@@ -40,6 +38,8 @@ router.get('/edit', async (ctx) => {
   let id = ctx.query.id;
   let data = await DB.find('news',{_id:DB.getObjectID(id)});
   let cate = await DB.find('news_cate',{},{},{sort:1});
+  let thumbnails = data[0].thumbnails
+  data[0].thumbnails = JSON.parse(thumbnails)
   await ctx.render('admin/news/edit',{list:data[0],currentNav:'/admin/news',cate})
 })
 
