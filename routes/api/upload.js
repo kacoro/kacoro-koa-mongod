@@ -10,7 +10,7 @@ const { getStat,mkdir,dirExists } = require('../../util/dir')
 router.prefix('/upload')
 router.post('/',  async (ctx) => {
         // 上传单个文件
-        const datePath = dayjs().format('YYYY-MM-DD/HH') 
+        const datePath = dayjs().format('YYYY-MM-DD/HH/') 
         var resPath = path.join(__dirname, '../../public/upload/'+datePath) 
         await dirExists(resPath);
         const file = ctx.request.files.file; // 获取上传文件
