@@ -38,7 +38,7 @@ router.get('/delete',  async (ctx) => {
   let id = ctx.query.id;
     let data = await DB.remove('news_cate',{_id:DB.getObjectID(id)})
     if(data){
-        ctx.redirect('/admin/news_cate')
+        ctx.redirect('/admin/newscate')
     }else{
         ctx.redirect('/admin/newscate')
     }

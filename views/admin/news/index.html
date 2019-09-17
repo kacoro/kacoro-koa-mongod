@@ -8,13 +8,13 @@
       <a class="btn btn-primary pull-right" href="/admin/news/add?cate_name={{cate_name}}" class="btn btn-primary " role="button">添加</a>
       <div class="pull-left">
        {{if cate_name==''}}
-       <a href="/admin/news" class="btn btn-info" role="button">全部</a>
+       <a href="/admin/news" class="btn btn-info" role="button">全部 {{totle}}</a>
        {{else}}
        <a href="/admin/news" class="btn " role="button">全部</a>
        {{/if}}
        {{each cate}}
        {{if cate_name==$value.name}}
-       <a href="/admin/news?&cate_name={{$value.name}}" class="btn btn-info" role="button">{{$value.name}}</a>
+       <a href="/admin/news?&cate_name={{$value.name}}" class="btn btn-info" role="button">{{$value.name}} {{totle}}</a>
        {{else}}
        <a href="/admin/news?&cate_name={{$value.name}}" class="btn " role="button">{{$value.name}}</a>
        {{/if}}
