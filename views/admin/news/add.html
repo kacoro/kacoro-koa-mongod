@@ -26,10 +26,30 @@
 		</select>
 	</div>
 	 <!--dom结构部分-->
-	 <div id="uploader-demo">
-			<!--用来存放item-->
+	 <!-- <div id="uploader-demo">
+			
 			<div id="fileList" class="uploader-list clearfix"></div>
 			<div id="filePicker">选择图片</div>
+	</div> -->
+	<!--头部，相册选择和格式选择-->
+	<div id="container">
+		<div id="uploader">
+			<div class="queueList">
+				<div id="dndArea" class="placeholder">
+					<div id="filePicker"></div>
+					<p>或将照片拖到这里，单次最多可选300张</p>
+				</div>
+			</div>
+			<div class="statusBar" style="display:none;">
+				<div class="progress">
+					<span class="text">0%</span>
+					<span class="percentage"></span>
+				</div><div class="info"></div>
+				<div class="btns">
+					<div id="filePicker2"></div><div class="uploadBtn">开始上传</div>
+				</div>
+			</div>
+		</div>
 	</div>
       <div class="form-group">
           <label for="editor">内容：</label>
@@ -55,8 +75,10 @@ var quill = new Quill('#editor', {
     }
 });
 
-var _uploader = uploader('#filePicker','#fileList');
+// var _uploader = uploader('#filePicker','#fileList');
+imagesUploader('#uploader',{
 
+})
 quill.on('text-change', function(delta, oldDelta, source) {
   if (source == 'api') {
 
@@ -112,7 +134,7 @@ quill.on('text-change', function(delta, oldDelta, source) {
 						//  return false;
 						 var category=$("#category option:selected");
 						 var thumbnails =[]
-						  $('#fileList .file-item').each(function( index ) {
+						  $('#uploader .filelist li.state-complete').each(function() {
 							thumbnails.push(
 								{
 									pathName:$( this ).attr('pathName'),
@@ -120,7 +142,8 @@ quill.on('text-change', function(delta, oldDelta, source) {
 								}
 							)		
 						});
-						
+						console.log(thumbnails) 
+					
                			var url = '/api/news/add';
 							 $.ajax({
 									 url:url,

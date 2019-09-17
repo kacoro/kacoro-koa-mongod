@@ -47,7 +47,9 @@ router.get('/news/detail', async (ctx) => {
   
   var options = Object.assign(filters,{_id:DB.getObjectID(id)})
   var result = await DB.findOne('news',options);
-
+  console.log(result.thumbnail)
+  if(result.thumbnails)
+  result.thumbnails = JSON.parse(result.thumbnails)
   let prevOps = Object.assign(filters,{"cate_name":result.cate_name,addTime:{ '$gt': result.addTime}})
   let nextOps = Object.assign(filters,{"cate_name":result.cate_name,addTime:{ '$lt': result.addTime }})
   // var prev = await DB.findOne('news',{cate_name:result.cate_name,status:'on',addTime:{ '$gt': result.addTime }});

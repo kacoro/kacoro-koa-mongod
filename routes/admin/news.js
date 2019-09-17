@@ -38,7 +38,9 @@ router.get('/edit', async (ctx) => {
   let id = ctx.query.id;
   let data = await DB.find('news',{_id:DB.getObjectID(id)});
   let cate = await DB.find('news_cate',{},{},{sort:1});
+  
   let thumbnails = data[0].thumbnails
+  if(thumbnails)
   data[0].thumbnails = JSON.parse(thumbnails)
   await ctx.render('admin/news/edit',{list:data[0],currentNav:'/admin/news',cate})
 })

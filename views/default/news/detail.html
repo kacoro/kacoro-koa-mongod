@@ -11,7 +11,12 @@
       </div>
       <div class="row">
             <div class="col-sm-12 blog-main">
+     
+              {{each thumbnails }}
+              <img src="{{$value.pathName}}" width="100%" ><div class="info">{{$value.fileName}}</div>
+              {{/each}}
               <div class="blog-post">
+                 
                 {{@content }}
               </div><!-- /.blog-post -->
               <nav aria-label="...">

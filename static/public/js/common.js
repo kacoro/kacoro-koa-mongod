@@ -38,12 +38,19 @@ function uploader(id,list,thumbnails){
       '<div id="' + file.id + '" class="file-item thumbnail pull-left">' +
           '<img>' +
           '<div class="info">' + file.name + '</div>' +
+          '<div class="file-panel" style="height: 0px;"><span class="cancel">删除</span><span class="rotateRight">向右旋转</span><span class="rotateLeft">向左旋转</span></div>'+
       '</div>'
       ),
+      $btns = $('<div class="file-panel">' +
+                    '<span class="cancel">删除</span>' +
+                    '<span class="rotateRight">向右旋转</span>' +
+                    '<span class="rotateLeft">向左旋转</span></div>').appendTo( $li ),
       $img = $li.find('img');
+      $li.on('click', '.remove-this', function() {
+          uploader.removeFile( file );
+      })
       // $list为容器jQuery实例
     $(list).append( $li );
-
     // 创建缩略图
     // 如果为非图片文件，可以不用调用此方法。
     // thumbnailWidth x thumbnailHeight 为 100 x 100
