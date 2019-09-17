@@ -63,11 +63,11 @@
 			</div>
 		</div>
       <div class="form-group">
-          <label for="editor">内容：</label>
+		  <label for="editor">内容：</label>
           <div id="editor" style="height: 400px">
 				{{@list.content}}
           </div>
-          <input type="hidden" name="content" id="content" value="" />
+          <input type="hidden" name="content" id="content" value="{{list.content}}" />
           <input type="hidden" name="note" id="note" value="{{list.note}}"/>
         </div> 
       <div class="checkbox">
@@ -88,10 +88,15 @@ imagesUploader('#uploader',$('#uploader').attr('data'))
     var quill = new Quill('#editor', {
       theme: 'snow',
       modules: {
+		toolbar: [
+			[{ header: [1, 2, false] }],
+			['bold', 'italic', 'underline'],
+			['image', 'code-block']
+			],
           imageDrop: true
       }
   });
-
+  
   quill.on('text-change', function(delta, oldDelta, source) {
     if (source == 'api') {
       console.log("An API call triggered this change.");
@@ -99,9 +104,10 @@ imagesUploader('#uploader',$('#uploader').attr('data'))
     } else if (source == 'user') {
       var note = quill.getText(0,255);
       var delta = quill.getContents();
-      console.log("A user action triggered this change.");
+      
       console.log(delta)
-      $("#content").val(JSON.stringify(delta))
+	//   $("#content").val(JSON.stringify(delta))
+	  $("#content").val(quill.root.innerHTML)
       $("#note").val(note)
     }
   });
@@ -171,7 +177,7 @@ imagesUploader('#uploader',$('#uploader').attr('data'))
 									 success:function(data){
 										 if(data.ok){
 											var page = getUrlParam(page);
-											// self.location=document.referrer
+											self.location=document.referrer
 											console.log('成功！')
 										 }else{
                         console.log('失败！')

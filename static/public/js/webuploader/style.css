@@ -180,8 +180,10 @@ table {
     width: 100%;
     bottom: 0;
     left: 0;
+    margin-bottom:0;
     height: 8px;
     overflow: hidden;
+    background:none;
     z-index: 50;
 }
 #uploader .filelist li p.progress span {

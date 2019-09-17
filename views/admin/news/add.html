@@ -76,9 +76,7 @@ var quill = new Quill('#editor', {
 });
 
 // var _uploader = uploader('#filePicker','#fileList');
-imagesUploader('#uploader',{
-
-})
+imagesUploader('#uploader')
 quill.on('text-change', function(delta, oldDelta, source) {
   if (source == 'api') {
 
@@ -89,7 +87,7 @@ quill.on('text-change', function(delta, oldDelta, source) {
     var delta = quill.getContents();
     console.log("A user action triggered this change.");
     console.log(delta)
-    $("#content").val(JSON.stringify(delta))
+    $("#content").val(quill.root.innerHTML)
     $("#note").val(note)
   }
 });

@@ -5,10 +5,18 @@ DB = require('../../module/db'),
 fs = require('fs'),
 path = require('path');
 const { uploadFile } = require('../../util/upload')
-
+const { getStat,mkdir,dirExists } = require('../../util/dir')
 router.prefix('/upload')
 router.post('/',  async (ctx) => {
         // 上传单个文件
+        var resPath = path.join(__dirname, '../../public/upload/') 
+        fs.exists("resPath", function(exists) {
+          if(!exists){//创建目录
+
+          }
+        });
+        await dirExists(resPath);
+    
         const file = ctx.request.files.file; // 获取上传文件
         // 创建可读流
         const reader = fs.createReadStream(file.path);

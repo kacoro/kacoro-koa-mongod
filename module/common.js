@@ -21,4 +21,3 @@ exports.getPostData = function(ctx){
         }
     })
 }
-
