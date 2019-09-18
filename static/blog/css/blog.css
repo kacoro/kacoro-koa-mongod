@@ -19,9 +19,11 @@ h6, .h6 {
   color: #333;
 }
 
-a:focus, a:hover {
-  color: #23527c;
-  text-decoration: underline;
+
+
+a,a:focus, a:hover {
+  color: #333;
+  text-decoration: none;
 }
 
 .blog-post img{
@@ -34,7 +36,8 @@ a:focus, a:hover {
 /* Hide for mobile, show later */
 .sidebar {
   /* display: none; */
-  background: url('../images/bg.jpg') center right
+  overflow: hidden;
+  /* background: url('../images/bg.jpg') center right */
 }
 .nav-left{
   max-width: 800px;
@@ -59,10 +62,10 @@ a:focus, a:hover {
     left: 0;
     z-index: 1000;
     display: block;
-    padding: 20px;
+    padding: 0px;
     overflow-x: hidden;
-    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-    background-color: #f5f5f5;
+    overflow-y: hidden; /* Scrollable contents if viewport is shorter than content. */
+    /* background-color: #f5f5f5; */
     border-right: 1px solid #eee;
   }
 }
