@@ -37,7 +37,9 @@ a,a:focus, a:hover {
 .sidebar {
   /* display: none; */
   overflow: hidden;
-  background: #2034ad;
+  background: linear-gradient(45deg, #171a45 30%, #0e1871 90%);
+  box-shadow: 0 3px 5px 2px rgba(255, 105, 135, .3);
+  border-radius: 3px;
   /* background: url('../images/bg.jpg') center right */
 }
 .nav-left{

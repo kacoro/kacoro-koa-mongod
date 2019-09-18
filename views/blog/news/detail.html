@@ -11,11 +11,12 @@
       </div>
       <div class="row">
             <div class="col-sm-12 blog-main">
-     
+              {{if thumbnails}}
               {{each thumbnails }}
-              <img src="{{$value.pathName}}" width="100%" ><div class="info">{{$value.fileName}}</div>
+              <img class="lazy" src="data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs="  data-original="{{$value.pathName}}" style="max-width: 100%" ><div class="info">{{$value.fileName}}</div>
               {{/each}}
-              <div class="blog-post">
+              {{/if}}
+              <div class="blog-post" id="blog-post">
                  
                 {{@content }}
               </div><!-- /.blog-post -->
@@ -69,6 +70,16 @@
     
           </div>
          <!--PC版-->
+         <script>
+           $imgs = $('#blog-post').find('img')
+            console.log($imgs)
+            $imgs.each(function(i){
+              console.log($(this))
+              $(this).addClass('lazy')
+                $(this).attr('data-original',$(this)[0].src)
+                $(this).attr('src','data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=')
+            })
+         </script>
          {{include '../public/footer'}}
           {{/block}}
          
