@@ -3,7 +3,7 @@
  */
 
 body {
-  font-family: Georgia, "Times New Roman", Times, serif;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   color: #555;
 }
 
@@ -49,13 +49,18 @@ a,a:focus, a:hover {
 }
 
 .navbar-toggle {
- 
   background-color: rgba(255,255,255,.1);
   border: 1px solid rgba(255,255,255,.8);
 }
 .navbar-toggle .icon-bar{
   background-color: rgba(255,255,255,.8);
 }
+footer{
+  overflow: hidden;
+  width: 100%;
+ 
+}
+
 .nav-left a{color: #f5f5f5; width: 20%; display: inline-block; text-align: center}
 @media (min-width: 768px) {
   .sidebar {
@@ -70,6 +75,25 @@ a,a:focus, a:hover {
     overflow-y: hidden; /* Scrollable contents if viewport is shorter than content. */
     /* background-color: #f5f5f5; */
     border-right: 0px solid #eee;
+  }
+  footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 1000;
+    display: block;
+    padding: 0px;
+    overflow-x: hidden;
+    overflow-y: hidden; /* Scrollable contents if viewport is shorter than content. */
+    /* background-color: #f5f5f5; */
+    border-right: 0px solid #eee;
+  }
+  footer .pull-left{
+    color: #fff;
+    padding-left: 20px;
+  }
+  footer .pull-right{
+    padding-right: 20px;
   }
 }
 
@@ -89,7 +113,6 @@ a,a:focus, a:hover {
   color: #fff;
   background-color: #428bca;
 }
-
 
       .main {
         padding: 20px;
@@ -183,7 +206,7 @@ pre{
  */
 
 .blog-main {
-  font-size: 18px;
+  font-size: 14px;
   line-height: 1.5;
 }
 
@@ -206,7 +229,7 @@ pre{
 
 /* Pagination */
 .pager {
-  margin-bottom: 60px;
+  margin-bottom: 30px;
   text-align: left;
 }
 .pager > li > a {

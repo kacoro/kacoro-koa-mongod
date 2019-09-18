@@ -4,32 +4,24 @@
 {{block 'description'}}{{note}}{{/block}}
 {{block 'content'}}
 <div class="col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 main">
-<div class="blog-header">
-        <h1 class="blog-title">{{title}}</h1>
-        <p class="lead blog-description">{{ addTime | dateFormat 'YYYY年MM月DD日 HH:mm:ss'}} 
+    <div class="blog-header">
+        <h3 >关于我</h3>
             <!-- by <a href="#">{{nickname}}</a></p> -->
       </div>
+      <hr class="featurette-divider" style="margin: 0px 0">
       <div class="row">
             <div class="col-sm-12 blog-main">
-     
-              {{each thumbnails }}
-              <img src="{{$value.pathName}}" width="100%" ><div class="info">{{$value.fileName}}</div>
-              {{/each}}
-              <div class="blog-post">
-                 
-                {{@content }}
-              </div><!-- /.blog-post -->
-              <nav aria-label="...">
-                <ul class="pager">
-                    {{if prevId}}
-                    <li class="previous"><a href="{{currentNav}}?id={{@prevId}}"><span aria-hidden="true">&larr;</span> 上一页</a></li>
-                   
-                    {{/if}}
-                    {{if nextId}}
-                    <li class="next"><a href="{{currentNav}}?id={{@nextId}}">下一页 <span aria-hidden="true">&rarr;</span></a></li>
-                     {{/if}}
-                </ul>
-              </nav>
+                <p>
+                    &nbsp;                 </p>
+               <p style="text-indent: 2em;">
+                  从事互联网多年，广告公司合伙人3年，主要负责网络建设，担任技术经理、运营经理等，2014年职于动态科技任前端开发经理，项目经理，2016年~2019年任职于多度科技，任前端开发组长。
+                </p>
+                <p style="text-indent: 2em;">
+                  现在为自由职业，接外包为主。并思考如何把握自己的事业。
+               </p>
+               <p style="text-indent: 2em;">
+                  以此博客来记录和分享生活，并慢慢迭代，提高技术。
+               </p>  
               
             </div>
             <!-- /.blog-main -->

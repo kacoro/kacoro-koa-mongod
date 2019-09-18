@@ -5,10 +5,11 @@
 {{block 'content'}}
 <div class="col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 main">
 <div class="blog-header">
-        <h1 class="blog-title">{{title}}</h1>
-        <p class="lead blog-description">{{ addTime | dateFormat 'YYYY年MM月DD日 HH:mm:ss'}} 
+        <h3 >{{title}}</h3>
+        <h5 >{{ addTime | dateFormat 'YYYY年MM月DD日 HH:mm:ss'}} </h5>
             <!-- by <a href="#">{{nickname}}</a></p> -->
       </div>
+      <hr class="featurette-divider" style="margin-top: 0px">
       <div class="row">
             <div class="col-sm-12 blog-main">
               {{if thumbnails}}
