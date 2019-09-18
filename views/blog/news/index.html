@@ -5,12 +5,11 @@
         <!-- START THE FEATURETTES -->
         {{each list}}
         <hr class="featurette-divider">
-        <div class="row ">
           <!-- <div class="col-md-8 {{if $index%2!=0}} col-md-push-4 {{/if}}" > -->
             <div>
-            <h1>
+            <h3>
                 <a href="/news/detail?id={{@ $value._id}}">{{ $value.title}}</a></br>
-            </h1>
+            </h3>
             <h4 >{{ $value.addTime | dateFormat 'YYYY年MM月DD日 HH:mm:ss'}}</h4>
             <p class="lead">{{ $value.note | slice 120}}</p>
           </div>
@@ -19,7 +18,6 @@
             data-src="holder.js/300x300/auto" alt="500x500" 
             src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgdmlld0JveD0iMCAwIDUwMCA1MDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjwhLS0KU291cmNlIFVSTDogaG9sZGVyLmpzLzUwMHg1MDAvYXV0bwpDcmVhdGVkIHdpdGggSG9sZGVyLmpzIDIuNi4wLgpMZWFybiBtb3JlIGF0IGh0dHA6Ly9ob2xkZXJqcy5jb20KKGMpIDIwMTItMjAxNSBJdmFuIE1hbG9waW5za3kgLSBodHRwOi8vaW1za3kuY28KLS0+PGRlZnM+PHN0eWxlIHR5cGU9InRleHQvY3NzIj48IVtDREFUQVsjaG9sZGVyXzE2YjZhMDE5NjQyIHRleHQgeyBmaWxsOiNBQUFBQUE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LWZhbWlseTpBcmlhbCwgSGVsdmV0aWNhLCBPcGVuIFNhbnMsIHNhbnMtc2VyaWYsIG1vbm9zcGFjZTtmb250LXNpemU6MjVwdCB9IF1dPjwvc3R5bGU+PC9kZWZzPjxnIGlkPSJob2xkZXJfMTZiNmEwMTk2NDIiPjxyZWN0IHdpZHRoPSI1MDAiIGhlaWdodD0iNTAwIiBmaWxsPSIjRUVFRUVFIi8+PGc+PHRleHQgeD0iMTg1LjEyNSIgeT0iMjYxLjEiPjUwMHg1MDA8L3RleHQ+PC9nPjwvZz48L3N2Zz4=" data-holder-rendered="true">
           </div> -->
-        </div>
         {{/each}}
         <hr class="featurette-divider">
         <nav aria-label="...">
