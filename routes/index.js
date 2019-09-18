@@ -1,7 +1,7 @@
 const router = require('koa-router')()
 DB = require('../module/db'),
 passport = require('koa-passport')
-
+const tplName = 'blog'
 router.get('/', async (ctx) => {
   let totle = await DB.count('news',{status:'on',cate_name:{$nin:["私密日志","政治","技术"]}});//表总记录数
         //koa-bodyparser解析前端参数
@@ -15,7 +15,7 @@ router.get('/', async (ctx) => {
         let hasMore=totle-(page-1)*size>size?true:false;
         let num = Math.ceil(totle/size)
       
-    await ctx.render('default/index',{list:result,page,size,hasMore,totle,hasMore,num})
+    await ctx.render(tplName+'/index',{list:result,page,size,hasMore,totle,hasMore,num})
 })
 
 
@@ -37,7 +37,7 @@ router.get('/news', async (ctx) => {
         //是否还有更多
         let hasMore=totle-(page-1)*size>size?true:false;
         let num = Math.ceil(totle/size)
-    await ctx.render('default/news/index',{list:result,page,size,hasMore,totle,hasMore,num,cate_name})
+    await ctx.render(tplName+'/news/index',{list:result,page,size,hasMore,totle,hasMore,num,cate_name})
  
 })
 
@@ -63,16 +63,16 @@ router.get('/news/detail', async (ctx) => {
   if(next[0]){
     nextId = next[0]._id
   }
-  await ctx.render('default/news/detail',{...result,prevId,nextId})
+  await ctx.render(tplName+'/news/detail',{...result,prevId,nextId})
 
 })
 
 router.get('/about', async (ctx) => {
-  await ctx.render('default/about')
+  await ctx.render(tplName+'/about')
 })
 
 router.get('/login', async (ctx) => {
-  await ctx.render('default/login')
+  await ctx.render(tplName+'/login')
 })
 router.get('/logout',async (ctx) => {
   ctx.logout()

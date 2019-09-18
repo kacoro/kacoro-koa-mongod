@@ -1,0 +1,30 @@
+{{include './public/header'}}
+<div class="col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 main">
+        <!-- Three columns of text below the carousel -->
+        <!-- /.row -->
+        <!-- START THE FEATURETTES -->
+        {{each list}}
+        <hr class="featurette-divider">
+            <div>
+            <h1>
+                <a href="/news/detail?id={{@ $value._id}}">{{ $value.title}}</a></br>
+            </h1>
+            <h4 >{{ $value.addTime | dateFormat 'YYYY年MM月DD日 HH:mm:ss'}}</h4>
+            <p class="lead">{{ $value.note | slice 120}}</p>
+          </div>
+          
+        {{/each}}
+        <hr class="featurette-divider">
+        <nav aria-label="...">
+            <ul class="pager">
+              
+              {{if page>1}}
+              <li class="previous"><a href="{{currentNav}}?page={{ page-1}}"><span aria-hidden="true">&larr;</span> 上一页</a></li>
+             
+              {{/if}}
+              {{if hasMore}}
+              <li class="next"><a href="{{currentNav}}?page={{ page+1}}">下一页 <span aria-hidden="true">&rarr;</span></a></li>
+               {{/if}}
+            </ul>
+          </nav>
+        {{include './public/footer'}}
