@@ -119,12 +119,13 @@ router.post('/login',passport.authenticate('local', {
 })
 
 router.post('/comment/get',async (ctx) => {// 获取留言版
-  let filters = {status:'on'}
-  const {articleId} = ctx.query
+ 
+  const {articleId} =  ctx.request.body
+  console.log(articleId)
   //显示符合前端分页请求的列表查询
-  let options = { articleId:articleId};
+  let filters = { articleId:articleId,status:'on'};
   
-  let result = await DB.find('comments',filters,options,{addTime:1});
+  let result = await DB.find('comments',filters,{},{addTime:1});
   //是否还有更多
   console.log(result)
   if(result){
