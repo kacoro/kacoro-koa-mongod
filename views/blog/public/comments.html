@@ -59,7 +59,7 @@
   const articleId = "{{@ id}}";
   const articleName = "{{title}}";
   var $cancel = $('#cancel');
-  var $eixt = $($eixt)
+  var $eixt = $('#eixt');
   
   $eixt.hide()
   $cancel.hide()
@@ -88,8 +88,8 @@
         }
       });   
   // 用户留言
-  var name = Cookies.get('commentName') || '';
-  var email = Cookies.get('commentEmail') || '';
+  var name = localStorage.getItem("commentName") || '';
+  var email = localStorage.getItem('commentEmail') || '';
   
   if(name!=''&&email!=''){
     console.log(name,email)
@@ -144,8 +144,8 @@
        name = $('#name').val();
        email = $('#email').val();
        content = $('#content').val();
-      Cookies.set('commentName',name);
-      Cookies.set('commentEmail',email);
+       localStorage.setItem('commentName',name);
+       localStorage.setItem('commentEmail',email);
       $("#userInfo .form-group").hide();
      
     
