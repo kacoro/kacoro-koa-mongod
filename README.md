@@ -69,3 +69,11 @@ pm2 delete kacoro
 pm2 restart kacoro
 
 
+# 缓存清除
+
+```
+# 由于nginx采用了缓存所以上线后需要清除缓存
+cd /data/nginx/cache/
+rm -rf *
+
+```
