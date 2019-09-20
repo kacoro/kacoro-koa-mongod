@@ -11,7 +11,7 @@
                 <a href="/news/detail?id={{@ $value._id}}">{{ $value.title}}</a></br>
             </h3>
             <h5 >{{ $value.addTime | dateFormat 'YYYY年MM月DD日 HH:mm:ss'}}</h5>
-            <p class="lead">{{ $value.note | slice 120}}</p>
+            <p class="lead text-overflow">{{ $value.note | slice 120}}</p>
           </div>
           <!-- <div class="col-md-4 {{if $index%2!=0}} col-md-pull-8 {{/if}}" >
             <img class="featurette-image img-responsive center-block" 
