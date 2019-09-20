@@ -1,0 +1,228 @@
+<!-- 留言板 -->
+
+<div class="comment" id="">
+    <h3>
+        <span  class="center-block" style="text-align: center">Comments</span>   
+    </h3>
+    <hr class="featurette-divider">
+    <ul  id="commentList"></ul>
+    <div id="commentFooter">
+
+    </div>
+  <form
+    class="clearfix"
+    action="#"
+    id="formModal"
+    novalidate="novalidate"
+  >
+  <hr class="featurette-divider">
+  <div id="userInfo">
+        <div class="form-group">
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  name="email"
+                  placeholder="Email"
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="name"
+                  id="name"
+                  placeholder="用户名"
+                />
+              </div>
+  </div>
+  
+    <div class="form-group">
+      <textarea
+        class="form-control"
+        name="content"
+        id="content"
+        placeholder="评论"
+      ></textarea>
+    </div>
+    <div class="form-group">
+      <span class=" pull-right">
+            <a  class="btn btn-link " id="eixt">切换用户</a> &nbsp;
+            <a  class="btn btn-default " id="cancel">取消</a> &nbsp; 
+            <button type="submit" class="btn btn-default">提交</button> &nbsp; 
+      </span>
+    </div>
+  </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<script>
+  const articleId = "{{@ id}}";
+  const articleName = "{{title}}";
+  var formModal = $("#formModal");
+  var $commentList = $("#commentList");
+  var replyId = ''
+  // 异步获取留言板信息
+  var url = '/comment/get';
+  $.ajax({
+        url: url,
+        type: "post",
+        dataType: "json",
+        data:{articleId:articleId},         
+        async: false,
+        success: function(data) {
+          if (data.code = 200) {
+            console.log("成功！");
+            console.log(data.data)
+            for(var i = 0;i<data.data.length;i++){
+                showComent(data.data[i])
+            }
+           
+          } else {
+            console.log("失败！");
+          }
+        }
+      });   
+  // 用户留言
+  var name = Cookies.get('commentName') || '';
+  var email = Cookies.get('commentEmail') || '';
+  
+  if(name!=''&&email!=''){
+    console.log(name,email)
+    $('#name').val(name);
+    $('#email').val(email);
+    $("#userInfo .form-group").hide();
+  }
+  formModal.validate({
+    messages: {
+      name: {
+        required: "请输入用户名"
+      },
+      email: {
+        required: "请输入邮箱"
+      },
+      content: {
+        required: "请输入内容"
+      }
+    },
+    rules: {
+      name: {
+        required: true
+      },
+      email: {
+        required: true
+      },
+      content: {
+        required: true
+      }
+    },
+    highlight: function(element) {
+      // hightlight error inputs
+      $(element)
+        .closest(".form-group")
+        .addClass("has-error"); // set error class to the control group
+    },
+
+    unhighlight: function(element) {
+      // revert the change done by hightlight
+      $(element)
+        .closest(".form-group")
+        .removeClass("has-error"); // set error class to the control group
+    },
+    success: function(label) {
+      label.closest(".form-group").removeClass("has-error"); // set success class to the control group
+      return true;
+    },
+    submitHandler: function() {
+      var url = "/comment/add";
+       name = $('#name').val();
+       email = $('#email').val();
+       content = $('#content').val();
+      Cookies.set('commentName',name);
+      Cookies.set('commentEmail',email);
+      $("#userInfo .form-group").hide();
+     
+    
+      var data = {
+        name:name,
+        email:email,
+        content:content,
+        replyId:replyId,
+        articleId:articleId,
+        articleName:articleName
+      }
+      console.log(data)
+      
+      $.ajax({
+        url: url,
+        type: "post",
+        dataType: "json",
+        data:data,         
+        async: false,
+        success: function(data) {
+          if (data.code = 200) {
+            console.log("成功！");
+            showComent(data.data);
+          
+            $('#content').val('')
+          } else {
+            console.log("失败！");
+          }
+        }
+      });
+      return false;
+    }
+  });
+
+  //显示留言
+  function showComent(data){
+      
+    var $li = $(
+        '<li id="' +
+        data._id +'"</li>' ),
+        $blockquote  = $(
+            '<blockquote class="">' +
+          '<h4 class="title">' +
+                data.name +
+          "</h4>" +
+          '<h6>'+dateFormat("yyyy-MM-dd hh:mm:ss",new Date(data.addTime))+'</h6>' +
+          '<p class="lead">'+data.content+'</p></blockquote>' 
+        ).appendTo($li),
+      $btns = $(
+        '<div class="replay-panel clearfix">' + '<span class="btn btn-default replay " >回复</span>'
+      ).appendTo($blockquote);
+      $ul = $('<ul id="ul_' +
+        data._id +
+          '"></ul>').appendTo($li),
+       $blockquote.on("mouseenter", function(event) {
+        $btns.stop().animate({ height: 35 });
+      });
+  
+      $blockquote.on("mouseleave",function() {
+        $btns.stop().animate({ height: 0 });
+      });
+      $btns.on("click", "span", function() {
+        replyId = data._id;
+        $(formModal).appendTo($li)
+        // $li.remove()
+      })
+        if(!data.replyId){
+            console.log(data)
+        $li.appendTo($commentList)
+        }else{
+            console.log(data)
+            $li.appendTo($('#ul_'+data.replyId))
+        }
+    
+  }
+  var $cancel = $('#cancel');
+        $cancel.on("click", function() {
+        replyId = ''
+        $(formModal).appendTo($('#commentFooter'))  
+  })
+  $('#eixt').on("click", function() {
+        $("#userInfo .form-group").show();
+        $('#name').val(name);
+        $('#email').val(email);
+   })
+  //回复 隐藏留言板 显示回复版
+</script>

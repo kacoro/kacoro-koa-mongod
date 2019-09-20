@@ -20,7 +20,6 @@ router.get('/', async (ctx) => {
 
 
 router.get('/news', async (ctx) => {
- 
         //koa-bodyparser解析前端参数
         let filters = {status:'on'}
         let reqParam= ctx.query;
@@ -38,7 +37,26 @@ router.get('/news', async (ctx) => {
         let hasMore=totle-(page-1)*size>size?true:false;
         let num = Math.ceil(totle/size)
     await ctx.render(tplName+'/news/index',{list:result,page,size,hasMore,totle,hasMore,num,cate_name})
- 
+})
+
+router.get('/news', async (ctx) => {
+  //koa-bodyparser解析前端参数
+  let filters = {status:'on'}
+  let reqParam= ctx.query;
+  let page = Number(reqParam.page) || 1;//当前第几页
+  let size = Number(reqParam.size) || 9;//每页显示的记录条数
+  var cate_name = reqParam.cate_name || '';
+  //显示符合前端分页请求的列表查询
+  let options = { "limit": size,"skip": (page-1)*size};
+  if(cate_name){
+    filters = Object.assign(filters,{"cate_name":cate_name})
+  }
+  let totle = await DB.count('news',filters);//表总记录数
+  let result = await DB.find('news',filters,options);
+  //是否还有更多
+  let hasMore=totle-(page-1)*size>size?true:false;
+  let num = Math.ceil(totle/size)
+  await ctx.render(tplName+'/news/index',{list:result,page,size,hasMore,totle,hasMore,num,cate_name})
 })
 
 router.get('/news/detail', async (ctx) => {
@@ -99,4 +117,38 @@ router.post('/login',passport.authenticate('local', {
     })(ctx)
 })
 
+router.post('/comment/get',async (ctx) => {// 获取留言版
+  let filters = {status:'on'}
+  const {articleId} = ctx.query
+  //显示符合前端分页请求的列表查询
+  let options = { articleId:articleId};
+  
+  let result = await DB.find('comments',filters,options,{addTime:1});
+  //是否还有更多
+  console.log(result)
+  if(result){
+    ctx.body = {
+      code :200,
+      data :result
+    }
+  }else{
+    ctx.body = result
+  }
+  
+})
+
+router.post('/comment/add',async (ctx) => {// 留言 用户
+  const {content,sort} = ctx.request.body
+ 
+  let data = await DB.insert('comments',Object.assign(ctx.request.body,{status:'on',addTime:new Date()}))
+  console.log(data)
+  if(data.result.ok){
+    ctx.body = {
+      code :200,
+      data : data.ops[0]
+    }
+  }else{
+    ctx.body = data.result
+  }
+})
 module.exports = router.routes()

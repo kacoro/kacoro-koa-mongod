@@ -1,0 +1,269 @@
+{{include '../public/header'}}
+{{include '../public/nav'}}
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+  <h2 class="page-header">添加新闻</h2>
+  <form action="#" id="formModal"  novalidate="novalidate">
+      <div class="form-group">
+        <label for="title">标题：</label>
+        <input
+          type="text"
+          class="form-control"
+          name="title"
+          id="title"
+          placeholder="标题"
+        />
+	  </div>
+	  <div class="form-group">
+        <label for="title">关键字:</label>
+        <input
+          type="text"
+          class="form-control"
+          name="keywords"
+          id="keywords"
+          placeholder="关键字以英文逗号分隔"
+          value=""
+        />
+	  </div>
+	  <div class="form-group">
+        <label for="title">描述:</label>
+		<textarea   class="form-control" name="description"   id="description"  placeholder="描述不要超过255字"></textarea>
+	  </div>
+	  <div class="form-group">
+        <label for="title">文章分类：</label>
+		<select class="form-control"  name="cate_id" id='category' >
+				{{each cate}}
+				{{if $value.name==cate_name}}<option value="{{@ $value._id}}"  selected="selected">{{$value.name}}</option>
+				{{else }} 
+				<option value="{{@ $value._id}}" >{{$value.name}}</option>
+				{{/if}}
+				{{/each}}
+		</select>
+	</div>
+	<div id="container">
+		<div id="uploader">
+			<div class="queueList">
+				<div id="dndArea" class="placeholder">
+					<div id="filePicker"></div>
+					<p>或将照片拖到这里，单次最多可选300张</p>
+				</div>
+			</div>
+			<div class="statusBar" style="display:none;">
+				<div class="progress">
+					<span class="text">0%</span>
+					<span class="percentage"></span>
+				</div><div class="info"></div>
+				<div class="btns">
+					<div id="filePicker2"></div><div class="uploadBtn">开始上传</div>
+				</div>
+			</div>
+		</div>
+	</div>
+      <div class="form-group">
+		  <label for="editor">内容：</label>
+		  <div id="toolbar-container">
+			<span class="ql-formats">
+			  <select class="ql-font"></select>
+			  <select class="ql-size"></select>
+			</span>
+			<span class="ql-formats">
+			  <button class="ql-bold"></button>
+			  <button class="ql-italic"></button>
+			  <button class="ql-underline"></button>
+			  <button class="ql-strike"></button>
+			</span>
+			<span class="ql-formats">
+			  <select class="ql-color"></select>
+			  <select class="ql-background"></select>
+			</span>
+			<span class="ql-formats">
+			  <button class="ql-script" value="sub"></button>
+			  <button class="ql-script" value="super"></button>
+			</span>
+			<span class="ql-formats">
+			  <button class="ql-header" value="1"></button>
+			  <button class="ql-header" value="2"></button>
+			  <button class="ql-blockquote"></button>
+			</span>
+			<span class="ql-formats">
+			  <button class="ql-list" value="ordered"></button>
+			  <button class="ql-list" value="bullet"></button>
+			  <button class="ql-indent" value="-1"></button>
+			  <button class="ql-indent" value="+1"></button>
+			</span>
+			<span class="ql-formats">
+			  <button class="ql-direction" value="rtl"></button>
+			  <select class="ql-align"></select>
+			</span>
+			<span class="ql-formats">
+			  <button class="ql-link"></button>
+			  <button class="ql-image" ></button>
+			  <button class="ql-video"></button>
+			  <button class="ql-formula"></button>
+			</span>
+			<span class="ql-formats">
+				<button class="ql-code-block"></button>
+			 	<button class="ql-clean"></button>
+			</span>
+		  </div>
+          <div id="editor" style="min-height: 400px">
+           
+          </div>
+        </div> 
+          <input type="hidden" name="content" id="content" value="" />
+		  <input type="hidden" name="note" id="note" value=""/>
+      <div class="checkbox">
+        <label> <input type="checkbox" name="status"  checked="checked"/> 启用 </label>
+      </div>
+      
+      <button type="submit" class="btn btn-default">提交</button>
+    </form>
+</div>
+
+<script>
+	// 工具栏配置
+var quill = new Quill('#editor', {
+    theme: 'snow',
+     modules: {
+		imageDrop: true,
+		formula:true,
+		syntax:true,
+		toolbar: '#toolbar-container'
+	},
+});
+var toolbar = quill.getModule('toolbar');
+toolbar.addHandler('image', quill_img_handler);
+function quill_img_handler() {
+  let fileInput = this.container.querySelector('input.ql-image[type=file]');
+
+  if (fileInput == null) {
+      fileInput = document.createElement('input');
+      fileInput.setAttribute('type', 'file');
+      fileInput.setAttribute('accept', 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon');
+      fileInput.classList.add('ql-image');
+      fileInput.addEventListener('change', () => {
+          const files = fileInput.files;
+          const range = quill.getSelection(true);
+
+          if (!files || !files.length) {
+              console.log('No files selected');
+              return;
+          }
+
+          const formData = new FormData();
+          formData.append('file', files[0]);
+    console.log(files[0])
+          quill.enable(false);
+    $.ajax({  
+             url: "/api/upload", 
+            method: "POST",
+      data: formData,
+      processData : false, 
+      contentType : false,
+          }).done(function(response) {
+      console.log(response)
+            if (response.filePath) {
+              quill.enable(true);
+                  quill.editor.insertEmbed(range.index, 'image', response.filePath);
+                  quill.setSelection(range.index + 1, Quill.sources.SILENT);
+                  fileInput.value = '';
+            } else {
+      console.log('quill image upload failed');
+              quill.enable(true);
+            }
+          });	   
+      });
+      this.container.appendChild(fileInput);
+  }
+  fileInput.click();
+}
+imagesUploader('#uploader')
+quill.on('text-change', function(delta, oldDelta, source) {
+  if (source == 'api') {
+
+    console.log("An API call triggered this change.");
+    // var delta = quill.getText();
+  } else if (source == 'user') {
+    var note = quill.getText(0,255);
+    $("#content").val(quill.root.innerHTML)
+    $("#note").val(note)
+  }
+});
+
+	 $(function(){
+		    //自定义手机码验证
+		    jQuery.validator.addMethod("phone", function(value, element) {
+		    return this.optional(element) || /^1[3|4|5|7|8]\d{9}$/.test(value);
+		    }, "手机号码不正确");
+			 //表单验证
+			var formModal = $('#formModal');
+			formModal.validate({
+					 messages: {
+							 title:{
+									 required: "请输入标题"
+							 },
+							 content:{
+									 required: "请输入内容",
+							 },
+					 },
+					 rules: {
+               title:{
+									 required: true
+							 },
+							 content: {
+									 required: true
+							 }
+					 },
+					 highlight: function (element) { // hightlight error inputs
+							 $(element).closest('.form-group').addClass('has-error'); // set error class to the control group
+					 },
+		
+					 unhighlight: function (element) { // revert the change done by hightlight
+							 $(element).closest('.form-group').removeClass('has-error'); // set error class to the control group
+					 },
+					 success: function (label) {
+							 label.closest('.form-group').removeClass('has-error'); // set success class to the control group
+							 return true;
+					 },
+					 submitHandler: function() {
+						 console.log(formModal.serialize())
+						//  return false;
+						 var category=$("#category option:selected");
+						 var thumbnails =[]
+						  $('#uploader .filelist li.state-complete').each(function() {
+							thumbnails.push(
+								{
+									pathName:$( this ).attr('pathName'),
+									fileName:$( this ).attr('fileName')
+								}
+							)		
+						});
+						console.log(thumbnails) 
+					
+               			var url = '/api/news/add';
+							 $.ajax({
+									 url:url,
+									 type:'post',
+									 dataType: 'json',
+									 data:formModal.serialize()+'&cate_name='+category.text()+'&thumbnails='+JSON.stringify(thumbnails),
+									 async: false,
+									 success:function(data){
+										 if(data.ok){
+											self.location=document.referrer
+											console.log('成功！')
+										 }else{
+                        console.log('失败！')
+										 }
+									 }
+							 });
+							 return false;
+					 }
+		
+			});
+		
+		   
+})
+			
+    	
+    
+</script>
+{{include '../public/footer'}}

@@ -1,0 +1,92 @@
+{{include '../public/header'}}
+{{include '../public/nav'}}
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+  <h2 class="page-header clearfix ">
+    <span >评论管理</span> 
+  </h2>
+ 
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>内容</th>
+          <th>用户名</th>
+          <th>邮箱</th>
+          <th class="hidden-xs">关联主题</th>
+          <th class="hidden-xs">发布时间</th>
+          <th class="hidden-xs">状态</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{each list}}
+        <tr>
+          <td>{{ $index+size*(page-1)+1 }}</td>
+          <td >{{ $value.content | slice 30}}</td>
+          <td >{{ $value.name | slice 20}}</td>
+          <td class="hidden-xs">{{ $value.email }}</td>
+          <th class="hidden-xs">{{$value.articleName}}</th>
+
+          <td class="hidden-xs" >{{@ $value.addTime | dateFormat 'YYYY年MM月DD日 HH:mm:ss' }}</td>
+          <td class="hidden-xs">{{ $value.status }}</td>
+          <td>
+            <a href="/admin/comments/edit?id={{@ $value._id}}&page={{page}}">编辑</a>&nbsp;
+            <a data-href="/admin/comments/delete?id={{@ $value._id}}&page={{page}}"   onclick="delDialog('{{@ $value._id}}')">删除</a>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+  <!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">提示</h4>
+        </div>
+        <div class="modal-body">
+          是否要删除？
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-primary" onclick="del()">确认</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{include '../public/pagenav',{page,size,totle,hasMore,num,cate_name} }}
+</div>
+
+{{include '../public/footer'}}
+<script>
+  var seletedId;
+  function delDialog(id){
+    seletedId = id
+     $('#myModal').modal('show')  
+   }
+ 
+    function del(){
+      console.log(seletedId)
+    var url = '/api/comments/delete';
+							 $.ajax({
+									 url:url,
+									 type:'post',
+									 dataType: 'json',
+									 data:{id:seletedId},
+									 async: false,
+									 success:function(data){
+										 if(data.ok){
+                      location.reload()
+											console.log('成功！')
+										 }else{
+                       console.log('失败！')
+										 }
+									 }
+							 });
+							 return false;
+  }
+
+</script>
