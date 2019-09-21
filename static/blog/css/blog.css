@@ -301,3 +301,17 @@ pre{
   overflow: hidden;
   height: 0;
 }
+#commentList li .header{
+
+}
+.title{
+  margin-bottom: 4px;
+}
+#commentList li .avatar{
+  margin-top: 0px;
+  margin-right: 5px;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  background: url('../images/icon-user.png')
+}

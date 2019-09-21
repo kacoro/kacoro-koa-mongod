@@ -13,6 +13,7 @@
           <th>内容</th>
           <th>用户名</th>
           <th>邮箱</th>
+          <th>站点</th>
           <th class="hidden-xs">关联主题</th>
           <th class="hidden-xs">发布时间</th>
           <th class="hidden-xs">状态</th>
@@ -26,8 +27,8 @@
           <td >{{ $value.content | slice 30}}</td>
           <td >{{ $value.name | slice 20}}</td>
           <td class="hidden-xs">{{ $value.email }}</td>
+          <td class="hidden-xs">{{ $value.website ||''}}</td>
           <th class="hidden-xs">{{$value.articleName}}</th>
-
           <td class="hidden-xs" >{{@ $value.addTime | dateFormat 'YYYY年MM月DD日 HH:mm:ss' }}</td>
           <td class="hidden-xs">{{ $value.status }}</td>
           <td>

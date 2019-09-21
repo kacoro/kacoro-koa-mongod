@@ -127,7 +127,6 @@ router.post('/comment/get',async (ctx) => {// 获取留言版
   
   let result = await DB.find('comments',filters,{},{addTime:1});
   //是否还有更多
-  console.log(result)
   if(result){
     ctx.body = {
       code :200,
@@ -140,10 +139,8 @@ router.post('/comment/get',async (ctx) => {// 获取留言版
 })
 
 router.post('/comment/add',async (ctx) => {// 留言 用户
-  const {content,sort} = ctx.request.body
- 
   let data = await DB.insert('comments',Object.assign(ctx.request.body,{status:'on',addTime:new Date()}))
-  console.log(data)
+ 
   if(data.result.ok){
     ctx.body = {
       code :200,
@@ -152,5 +149,15 @@ router.post('/comment/add',async (ctx) => {// 留言 用户
   }else{
     ctx.body = data.result
   }
+})
+router.get('/upload/userIcon/*.jpg',async (ctx) => {// 留言 用户
+  
+    console.log("图片资源",ctx)
+    if(ctx.status ==404){
+      console.log("图片资源404",ctx)
+      // ctx.type="image/png"
+      // ctx.status = 200
+      ctx.response.redirect('/upload/userIcon/icon-user.png'); 
+    }
 })
 module.exports = router.routes()

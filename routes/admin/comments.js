@@ -21,7 +21,7 @@ router.get('/',  async (ctx) => {
         let hasMore=totle-(page-1)*size>size?true:false;
         let num = Math.ceil(totle/size)
         
-    await ctx.render('admin/comments/index',{title,list:result,page,size,hasMore,totle,hasMore,num})
+    await ctx.render('admin/comments/index',{title,list:result,page,size,hasMore,totle,num})
 })
 router.get('/add', async (ctx) => {
   let reqParam= ctx.query;

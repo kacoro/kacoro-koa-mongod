@@ -76,4 +76,5 @@ pm2 restart kacoro
 cd /data/nginx/cache/
 rm -rf *
 
+cd /data/
 ```
