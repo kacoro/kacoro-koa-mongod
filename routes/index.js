@@ -121,11 +121,11 @@ router.post('/login',passport.authenticate('local', {
 router.post('/comment/get',async (ctx) => {// 获取留言版
  
   const {articleId} =  ctx.request.body
-  console.log(articleId)
+ 
   //显示符合前端分页请求的列表查询
   let filters = { articleId:articleId,status:'on'};
-  
-  let result = await DB.find('comments',filters,{},{addTime:1});
+  let projection = {"email":0,"status":0,"articleId":0};
+  let result = await DB.find('comments',filters,{},{addTime:1},projection);
   //是否还有更多
   if(result){
     ctx.body = {
@@ -151,10 +151,7 @@ router.post('/comment/add',async (ctx) => {// 留言 用户
   }
 })
 router.get('/upload/userIcon/*.jpg',async (ctx) => {// 留言 用户
-  
-    console.log("图片资源",ctx)
     if(ctx.status ==404){
-      console.log("图片资源404",ctx)
       // ctx.type="image/png"
       // ctx.status = 200
       ctx.response.redirect('/upload/userIcon/icon-user.png'); 

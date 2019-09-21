@@ -304,6 +304,7 @@ pre{
 #commentList li .header{
 
 }
+#commentList li .lead{margin-bottom: 10px;}
 .title{
   margin-bottom: 4px;
 }

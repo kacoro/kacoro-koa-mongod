@@ -54,10 +54,10 @@ class Db {
              }))
         })
     }
-    find(collectionName,json,options,sortOpitons){
+    find(collectionName,json,options,sortOpitons,projecttion){
         return new Promise((resolve,reject)=>{
             this.connect().then((db=>{
-                var result =  db.collection(collectionName).find(json,options ||{}).sort( sortOpitons||{addTime:-1}) 
+                var result =  db.collection(collectionName).find(json,options ||{}).sort( sortOpitons||{addTime:-1}).project(projecttion||{}) 
                 result.toArray((err,docs)=>{
                     if(err){
                         reject(err)
