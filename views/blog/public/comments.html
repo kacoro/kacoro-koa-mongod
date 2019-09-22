@@ -78,7 +78,6 @@
   var email = localStorage.getItem('commentEmail') || '';
   var website = localStorage.getItem('commentWebsite') || '';
   if(name!=''&&email!=''){
-    console.log(name,email)
     $('#name').val(name);
     $('#email').val(email);
     $('#website').val(website);
@@ -172,7 +171,7 @@
         async: false,
         success: function(data) {
           if (data.code = 200) {
-            console.log("成功！");
+        
             showComent(data.data);
           
             $('#content').val('')

@@ -39,8 +39,7 @@
            $imgs = $('#blog-post').find('img')
             console.log($imgs)
             $imgs.each(function(i){
-              console.log($(this))
-              $(this).addClass('lazy')
+                $(this).addClass('lazy')
                 $(this).attr('data-original',$(this)[0].src)
                 $(this).attr('src','data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=')
             })
