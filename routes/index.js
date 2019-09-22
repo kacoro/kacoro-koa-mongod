@@ -10,33 +10,13 @@ router.get('/', async (ctx) => {
         let size = Number(reqParam.size) || 9;//每页显示的记录条数
         //显示符合前端分页请求的列表查询
         let options = { "limit": size,"skip": (page-1)*size};
-        let result = await DB.find('news',{status:'on',cate_name:{$nin:["私密日志","政治","技术"]}},options);
+        let projection = {"title":1,"addTime":1,"note":1,"_id":1}; //仅显示所需要的列
+        let result = await DB.find('news',{status:'on',cate_name:{$nin:["私密日志","政治","技术"]}},options,null,projection);
         //是否还有更多
         let hasMore=totle-(page-1)*size>size?true:false;
         let num = Math.ceil(totle/size)
       
     await ctx.render(tplName+'/index',{list:result,page,size,hasMore,totle,hasMore,num})
-})
-
-
-router.get('/news', async (ctx) => {
-        //koa-bodyparser解析前端参数
-        let filters = {status:'on'}
-        let reqParam= ctx.query;
-        let page = Number(reqParam.page) || 1;//当前第几页
-        let size = Number(reqParam.size) || 9;//每页显示的记录条数
-        var cate_name = reqParam.cate_name || '';
-        //显示符合前端分页请求的列表查询
-        let options = { "limit": size,"skip": (page-1)*size};
-        if(cate_name){
-          filters = Object.assign(filters,{"cate_name":cate_name})
-        }
-        let totle = await DB.count('news',filters);//表总记录数
-        let result = await DB.find('news',filters,options);
-        //是否还有更多
-        let hasMore=totle-(page-1)*size>size?true:false;
-        let num = Math.ceil(totle/size)
-    await ctx.render(tplName+'/news/index',{list:result,page,size,hasMore,totle,hasMore,num,cate_name})
 })
 
 router.get('/news', async (ctx) => {
@@ -52,7 +32,8 @@ router.get('/news', async (ctx) => {
     filters = Object.assign(filters,{"cate_name":cate_name})
   }
   let totle = await DB.count('news',filters);//表总记录数
-  let result = await DB.find('news',filters,options);
+  let projection = {"title":1,"addTime":1,"note":1,"_id":1};
+  let result = await DB.find('news',filters,options,null,projection);
   //是否还有更多
   let hasMore=totle-(page-1)*size>size?true:false;
   let num = Math.ceil(totle/size)
