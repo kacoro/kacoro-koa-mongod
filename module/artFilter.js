@@ -27,7 +27,8 @@ class ArtFilter{
         };
         defaults.imports.slice = function(str,length){ 
           if(str.length>length){
-            return str.slice(0,length) + '...'
+              console.log(`${str}`)
+            return str.replace(/\ +/g,"").replace(/[\r\n]/g,"").slice(0,length) + '...'
           }
           return str;   
         };
