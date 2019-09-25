@@ -186,7 +186,7 @@
   
   //显示留言
   function showComent(data){
-    var titleTpl = data.name;
+    var titleTpl = data.name.toLowerCase();
     var src =  '/upload/userIcon/'+data.name+'.jpg';
     if(data.website){
       var regex = /(https?:\/\/)?(\w+\.?)+(\/[a-zA-Z0-9\?%=_\-\+\/]+)?/gi;

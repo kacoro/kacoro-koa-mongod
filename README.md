@@ -8,6 +8,8 @@ demo:http://kacoro.com/
 * yarn/npm/cnpm
 * pm2
 
+# 日志
+作为一个博客已经基本完成了，下一个阶段。使用react重构。koa2需要把逻辑层从路由分离出Controller。引入redis等。并以企业站方向进行。接口采用restfull重新设计。
 
 ## 后台管理计划
 1. 用户管理 (初步完成)

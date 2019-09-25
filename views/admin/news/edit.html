@@ -206,16 +206,13 @@ function quill_img_handler() {
       var delta = quill.getText();
     } else if (source == 'user') {
       var note = quill.getText(0,255);
-      var delta = quill.getContents();
-      
-      console.log(delta)
+    
 	//   $("#content").val(JSON.stringify(delta))
 	  $("#content").val(quill.root.innerHTML)
       $("#note").val(note)
     }
   });
   
-  console.log($("#content").val())
     // quill.setContents(JSON.parse($("#content").val()))
 		    //自定义手机码验证
 		    jQuery.validator.addMethod("phone", function(value, element) {
