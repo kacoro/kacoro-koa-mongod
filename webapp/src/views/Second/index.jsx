@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Third extends Component {
+class Second extends Component {
   constructor(props) {
     super(props);
   }
@@ -13,19 +13,19 @@ class Third extends Component {
   }
   changeRouter = () => {
     this.props.history.push({
-      pathname: '/first',
+      pathname: '/third',
       state: {
-        text: 'from third'
+        text: 'from second'
       }
     });
   }
   render() {
     return (
       <div onClick={this.changeRouter}>
-        Third
+        Second
       </div>
     );
   }
 }
 
-export default Third;
+export default Second;

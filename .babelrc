@@ -5,13 +5,35 @@
             {
             "modules": false,
              "targets": {
-                "chrome": "58",
-                "ie": "8",
                 "esmodules": true
                 },
-              "useBuiltIns": "entry"
+              "useBuiltIns": "usage",
+              "corejs": "3.0.0"
             }
-          ]
+          ],
+          "@babel/preset-react"
     ],
-    "plugins": []
+    "plugins": [
+      // Stage 0
+      "@babel/transform-react-constant-elements",
+      "transform-react-remove-prop-types",
+      "transform-react-pure-class-to-function",
+      "@babel/plugin-transform-runtime",
+      "react-hot-loader/babel",
+      //箭头函数
+      // "@babel/plugin-transform-arrow-functions",
+      // Stage 2 https://github.com/babel/babel/tree/master/packages/babel-preset-stage-2
+      ["@babel/plugin-proposal-decorators", { "legacy": true }],
+      "@babel/plugin-proposal-function-sent",
+      "@babel/plugin-proposal-export-namespace-from",
+      "@babel/plugin-proposal-numeric-separator",
+      "@babel/plugin-proposal-throw-expressions",
+  
+      // Stage 3
+      "@babel/plugin-syntax-dynamic-import",
+      "@babel/plugin-syntax-import-meta",
+      ["@babel/plugin-proposal-class-properties", { "loose": true }],
+      "@babel/plugin-proposal-json-strings"
+    ]
+   
   }

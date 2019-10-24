@@ -1,31 +1,31 @@
 import React, { Component } from 'react';
 
-class Third extends Component {
+class First extends Component {
   constructor(props) {
     super(props);
   }
 
   componentWillMount () {
-    console.log('state--------', this.props.location.state)
+
   }
   componentDidMount() {
 
   }
   changeRouter = () => {
     this.props.history.push({
-      pathname: '/first',
+      pathname: '/second',
       state: {
-        text: 'from third'
+        text: 'from first'
       }
     });
   }
   render() {
     return (
       <div onClick={this.changeRouter}>
-        Third
+        First
       </div>
     );
   }
 }
 
-export default Third;
+export default First;

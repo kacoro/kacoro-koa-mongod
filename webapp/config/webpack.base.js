@@ -1,13 +1,14 @@
 const path = require("path")
+const webpack = require('webpack');
 const HtmlwebpackPlugin = require('html-webpack-plugin');
 const externalPlugins = require('webpack-node-externals')
 console.log('./src/main2.js')
 console.log(path.resolve(__dirname,'../src/main.js'))
+var APP_PATH = path.resolve(__dirname, '../src')
 const clientConfig  = {
     mode:'production',
     entry:{
-        main:path.resolve(__dirname, '../src/main.js'),
-        main2:path.resolve(__dirname,'../src/main2.js')
+        main:path.resolve(__dirname, '../src/main.jsx')
     },
     output:{
         path:path.resolve(__dirname,'../dist'),
@@ -15,20 +16,18 @@ const clientConfig  = {
     },
     module:{
         rules: [
-            {
-              test: /\.js$/,
-              exclude: /(node_modules|bower_components)/,
-              use: {
-                loader: 'babel-loader'
-              }
-            }
+            { test: /\.js|jsx$/, use: "babel-loader", exclude: /node_modules/ }
           ]
     },
+    resolve: {
+        modules: [APP_PATH, 'node_modules'],
+        extensions: ['*', '.js', '.jsx']
+      },
     plugins:[new HtmlwebpackPlugin({ // 在build目录下自动生成index.html
         title: '', // 指定其title
         template: 'ejs-compiled-loader!' + path.resolve(__dirname, '../src/index.html'), // 指定要打包的html路径和文件名
         filename: 'index.html', // 指定输出路径和文件名
-        chunks: ['main','main2'], // 页面中所需要的js
+        chunks: ['main'], // 页面中所需要的js
         minify: {
           collapseWhitespace: true // 压缩选项
         }
