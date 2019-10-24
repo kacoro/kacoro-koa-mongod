@@ -51,7 +51,9 @@
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-router-dom": "^5.1.2",
-    "render-quill": "^1.0.5"
+    "render-quill": "^1.0.5",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.6.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.4",
@@ -72,6 +74,8 @@
     "@babel/preset-react": "^7.6.3",
     "@babel/register": "7.6.2",
     "@babel/runtime": "7.6.3",
+    "@types/react": "^16.9.10",
+    "@types/react-dom": "^16.9.2",
     "babel-loader": "^8.0.6",
     "babel-preset-react-optimize": "1.0.1",
     "core-js": "^3.3.3",
@@ -79,6 +83,9 @@
     "html-webpack-plugin": "^3.2.0",
     "nodemon": "^1.19.1",
     "react-hot-loader": "^4.12.15",
+    "source-map-loader": "^0.2.4",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.6.4",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.9",
     "webpack-merge": "^4.2.2",

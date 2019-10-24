@@ -2,8 +2,6 @@ const path = require("path")
 const webpack = require('webpack');
 const HtmlwebpackPlugin = require('html-webpack-plugin');
 const externalPlugins = require('webpack-node-externals')
-console.log('./src/main2.js')
-console.log(path.resolve(__dirname,'../src/main.js'))
 var APP_PATH = path.resolve(__dirname, '../src')
 const clientConfig  = {
     mode:'production',
@@ -12,16 +10,38 @@ const clientConfig  = {
     },
     output:{
         path:path.resolve(__dirname,'../dist'),
-        filename:"[name].js"
+        filename:"[name].js",
+        publicPath:'/dist'
     },
     module:{
         rules: [
-            { test: /\.js|jsx$/, use: "babel-loader", exclude: /node_modules/ }
+            { test: /\.js(x?)$/, use: "babel-loader", exclude: /node_modules/ },
+            { test: /\.ts(x?)$/, use:[{loader:'babel-loader'},{loader:"ts-loader"}] , exclude: /node_modules/ },
+            {
+                enforce: "pre",
+                test: /\.js$/,
+                loader: "source-map-loader"
+            },
+            {
+              test: /\.[(png)|(obj)|(json)]$/,
+              loader: "file-loader"
+            },
+            {
+              test: /\.(woff|woff2|jpg|png)$/,
+              use: {
+                  loader: 'url-loader',
+                  options: {
+                      name: 'imanges/[hash].[ext]',
+                      limit: 5000,
+                      mimetype: 'application/font-woff'
+                  }
+              }
+            }
           ]
     },
     resolve: {
         modules: [APP_PATH, 'node_modules'],
-        extensions: ['*', '.js', '.jsx']
+        extensions: ['*', '.js', '.jsx','.ts','.tsx']
       },
     plugins:[new HtmlwebpackPlugin({ // 在build目录下自动生成index.html
         title: '', // 指定其title
@@ -48,7 +68,7 @@ const serverConfig = { // node环境打包
       index: path.resolve(__dirname, '../index.js')
     },
     output: { // 出口配置
-      publicPath:'/',
+      publicPath:'/dist',
       path: path.resolve(__dirname, '../dist'), // 打包后的文件存放的地方
       filename: "[name].js" // 打包后输出文件的文件名与入口文件名一致
     },
