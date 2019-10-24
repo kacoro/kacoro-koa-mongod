@@ -1,0 +1,17 @@
+{
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+            "modules": false,
+             "targets": {
+                "chrome": "58",
+                "ie": "8",
+                "esmodules": true
+                },
+              "useBuiltIns": "entry"
+            }
+          ]
+    ],
+    "plugins": []
+  }
