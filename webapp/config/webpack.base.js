@@ -38,7 +38,7 @@ const clientConfig  = {
         compress: true, // 服务器是否启动gzip等压缩
         port: 5200, // 监听的端口号
         open: true, // 自动打开浏览器
-        // historyApiFallback: true, // 不跳转
+        historyApiFallback: true, // 不跳转
         // inline: true // 实时刷新
     }
 }
@@ -48,6 +48,7 @@ const serverConfig = { // node环境打包
       index: path.resolve(__dirname, '../index.js')
     },
     output: { // 出口配置
+      publicPath:'/',
       path: path.resolve(__dirname, '../dist'), // 打包后的文件存放的地方
       filename: "[name].js" // 打包后输出文件的文件名与入口文件名一致
     },

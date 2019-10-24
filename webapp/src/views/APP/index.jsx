@@ -1,26 +1,30 @@
-import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
-import App from '../views/App'
-import First from '../views/First'
-
-
-class ConfigRouter extends Component {
-  constructor(props) {
-    super(props);
-  };
-
-  render () {
-    console.log('wo xuan rang le')
+import React, { Component } from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+class App extends Component {
+  render() {
     return (
-      <Router>
-        <App>
-          <Switch>
-            <Route exact path="/" component={First} />
-            <Redirect to="/" />
-          </Switch>
-        </App>
-      </Router>
-    )
+      <div className="App">
+          App: 如果有每个页面都需要展示的东西，例如自定义的title导航栏
+          <ul>
+            <li>
+              <Link to="/">First</Link>
+            </li>
+            <li>
+              <Link to="/second">Second</Link>
+            </li>
+            <li>
+              <Link to="/third">Third</Link>
+            </li>
+          </ul>
+          {this.props.children}
+      </div>
+    );
   }
 }
-export default ConfigRouter;
+
+export default App;
