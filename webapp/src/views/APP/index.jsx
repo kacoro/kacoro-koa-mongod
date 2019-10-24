@@ -5,6 +5,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import Button from '@material-ui/core/Button';
 class App extends Component {
   render() {
     return (
@@ -21,6 +22,9 @@ class App extends Component {
               <Link to="/third">Third</Link>
             </li>
           </ul>
+          <Button variant="contained" color="primary">
+            Hello World
+          </Button>
           {this.props.children}
       </div>
     );

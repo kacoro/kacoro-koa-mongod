@@ -83,7 +83,7 @@ app.use(async (ctx, next) => {
 const redirect = async (ctx, next) => {
   // var stats  = await sendfile(this,'../webapp/dist/index.html')
   var htmlFile = await (new Promise(function(resolve, reject){
-      fs.readFile('./webapp/dist/index.html', (err, data) => {
+      fs.readFile('./webapp/dist/index.html','utf-8', (err, data) => {
         if (err){
           reject(err);
         }else{
@@ -92,7 +92,16 @@ const redirect = async (ctx, next) => {
       });
   }))
   ctx.type = 'html';
-  ctx.body = fs.createReadStream('./webapp/dist/index.html');
+  var html = fs.createReadStream('./webapp/dist/index.html');
+  console.log(htmlFile)
+  const keywords = '登录'
+  const description = '描述'
+  var seo = `<title>测试</title>
+  <meta name="keywords" content="${keywords}">
+  <meta name="description" content="${description}">
+  `
+  htmlFile = htmlFile.replace(/<title>([\S\s\t]*?)<\/title>/,seo)
+  ctx.body = htmlFile
 
 };
 
