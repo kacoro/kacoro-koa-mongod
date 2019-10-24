@@ -9,7 +9,7 @@ class Second extends Component {
     console.log('state--------', this.props.location.state)
   }
   componentDidMount() {
-
+    
   }
   changeRouter = () => {
     this.props.history.push({

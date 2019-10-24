@@ -92,7 +92,7 @@ const redirect = async (ctx, next) => {
       });
   }))
   ctx.type = 'html';
-  ctx.body = htmlFile;
+  ctx.body = fs.createReadStream('./webapp/dist/index.html');
 
 };
 

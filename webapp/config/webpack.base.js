@@ -45,7 +45,7 @@ const clientConfig  = {
 const serverConfig = { // node环境打包
     target: 'node',
     entry: { // 入口配置
-      index: path.resolve(__dirname, './index.js')
+      index: path.resolve(__dirname, '../index.js')
     },
     output: { // 出口配置
       publicPath:'/',
