@@ -2,7 +2,8 @@
 const  passport = require('koa-passport'),
        LocalStrategy = require('passport-local').Strategy,
        DB = require('./db'),
-       md5 = require('md5')
+       config = require('../config.js'),
+       bcrypt = require('bcrypt')
 
 // 序列化ctx.login()触发
 passport.serializeUser(function(user, done) {
@@ -22,9 +23,8 @@ passport.use(new LocalStrategy({
 }, async(username, password, done)=> {
     var result = await DB.findOne('user',{username:username});
     console.log("result",result)
-    var pwdMd5 = md5(md5(password),result.solt).toString()
     if (!result) { return done(null, false); }
-    if(result.password==pwdMd5){
+    if(bcrypt.compareSync(password,result.password)){
         done(null, result, {msg: 'this is a test'})
         // var  result = await DB.find('user',{username:username});
     }else{
