@@ -15,9 +15,9 @@ passport = require('./module/passport'),
 artFilter = require('./module/artFilter'),
 session = require('koa-session'),
 RedisStore = require('koa-redis'),
-Static = require('koa-static');
-
-
+Static = require('koa-static'),
+rewrite = require('koa-rewrite'),
+fs = require('fs')
 const app = new Koa()
 app.keys = ['newkey','oldkey']
 //art-template render
@@ -62,6 +62,7 @@ app.use(json())
 app.use(logger())
 app.use(Static( __dirname + '/../static'))
 app.use(Static( __dirname + '/../webapp'))
+
 // logger
 app.use(async (ctx, next) => {
   const start = new Date()
@@ -79,6 +80,25 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
 
+const redirect = async (ctx, next) => {
+  // var stats  = await sendfile(this,'../webapp/dist/index.html')
+  var htmlFile = await (new Promise(function(resolve, reject){
+      fs.readFile('./webapp/dist/index.html', (err, data) => {
+        if (err){
+          reject(err);
+        }else{
+          resolve(data);
+        }
+      });
+  }))
+  ctx.type = 'html';
+  ctx.body = htmlFile;
+
+};
+
+router.get('/dist/*', redirect);
+
+// app.use(rewrite(/^\/dist\/third/, '/dist/index.html'));
 
 // routes
 router.use(index)

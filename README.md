@@ -35,7 +35,9 @@ module.exports = {
 	dbhost: "localhost:27017",
 	dbName:'xxx',
 	dbUsername:'xxx',
-	dbPassword:'xxx'
+	dbPassword:'xxx',
+	tokenSecret:'yourtokensecret',
+	saltRounds:10
 }
 ```
 
