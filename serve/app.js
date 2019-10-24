@@ -60,12 +60,7 @@ app.use(passport.session())
 
 app.use(json())
 app.use(logger())
-app.use(Static(__dirname + '/static'))
-app.use(Static(__dirname + '/public'))
-app.use(Static(__dirname + '/res'))
-// app.use(views(__dirname + '/views', {
-//   extension: 'pug'
-// }))
+app.use(Static( __dirname + '/../static'))
 
 // logger
 app.use(async (ctx, next) => {

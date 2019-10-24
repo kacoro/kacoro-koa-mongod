@@ -7,7 +7,7 @@ const  passport = require('koa-passport'),
 
 // 序列化ctx.login()触发
 passport.serializeUser(function(user, done) {
-  console.log('serializeUser: ', user)
+  // console.log('serializeUser: ', user)
   done(null, user)
 })
 // 反序列化（请求时，session中存在"passport":{"user":"1"}触发）
