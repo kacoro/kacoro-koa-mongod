@@ -1,6 +1,6 @@
 //DB库
 const mongoose = require('mongoose')
-config = require('../config')
+config = require('../../config')
 
 const DB_URL = `mongodb://${config.dbUsername}:${encodeURIComponent(config.dbPassword)}@${config.dbhost}/${config.dbName}`;
 mongoose.connect(DB_URL,{useNewUrlParser: true,useUnifiedTopology: true})

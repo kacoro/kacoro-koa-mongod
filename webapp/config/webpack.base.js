@@ -10,8 +10,9 @@ const clientConfig  = {
     },
     output:{
         path:path.resolve(__dirname,'../dist'),
-        filename:"[name].js",
-        publicPath:'/dist'
+        chunkFilename: '[name].bundle.js',
+        filename:"[name].bundle.js",
+        publicPath:'/dist/'
     },
     module:{
         rules: [
@@ -47,7 +48,8 @@ const clientConfig  = {
         title: '', // 指定其title
         template: 'ejs-compiled-loader!' + path.resolve(__dirname, '../src/index.html'), // 指定要打包的html路径和文件名
         filename: 'index.html', // 指定输出路径和文件名
-        chunks: ['main'], // 页面中所需要的js
+        // chunks: ['main'], // 页面中所需要的js
+        inject:'body',
         minify: {
           collapseWhitespace: true // 压缩选项
         }

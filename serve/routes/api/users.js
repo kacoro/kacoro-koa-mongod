@@ -2,7 +2,7 @@
 
 const router = require('koa-router')(),
 DB = require('../../module/db'),
-config = require('../../config'),
+config = require('../../../config'),
 bcrypt = require('bcrypt')
 
 router.prefix('/users')

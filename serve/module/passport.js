@@ -2,7 +2,7 @@
 const  passport = require('koa-passport'),
        LocalStrategy = require('passport-local').Strategy,
        DB = require('./db'),
-       config = require('../config.js'),
+       config = require('../../config.js'),
        bcrypt = require('bcrypt')
 
 // 序列化ctx.login()触发

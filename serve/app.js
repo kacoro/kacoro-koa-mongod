@@ -105,7 +105,7 @@ const redirect = async (ctx, next) => {
 
 };
 
-router.get('/dist/*', redirect);
+router.get('/webapp/*', redirect);
 
 // app.use(rewrite(/^\/dist\/third/, '/dist/index.html'));
 

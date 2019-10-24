@@ -1,7 +1,7 @@
 //DB库
 const MongoClient = require('mongodb').MongoClient,
      ObjectID = require('mongodb').ObjectID,
-     config = require('../config')
+     config = require('../../config')
 
 class Db {
     static getInstance(){  //单例 多次实例化，实例不共享的问题
