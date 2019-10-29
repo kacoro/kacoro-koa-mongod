@@ -42,7 +42,10 @@ const clientConfig  = {
     },
     resolve: {
         modules: [APP_PATH, 'node_modules'],
-        extensions: ['*', '.js', '.jsx','.ts','.tsx']
+        extensions: ['*', '.js', '.jsx','.ts','.tsx'],
+        alias:{
+          '@app': APP_PATH
+        }
       },
     plugins:[new HtmlwebpackPlugin({ // 在build目录下自动生成index.html
         title: '', // 指定其title
@@ -67,11 +70,10 @@ const clientConfig  = {
 const serverConfig = { // node环境打包
     target: 'node',
     entry: { // 入口配置
-      index: path.resolve(__dirname, '../index.js')
+      index: path.resolve(__dirname, './index.js')
     },
     output: { // 出口配置
-      publicPath:'/dist',
-      path: path.resolve(__dirname, '../dist'), // 打包后的文件存放的地方
+      path: path.resolve(__dirname, '../serve'), // 打包后的文件存放的地方
       filename: "[name].js" // 打包后输出文件的文件名与入口文件名一致
     },
     externals: [externalPlugins()],
@@ -83,6 +85,7 @@ const serverConfig = { // node环境打包
           loader: "babel-loader",
         }
       ]
-    },
+    }
+   
   }
 module.exports = {clientConfig, serverConfig};

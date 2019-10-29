@@ -2,7 +2,7 @@ const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base')
 
 const devWebpackConfig = merge(baseWebpackConfig.clientConfig, {
-  mode: 'production', // 开发环境
+  mode: 'production', // 生产环境
   optimization :{
     // minimizer: [
     //   new UglifyJsPlugin({
@@ -12,7 +12,6 @@ const devWebpackConfig = merge(baseWebpackConfig.clientConfig, {
     //   })
     // ],
     splitChunks: {
-    
       cacheGroups: {
         vendors: {
           test: /[\\/]node_modules[\\/]/,

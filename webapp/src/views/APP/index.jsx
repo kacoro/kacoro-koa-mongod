@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
-  Switch,
   Route,
-  Link
+  Link,
+  Redirect
 } from "react-router-dom";
-import Button from '@material-ui/core/Button';
-import  {Hello}  from "../../components/Hello";
+
+
 class App extends Component {
   render() {
     return (
       <div className="App">
           App: 如果有每个页面都需要展示的东西，例如自定义的title导航栏
-          <Hello compiler="TypeScript" framework="React" />
           <ul>
             <li>
-              <Link to="/">First</Link>
+              <Link to="/first">First</Link>
             </li>
             <li>
               <Link to="/second">Second</Link>
@@ -24,9 +23,8 @@ class App extends Component {
               <Link to="/third">Third</Link>
             </li>
           </ul>
-          <Button variant="contained" color="primary">
-            Hello World
-          </Button>
+          
+          
           {this.props.children}
       </div>
     );

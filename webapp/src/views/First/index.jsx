@@ -6,7 +6,7 @@ class First extends Component {
   }
 
   componentWillMount () {
-
+    console.log('state--------', this.props.location.state)
   }
   componentDidMount() {
 
