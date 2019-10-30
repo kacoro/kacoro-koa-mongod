@@ -7,12 +7,12 @@
     "dev": " babel-node  bin/www",
     "prd": "pm2 start bin/www",
     "start:server": "node ./webapp/serve",
-    "dev:client": "webpack-dev-server --config=./config/webpack.dev.js",
-    "dev:server": "webpack-dev-server --config=./config/webpack.server.dev.js",
+    "dev:client": "webpack-dev-server --config=./build/webpack.dev.js",
+    "dev:server": "webpack-dev-server --config=./build/webpack.server.dev.js",
     "build":"npm run build:client && npm run build:server",
-    "build:client": "webpack --config=./config/webpack.prod.js",
-    "build:server": "webpack --config=./config/webpack.server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:client": "webpack --config=./build/webpack.prod.js",
+    "build:server": "webpack --config=./build/webpack.server.js",
+    "test": "echo \"Error: no test build\" && exit 1"
   },
   "dependencies": {
     "@babel/core": "^7.6.4",

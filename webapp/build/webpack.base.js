@@ -83,5 +83,12 @@ const serverConfig = { // node环境打包
       { test: /\.js(x?)$/, use: "babel-loader", exclude: /node_modules/ }
     ]
   },
+  resolve: {
+    modules: [APP_PATH, 'node_modules'],
+    extensions: ['*', '.js', '.jsx','.ts','.tsx'],
+    alias:{
+      '@app': APP_PATH
+    }
+  }
 }
 module.exports = {clientConfig, serverConfig};

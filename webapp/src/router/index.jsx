@@ -44,7 +44,7 @@ class RoutesIndex extends Component {
   };
 
   render () {
-    console.log('wo xuan rang le')
+    console.log('wo xuan rang le2')
     const { ...props } = this.props
     return (
       <div className="app-container">
