@@ -37,7 +37,8 @@ const clientConfig  = {
                       mimetype: 'application/font-woff'
                   }
               }
-            }
+            },
+            { test: /\.html$/, loader: 'html-loader' }
           ]
     },
     resolve: {
@@ -48,15 +49,11 @@ const clientConfig  = {
         }
       },
     plugins:[new HtmlwebpackPlugin({ // 在build目录下自动生成index.html
-        title: '', // 指定其title
-        template: 'ejs-compiled-loader!' + path.resolve(__dirname, '../src/index.html'), // 指定要打包的html路径和文件名
-        filename: 'index.html', // 指定输出路径和文件名
+       
+        template: path.resolve(__dirname, '../src/index.html'), // 指定要打包的html路径和文件名
+        filename: './views/index.html', // 指定输出路径和文件名
         // chunks: ['main'], // 页面中所需要的js
-        inject:'body',
-        minify: {
-          collapseWhitespace: true // 压缩选项
-        },
-        root:false
+       
       })],
     devServer:{
         contentBase: path.resolve(__dirname, '../dist'), // 配置开发服务运行时的文件根目录
