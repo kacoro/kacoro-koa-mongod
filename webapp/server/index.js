@@ -2,10 +2,10 @@
 
 import views from 'koa-views'
 import path from 'path'
-import router from './server/routes/index';
+import router from './routes/index';
+const app = require('./app.js').default;
+const clientRoute = require('./middlewares/clientRoute').default;
 
-const clientRoute = require('./server/middlewares/clientRoute').default;
-const app = require('../server.js').default;
 
 // 将dist文件夹设置为静态路径
 app.use(require('koa-static')('./dist'))

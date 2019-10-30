@@ -2,6 +2,7 @@ const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base')
 const OptimizeCssAssetsWebpackPlugin = require( "optimize-css-assets-webpack-plugin" )
 const devWebpackConfig = merge(baseWebpackConfig.clientConfig, {
+  
   mode: 'production', // 生产环境
   optimization :{
     // minimizer: [

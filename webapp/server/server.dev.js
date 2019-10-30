@@ -1,10 +1,11 @@
-require('babel-polyfill');
+require('@babel/polyfill');
 require('source-map-support').install();
 require('@babel/register')({
-    presets: ['@babel/preset-env', '@babel/preset-react']
+    presets: ['@babel/preset-env','@babel/preset-react',"@babel/preset-typescript"],
 });
 require('@babel/core').transform('code', {
-    plugins: ['@babel/plugin-transform-runtime']
+    plugins: ['@babel/plugin-transform-runtime','@babel/plugin-transform-modules-commonjs',"@babel/plugin-proposal-class-properties","@babel/plugin-proposal-throw-expressions","@babel/plugin-syntax-dynamic-import", "@babel/plugin-syntax-import-meta","@babel/plugin-proposal-export-namespace-from"]
+
 });
 require('css-modules-require-hook')({
     extensions: ['.scss'],
@@ -20,7 +21,7 @@ require('asset-require-hook')({
     extensions: ['jpg', 'png', 'gif', 'webp'],
     limit: 8192
 });
-require('module-alias/register')
+
 const fs = require('fs');
 const path = require('path');
 const views = require('koa-views');

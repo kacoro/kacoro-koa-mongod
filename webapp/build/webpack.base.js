@@ -5,17 +5,19 @@ const externalPlugins = require('webpack-node-externals')
 const CleanWebpackPlugin = require( "clean-webpack-plugin" );       // 每次运行打包时清理过期文件
 const MinCssExtractPlugin = require( "mini-css-extract-plugin" );   // 将css代码提取为独立文件的插件
 const LoadablePlugin = require('@loadable/webpack-plugin')
-var APP_PATH = path.resolve(__dirname, '../src')
+
+var APP_PATH = path.resolve(__dirname, '../client')
+console.log(APP_PATH)
 const clientConfig  = {
     mode:'production',
     entry:{
-        main:path.resolve(__dirname, '../src/main.jsx')
+        main:APP_PATH + '/main.jsx'
     },
     output:{
-        path:path.resolve(__dirname,'../dist'),
-        chunkFilename: '[name].bundle.js',
-        filename:"[name].bundle.js",
-        // publicPath:'/dist/'
+        path:path.resolve(__dirname,'../dist'), // 打包文件的输出目录
+        // chunkFilename: '[name].bundle.js',
+        filename:"js/[name].bundle.js"
+        // publicPath:path.resolve(__dirname,'../dist/') // js引用路径或者CDN地址
     },
     module:{
         rules: [
@@ -74,26 +76,18 @@ const clientConfig  = {
       }),
       new MinCssExtractPlugin( {
         //为抽取出的独立的CSS文件设置配置参数
-        filename: "[name].css"
+        filename: "css/[name].css"
     } ),
     new LoadablePlugin()],
-    devServer:{
-        contentBase: path.resolve(__dirname, '../dist'), // 配置开发服务运行时的文件根目录
-        host: 'localhost', // 服务器监听的主机地址 localhost || 127.0.0.1
-        compress: true, // 服务器是否启动gzip等压缩
-        port: 5200, // 监听的端口号
-        open: true, // 自动打开浏览器
-        historyApiFallback: true, // 不跳转
-        // inline: true // 实时刷新
-    }
+    
 }
 const serverConfig = { // node环境打包
   target: 'node',
   entry: { // 入口配置
-    index: path.resolve(__dirname, '../index.js')
+    index: path.resolve(__dirname, '../server/index.js')
   },
   output: { // 出口配置
-    path: path.resolve(__dirname, '../dist'), // 打包后的文件存放的地方
+    path: path.resolve(__dirname, '../dist/server'), // 打包后的文件存放的地方
     filename: "[name].js" // 打包后输出文件的文件名与入口文件名一致
   },
   externals: [externalPlugins()],
@@ -117,7 +111,8 @@ const serverConfig = { // node环境打包
       }
     ]
   },
-  plugins: [new LoadablePlugin()],
+  
+  // plugins: [new LoadablePlugin()],
   resolve: {
     modules: [APP_PATH, 'node_modules'],
     extensions: ['*', '.js', '.jsx','.ts','.tsx'],
