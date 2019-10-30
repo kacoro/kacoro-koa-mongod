@@ -1,8 +1,7 @@
 import React, { Component,Suspense, lazy  } from 'react'
 import { BrowserRouter as Router, Route, Redirect, Switch,withRouter } from "react-router-dom";
 import App from '@app/views/App'
-
-import Loadable from 'react-loadable';
+import loadable from '@loadable/component'
 
 import asyncComponent from '@app/components/AsyncComponent'
 
@@ -10,9 +9,9 @@ import asyncComponent from '@app/components/AsyncComponent'
 // const AsyncSecond = asyncComponent(() => import(/* webpackChunkName: 'Second' */ '@app/views/Second'));
 // const AsyncThird = asyncComponent(() => import(/* webpackChunkName: 'Second' */ '@app/views/Third'));
 
-const AsyncFirst = lazy(() => import('@app/views/First'));
-const AsyncSecond = lazy(() => import('@app/views/Second'));
-const AsyncThird = lazy(() => import('@app/views/Third'));
+const AsyncFirst = loadable(() => import('@app/views/First'));
+const AsyncSecond = loadable(() => import('@app/views/Second'));
+const AsyncThird = loadable(() => import('@app/views/Third'));
 // const AsyncFirst2 = Loadable({
 //   loading: <div>loading...</div>,
 //   loader: () => import( '@app/views/First'), 
@@ -60,7 +59,7 @@ class RoutesIndex extends Component {
         <App>
           <Switch>
               {routes.map((item, index) => (
-                 <Route key={index} path={item.path} exact  render={() =><Suspense fallback={<div>Loading...</div>}>  <item.component {...props} />  </Suspense>} />
+                 <Route key={index} path={item.path} exact  render={() => <item.component {...props} />  } />
               ))}
           </Switch>
           </App>

@@ -4,7 +4,7 @@ const HtmlwebpackPlugin = require('html-webpack-plugin');
 const externalPlugins = require('webpack-node-externals')
 const CleanWebpackPlugin = require( "clean-webpack-plugin" );       // 每次运行打包时清理过期文件
 const MinCssExtractPlugin = require( "mini-css-extract-plugin" );   // 将css代码提取为独立文件的插件
-
+const LoadablePlugin = require('@loadable/webpack-plugin')
 var APP_PATH = path.resolve(__dirname, '../src')
 const clientConfig  = {
     mode:'production',
@@ -75,7 +75,8 @@ const clientConfig  = {
       new MinCssExtractPlugin( {
         //为抽取出的独立的CSS文件设置配置参数
         filename: "[name].css"
-    } )],
+    } ),
+    new LoadablePlugin()],
     devServer:{
         contentBase: path.resolve(__dirname, '../dist'), // 配置开发服务运行时的文件根目录
         host: 'localhost', // 服务器监听的主机地址 localhost || 127.0.0.1
@@ -115,6 +116,7 @@ const serverConfig = { // node环境打包
       }
     ]
   },
+  plugins: [new LoadablePlugin()],
   resolve: {
     modules: [APP_PATH, 'node_modules'],
     extensions: ['*', '.js', '.jsx','.ts','.tsx'],

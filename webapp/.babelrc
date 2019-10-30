@@ -14,6 +14,7 @@
           "@babel/preset-react"
     ],
     "plugins": [
+      "@loadable/babel-plugin",
       "transform-react-remove-prop-types",
       "transform-react-pure-class-to-function",
       "@babel/plugin-transform-runtime",
