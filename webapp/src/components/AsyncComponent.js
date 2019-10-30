@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import {withRouter} from "react-router-dom";
 export default function asyncComponent(importComponent) {
   class AsyncComponent extends Component {
     constructor(props) {
@@ -25,5 +25,5 @@ export default function asyncComponent(importComponent) {
     }
   }
 
-  return AsyncComponent;
+  return withRouter(AsyncComponent);
 }

@@ -9,9 +9,10 @@ class First extends Component {
     console.log('state--------', this.props.location.state)
   }
   componentDidMount() {
-
+    console.log(this.props)
   }
   changeRouter = () => {
+    
     this.props.history.push({
       pathname: '/second',
       state: {

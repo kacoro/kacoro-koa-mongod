@@ -6,7 +6,7 @@ class Third extends Component {
   }
 
   componentWillMount () {
-    console.log('state--------', this.props.location.state)
+    // console.log('state--------', this.props.location.state)
   }
   componentDidMount() {
 
