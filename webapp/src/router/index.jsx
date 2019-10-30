@@ -51,13 +51,13 @@ class RoutesIndex extends Component {
     const { ...props } = this.props
     return (
       <div className="app-container">
-        <App></App>
+        <App>
           <Switch>
               {routes.map((item, index) => (
                  <Route key={index} path={item.path} exact render={() => <item.component {...props} />} />
               ))}
           </Switch>
-          
+          </App>
       </div>
     );
   }

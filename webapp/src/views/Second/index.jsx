@@ -8,7 +8,7 @@ class Second extends Component {
     super(props);
   }
 
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     // console.log('state--------', this.props.location.state)
   }
   componentDidMount() {
