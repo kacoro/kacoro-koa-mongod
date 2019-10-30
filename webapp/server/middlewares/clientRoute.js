@@ -13,15 +13,15 @@ const extractor = new ChunkExtractor({ statsFile })
 
 
 async function clientRoute(ctx, next) {
-    console.log(ctx.url)
+   
     for (let item of routes) {
-       
         if (item.path == ctx.url) {
-            // const data = await getData(ctx.url);
+            const data = await getData(ctx.url);
+            
             await ctx.render('index', {
                 root: renderToString(
                     extractor.collectChunks(<Provider store={store}>
-                        <StaticRouter location={ctx.url} >
+                        <StaticRouter location={ctx.url} context={data} >
                             <RoutesIndex {...store.getState()} />
                         </StaticRouter>
                     </Provider>)

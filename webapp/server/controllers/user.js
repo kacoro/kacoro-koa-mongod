@@ -23,10 +23,10 @@ export const list = async (ctx, next) => {
   let hasMore = totle - (page - 1) * size > size ? true : false;
   let num = Math.ceil(totle / size)
   
-  await ctx.render('admin/users/index', { title, list: result, page, size, hasMore, totle, hasMore, num })
+  ctx.bod = { title, list: result, page, size, hasMore, totle, hasMore, num }
 }
 
-export const getUserInfo = async ctx => {
+export const getUser = async ctx => {
     let data = {};
 
     // await findUserInfo().then(result => {
@@ -39,7 +39,6 @@ export const getUserInfo = async ctx => {
         gender: '男',
         age: 24
     };
-    console.log(data)
     ctx.body = data;
 };
 

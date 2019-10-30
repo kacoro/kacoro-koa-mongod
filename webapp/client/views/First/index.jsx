@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
-
+import getData from '../../common/getData';
 class First extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+        user: props.staticContext
+    };
+}
+
+  async componentDidMount() {
+     
   }
 
-  UNSAFE_componentWillMount () {
-    // console.log('state--------', this.props.location.state)
+  async UNSAFE_componentWillMount () {
+    this.setState({ user: await getData('/') });
   }
-  componentDidMount() {
-    console.log(this.props)
-  }
+  
   changeRouter = () => {
     
     this.props.history.push({
@@ -21,9 +26,14 @@ class First extends Component {
     });
   }
   render() {
+    const { user } = this.state;
     return (
-      <div onClick={this.changeRouter}>
-        First
+      <div>
+        <p  onClick={this.changeRouter}>First</p>
+        <p>{user && user.userId}</p>
+                <p>{user && user.name}</p>
+                <p>{user && user.gender}</p>
+                <p>{user && user.age}</p>
       </div>
     );
   }
