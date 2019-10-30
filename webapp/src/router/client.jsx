@@ -10,7 +10,7 @@ class ConfigRouter extends Component {
   render () {
     console.log('wo xuan rang le')
     return (
-      <Router basename="/webapp">
+      <Router >
         <App>
             <Switch>
                 <Routes></Routes>

@@ -30,9 +30,10 @@ class ConfigRouter extends Component {
   render () {
     console.log('wo xuan rang le')
     return [<Route exact path="/" component={AsyncFirst} key='1' />,
-    <Route path="/second" component={AsyncSecond} key='2'/>,
-    <Route path="/third" component={AsyncThird} key='3'/>,
-    <Redirect to="/" key='4'/>]
+    <Route path="/first" component={AsyncSecond} key='2'/>,
+    <Route path="/second" component={AsyncSecond} key='3'/>,
+    <Route path="/third" component={AsyncThird} key='4'/>,
+    <Redirect to="/" key='5'/>]
             
   }
 }

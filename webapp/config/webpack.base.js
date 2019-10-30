@@ -12,7 +12,7 @@ const clientConfig  = {
         path:path.resolve(__dirname,'../dist'),
         chunkFilename: '[name].bundle.js',
         filename:"[name].bundle.js",
-        publicPath:'/dist/'
+        // publicPath:'/dist/'
     },
     module:{
         rules: [
@@ -55,7 +55,8 @@ const clientConfig  = {
         inject:'body',
         minify: {
           collapseWhitespace: true // 压缩选项
-        }
+        },
+        root:false
       })],
     devServer:{
         contentBase: path.resolve(__dirname, '../dist'), // 配置开发服务运行时的文件根目录
@@ -68,24 +69,19 @@ const clientConfig  = {
     }
 }
 const serverConfig = { // node环境打包
-    target: 'node',
-    entry: { // 入口配置
-      index: path.resolve(__dirname, './index.js')
-    },
-    output: { // 出口配置
-      path: path.resolve(__dirname, '../serve'), // 打包后的文件存放的地方
-      filename: "[name].js" // 打包后输出文件的文件名与入口文件名一致
-    },
-    externals: [externalPlugins()],
-    module: { // 模块：栗子 解读css，图片如何转换、压缩
-      rules:[
-        {
-          test: /\.js$/,
-          exclude: /node_modules/, 
-          loader: "babel-loader",
-        }
-      ]
-    }
-   
-  }
+  target: 'node',
+  entry: { // 入口配置
+    index: path.resolve(__dirname, '../index.js')
+  },
+  output: { // 出口配置
+    path: path.resolve(__dirname, '../dist'), // 打包后的文件存放的地方
+    filename: "[name].js" // 打包后输出文件的文件名与入口文件名一致
+  },
+  externals: [externalPlugins()],
+  module: { // 模块：栗子 解读css，图片如何转换、压缩
+    rules:[
+      { test: /\.js(x?)$/, use: "babel-loader", exclude: /node_modules/ }
+    ]
+  },
+}
 module.exports = {clientConfig, serverConfig};
