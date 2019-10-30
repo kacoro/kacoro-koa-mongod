@@ -6,7 +6,7 @@ class First extends Component {
   }
 
   UNSAFE_componentWillMount () {
-    console.log('state--------', this.props.location.state)
+    // console.log('state--------', this.props.location.state)
   }
   componentDidMount() {
     console.log(this.props)

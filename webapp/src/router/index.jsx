@@ -6,12 +6,14 @@ import Loadable from 'react-loadable';
 
 import asyncComponent from '@app/components/AsyncComponent'
 
-const AsyncFirst = asyncComponent(() => import(/* webpackChunkName: 'First' */ '@app/views/First'));
-const AsyncSecond = asyncComponent(() => import(/* webpackChunkName: 'Second' */ '@app/views/Second'));
-const AsyncThird = asyncComponent(() => import(/* webpackChunkName: 'Second' */ '@app/views/Third'));
+// const AsyncFirst = asyncComponent(() => import(/* webpackChunkName: 'First' */ '@app/views/First'));
+// const AsyncSecond = asyncComponent(() => import(/* webpackChunkName: 'Second' */ '@app/views/Second'));
+// const AsyncThird = asyncComponent(() => import(/* webpackChunkName: 'Second' */ '@app/views/Third'));
 
-
-// const AsyncFirst = Loadable({
+const AsyncFirst = lazy(() => import('@app/views/First'));
+const AsyncSecond = lazy(() => import('@app/views/Second'));
+const AsyncThird = lazy(() => import('@app/views/Third'));
+// const AsyncFirst2 = Loadable({
 //   loading: <div>loading...</div>,
 //   loader: () => import( '@app/views/First'), 
 //  })
@@ -26,10 +28,10 @@ const AsyncThird = asyncComponent(() => import(/* webpackChunkName: 'Second' */ 
 //  })
 
  const routes = [
-  { path: '/', component: AsyncFirst },
-  { path: '/first', component: AsyncFirst  },
-  { path: '/second', component: AsyncSecond  },
-  { path: '/third', component: AsyncThird }
+  { path: '/', component: withRouter(AsyncFirst) },
+  { path: '/first', component: withRouter(AsyncFirst)  },
+  { path: '/second', component: withRouter(AsyncSecond)  },
+  { path: '/third', component: withRouter(AsyncThird) }
   ];
 
 // import First from '@app/views/First';
@@ -52,12 +54,13 @@ class RoutesIndex extends Component {
 
   render () {
     const { ...props } = this.props
+    console.log(this.props)
     return (
       <div className="app-container">
         <App>
           <Switch>
               {routes.map((item, index) => (
-                 <Route key={index} path={item.path} exact  render={() => <item.component {...props} />} />
+                 <Route key={index} path={item.path} exact  render={() =><Suspense fallback={<div>Loading...</div>}>  <item.component {...props} />  </Suspense>} />
               ))}
           </Switch>
           </App>
