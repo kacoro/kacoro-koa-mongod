@@ -100,6 +100,7 @@ const serverConfig = { // node环境打包
   module: { // 模块：栗子 解读css，图片如何转换、压缩
     rules:[
       { test: /\.js(x?)$/, use: "babel-loader", exclude: /node_modules/ },
+      { test: /\.ts(x?)$/, use:[{loader:'babel-loader'},{loader:"ts-loader"}] , exclude: /node_modules/ },
       {
         test: /\.(s?)css$/,
         exclude: /node_modules/,
