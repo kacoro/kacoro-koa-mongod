@@ -2,7 +2,7 @@ import React, { Component,Suspense, lazy  } from 'react'
 import { BrowserRouter as Router, Route, Redirect, Switch,withRouter } from "react-router-dom";
 import App from '@app/views/App'
 
-// import Loadable from 'react-loadable';
+import Loadable from 'react-loadable';
 
 import asyncComponent from '@app/components/AsyncComponent'
 
@@ -13,22 +13,22 @@ const AsyncThird = asyncComponent(() => import(/* webpackChunkName: 'Second' */ 
 
 // const AsyncFirst = Loadable({
 //   loading: <div>loading...</div>,
-//   loader: () => import(/* webpackChunkName: 'First' */ '@app/views/First'), 
+//   loader: () => import( '@app/views/First'), 
 //  })
  
 //  const AsyncSecond = Loadable({
 //   loading: <div>loading...</div>,
-//   loader: () => import(/* webpackChunkName: 'Second' */ '@app/views/Second'), 
+//   loader: () => import( '@app/views/Second'), 
 //  })
 //  const AsyncThird = Loadable({
 //   loading: <div>loading...</div>,
-//   loader: () => import(/* webpackChunkName: 'Third' */ '@app/views/Third'), 
+//   loader: () => import( '@app/views/Third'), 
 //  })
 
  const routes = [
   { path: '/', component: AsyncFirst },
-  { path: '/first', component: AsyncFirst },
-  { path: '/second', component: AsyncSecond },
+  { path: '/first', component: AsyncFirst  },
+  { path: '/second', component: AsyncSecond  },
   { path: '/third', component: AsyncThird }
   ];
 
@@ -57,7 +57,7 @@ class RoutesIndex extends Component {
         <App>
           <Switch>
               {routes.map((item, index) => (
-                 <Route key={index} path={item.path} exact render={() => <item.component {...props} />} />
+                 <Route key={index} path={item.path} exact  render={() => <item.component {...props} />} />
               ))}
           </Switch>
           </App>
