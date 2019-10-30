@@ -2,6 +2,9 @@ const path = require("path")
 const webpack = require('webpack');
 const HtmlwebpackPlugin = require('html-webpack-plugin');
 const externalPlugins = require('webpack-node-externals')
+const CleanWebpackPlugin = require( "clean-webpack-plugin" );       // 每次运行打包时清理过期文件
+const MinCssExtractPlugin = require( "mini-css-extract-plugin" );   // 将css代码提取为独立文件的插件
+
 var APP_PATH = path.resolve(__dirname, '../src')
 const clientConfig  = {
     mode:'production',
@@ -38,6 +41,20 @@ const clientConfig  = {
                   }
               }
             },
+            {
+              test: /\.(s?)css$/,
+              exclude: /node_modules/,
+              use: [
+                // {loader: 'style-loader'}, // 当配置MinCssExtractPlugin.loader后，此项就无需配置，原因看各自作用
+                 {loader: MinCssExtractPlugin.loader},  // 将处理后的CSS代码提取为独立的CSS文件
+                {loader:'css-loader', options: { modules: {localIdentName: '[local]_[hash:base64:10]' }} },   // CSS加载器，使webpack可以识别css文件
+                {loader: 'sass-loader',
+                options: {      // loader 的额外参数，配置视具体 loader 而定
+                
+                  sourceMap: true, // 要安装resolve-url-loader，当此配置项启用 sourceMap 才能正确加载 Sass 里的相对路径资源，类似background: url(../image/test.png)
+                 }}, 
+              ]
+            },
             { test: /\.html$/, loader: 'html-loader' }
           ]
     },
@@ -49,12 +66,16 @@ const clientConfig  = {
         }
       },
     plugins:[new HtmlwebpackPlugin({ // 在build目录下自动生成index.html
-       
+        
         template: path.resolve(__dirname, '../src/template/server.html'), // 指定要打包的html路径和文件名
         filename: './views/index.html', // 指定输出路径和文件名
         // chunks: ['main'], // 页面中所需要的js
        
-      })],
+      }),
+      new MinCssExtractPlugin( {
+        //为抽取出的独立的CSS文件设置配置参数
+        filename: "[name].css"
+    } )],
     devServer:{
         contentBase: path.resolve(__dirname, '../dist'), // 配置开发服务运行时的文件根目录
         host: 'localhost', // 服务器监听的主机地址 localhost || 127.0.0.1
@@ -77,7 +98,21 @@ const serverConfig = { // node环境打包
   externals: [externalPlugins()],
   module: { // 模块：栗子 解读css，图片如何转换、压缩
     rules:[
-      { test: /\.js(x?)$/, use: "babel-loader", exclude: /node_modules/ }
+      { test: /\.js(x?)$/, use: "babel-loader", exclude: /node_modules/ },
+      {
+        test: /\.(s?)css$/,
+        exclude: /node_modules/,
+        use: [
+          {loader: 'isomorphic-style-loader'}, // 当配置MinCssExtractPlugin.loader后，此项就无需配置，原因看各自作用
+          //  {loader: MinCssExtractPlugin.loader},  // 将处理后的CSS代码提取为独立的CSS文件
+          {loader:'css-loader', options: { modules: {localIdentName: '[local]_[hash:base64:10]' }} },   // CSS加载器，使webpack可以识别css文件
+          {loader: 'sass-loader',
+          options: {      // loader 的额外参数，配置视具体 loader 而定
+          
+            sourceMap: true, // 要安装resolve-url-loader，当此配置项启用 sourceMap 才能正确加载 Sass 里的相对路径资源，类似background: url(../image/test.png)
+           }}, 
+        ]
+      }
     ]
   },
   resolve: {
