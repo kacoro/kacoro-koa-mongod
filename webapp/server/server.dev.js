@@ -7,8 +7,11 @@ require('@babel/core').transform('code', {
     plugins: ['@babel/plugin-transform-runtime']
 });
 require('css-modules-require-hook')({
-    extensions: ['.less'],
-    processorOpts: { parser: require('postcss-less').parse },
+    extensions: ['.scss'],
+    preprocessCss:  (data, filename) => require('node-sass').renderSync({
+        data,
+        file: filename
+    }).css ,
     camelCase: true,
     generateScopedName: '[local]_[hash:base64:10]'
 });
@@ -17,27 +20,28 @@ require('asset-require-hook')({
     extensions: ['jpg', 'png', 'gif', 'webp'],
     limit: 8192
 });
-
+require('module-alias/register')
 const fs = require('fs');
 const path = require('path');
 const views = require('koa-views');
 const convert = require('koa-convert');
 const webpack = require('webpack');
-const config = require('../build/webpack.dev.config');
+const config = require('../build/webpack.dev');
 const compiler = webpack(config);
 const devMiddleware = require('koa-webpack-dev-middleware');
 const hotMiddleware = require('koa-webpack-hot-middleware');
 const app = require('./app.js').default;
 const router = require('./routes').default;
 const clientRoute = require('./middlewares/clientRoute').default;
-const port = process.env.port || 3000;
+
+const port = process.env.port || 5200;
 
 compiler.plugin('emit', (compilation, callback) => {
     const assets = compilation.assets;
     let file, data;
     Object.keys(assets).forEach(key => {
         if (key.match(/\.html$/)) {
-            file = path.resolve(__dirname, key);
+            file = path.resolve(__dirname,'../'+ key);
             data = assets[key].source();
             fs.writeFileSync(file, data);
         }
