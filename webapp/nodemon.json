@@ -1,6 +1,9 @@
 {
     "restartable": "rs",
     "verbose": true,
+    "watch": [
+        "dist/",
+    ],
     "ignore": [
         "dist/client/**",
         "client/**",

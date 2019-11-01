@@ -3,6 +3,7 @@ import getData from '../../common/getData';
 class First extends Component {
   constructor(props) {
     super(props);
+    console.log("props",props)
     this.state = {
         user: props.staticContext
     };
@@ -13,7 +14,7 @@ class First extends Component {
   }
 
   async UNSAFE_componentWillMount () {
-    this.setState({ user: await getData('/') });
+    // this.setState({ user: await getData('/') });
   }
   
   changeRouter = () => {

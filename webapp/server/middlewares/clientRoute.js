@@ -1,4 +1,5 @@
 import React, { Component,Suspense, lazy  } from 'react'
+import { Helmet } from 'react-helmet'
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -17,7 +18,7 @@ async function clientRoute(ctx, next) {
     for (let item of routes) {
         if (item.path == ctx.url) {
             const data = await getData(ctx.url);
-            
+            console.log(data)
             await ctx.render('index', {
                 root: renderToString(
                     extractor.collectChunks(<Provider store={store}>
@@ -25,7 +26,8 @@ async function clientRoute(ctx, next) {
                             <RoutesIndex {...store.getState()} />
                         </StaticRouter>
                     </Provider>)
-                )
+                ),
+                helmet:Helmet.renderStatic()
             });
             break;
         }

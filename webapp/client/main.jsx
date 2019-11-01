@@ -2,4 +2,4 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Router from './router/client'
 
-ReactDOM.render(<Router />, document.getElementById('root'))
+ReactDOM.hydrate(<Router />, document.getElementById('root'))
