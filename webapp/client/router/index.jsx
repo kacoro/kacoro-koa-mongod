@@ -9,9 +9,9 @@ import asyncComponent from '@app/components/AsyncComponent'
 // const AsyncSecond = asyncComponent(() => import(/* webpackChunkName: 'Second' */ '@app/views/Second'));
 // const AsyncThird = asyncComponent(() => import(/* webpackChunkName: 'Second' */ '@app/views/Third'));
 
-// const AsyncFirst = loadable(() => import('@app/views/First'));
-// const AsyncSecond = loadable(() => import('@app/views/Second'));
-// const AsyncThird = loadable(() => import('@app/views/Third'));
+const AsyncFirst = loadable(() => import('@app/views/First'));
+const AsyncSecond = loadable(() => import('@app/views/Second'));
+const AsyncThird = loadable(() => import('@app/views/Third'));
 // const AsyncFirst2 = Loadable({
 //   loading: <div>loading...</div>,
 //   loader: () => import( '@app/views/First'), 
@@ -35,8 +35,8 @@ import asyncComponent from '@app/components/AsyncComponent'
 //   ];
 
 import First from '@app/views/First';
-import Second from '@app/views/Second';
-import Third from '@app/views/Third';
+// import Second from '@app/views/Second';
+// import Third from '@app/views/Third';
 
 // const routes = [
 //   { path: '/', component: withRouter(First) },
@@ -53,21 +53,21 @@ const routes = [
           },
           {
               path: "/first",
-              component: withRouter(First),
+              component: withRouter(AsyncFirst),
               routes: [
                   {
                       path: "/child/:id/grand-child",
-                      component: withRouter(First)
+                      component: withRouter(AsyncFirst)
                   }
               ]
           },
           {
               path: '/second', exact: true,
-              component: withRouter(Second),
+              component: withRouter(AsyncSecond),
           },
           {
               path: '/third', exact: true,
-              component: withRouter(Third)
+              component: withRouter(AsyncThird)
           }
 ];
 
