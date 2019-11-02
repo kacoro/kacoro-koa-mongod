@@ -1,0 +1,34 @@
+@import "@app/UI/Styles/Colors/index.scss";
+
+.button {
+    display: inline-block;
+    color:$wihteColor;
+    background-color: $primary;
+    border: 1px solid $primary;
+    outline: 0;
+    font-size: 14px;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+    cursor: pointer;
+    margin-right: 8px;
+    &:hover{
+        
+        background-color: lighten($primary,10%);
+        
+    }
+    
+}
+
+
+
+.outlined{
+    border: 1px solid $primary;
+    background-color:$wihteColor;
+    color: $primary;
+    &:hover{
+        
+        background-color: lighten($primary,70%);
+    }
+}

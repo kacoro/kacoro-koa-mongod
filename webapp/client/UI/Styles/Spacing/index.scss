@@ -1,0 +1,28 @@
+// 间距
+
+$size:1px;
+$length:50;
+
+//through
+@for $i from 1 through $length {
+    .px-#{$i} { padding: $size * $i 0; }
+    .py-#{$i} { padding: 0 $size * $i; }
+    .pa-#{$i} { padding: $size * $i; }
+    .pt-#{$i} { padding-top: $size * $i; }
+    .pr-#{$i} { padding-right: $size * $i; }
+    .pb-#{$i} { padding-bottom: $size * $i; }
+    .pl-#{$i} { padding-left: $size * $i; }
+}
+  
+@for $i from 1 through $length {
+  .mx-#{$i} { margin: $size * $i 0; }
+  .my-#{$i} { margin: 0 $size * $i; }
+  .ma-#{$i} { margin: $size * $i; }
+  .mt-#{$i} { margin-top: $size * $i; }
+  .mr-#{$i} { margin-right: $size * $i; }
+  .mb-#{$i} { margin-bottom: $size * $i; }
+  .ml-#{$i} { margin-left: $size * $i; }
+}
+  
+  
+  //to

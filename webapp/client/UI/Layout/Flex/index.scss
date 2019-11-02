@@ -1,0 +1,67 @@
+.Flex{
+   display: flex;
+  
+   // flex-direction 属性决定主轴的方向（即项目的排列方向）。
+   &.direction-row{
+      flex-direction: row //row（默认值）：主轴为水平方向，起点在左端。
+   }
+   &.direction-reverse {
+      flex-direction: row-reverse // 主轴为水平方向，起点在右端。
+   }
+   &.direction-column{
+      flex-direction: column // 主轴为垂直方向，起点在上沿。
+   }
+   &.direction-column-reverse{
+      flex-direction: column-reverse// 主轴为垂直方向，起点在下沿。
+   }
+
+   // flex-wrap属性 默认情况下，项目都排在一条线（又称"轴线"）上。flex-wrap属性定义，如果一条轴线排不下，如何换行。
+   &.wrap-nowrap{ //（默认）：不换行。
+      flex-wrap: nowrap;
+   }
+   &.wrap-wrap{
+      flex-wrap:  wrap; //换行，第一行在上方。
+   }
+   &.wrap-reverse{
+      flex-wrap: wrap-reverse; //换行，第一行在下方。
+   }
+
+   //flex-flow属性是flex-direction属性和flex-wrap属性的简写形式，默认值为row nowrap
+
+    //justify-content属性定义了项目在水平上的对齐方式。
+    &.justify-start{
+      justify-content: flex-start; //（默认值）：起点对齐
+   }
+   &.justify-end{
+      justify-content:flex-end;  //终点对齐
+   }
+   &.justify-center{
+      justify-content:center;  // 中点对齐
+   }
+   &.justify-between{
+      justify-content:space-between; //两端对齐，项目之间的间隔都相等。
+   }
+   &.justify-around{
+      justify-content:space-around; //每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。
+   }
+
+   //align-items属性定义项目在垂直轴上如何对齐。
+   &.align-start{
+      align-items:start; //起点对齐
+   }
+   &.align-end{
+      align-items:end;  // 终点对齐
+   }
+   &.align-center{
+      align-items:center; //中点对齐
+   }
+   &.align-baseline{
+      align-items:baseline; //项目的第一行文字的基线对齐
+   }
+   &.align-stretch{
+      align-items:stretch; // 如果项目未设置高度或设为auto，将占满整个容器的高度。
+   }
+
+   // align-content属性定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。
+  
+}

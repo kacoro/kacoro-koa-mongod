@@ -1,0 +1,42 @@
+.Modal {
+   
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  
+  transform: translate(-50%, -50%);
+  //  display: flex;
+  //  align-items:center;
+  
+  //  justify-content:center;
+   outline: none;
+  }
+
+
+  .Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.15)
+  }
+  .Content{
+    width: 384px;
+    box-sizing: border-box;
+     position: relative;
+    -webkit-overflow-scrolling:touch;
+    box-shadow: 0 12px 24px 0 rgba(28,31,33,.1);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+  }
+  .Close{
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 0;
+    right: -.5em;
+    top: -.5em;
+  }

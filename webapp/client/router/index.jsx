@@ -55,7 +55,7 @@ const routes = [
           },
           {
               path: "/first",
-              component: AsyncFirst,
+              component: withRouter(AsyncFirst),
               routes: [
                   {
                       path: "/child/:id/grand-child",
@@ -91,14 +91,16 @@ class RoutesIndex extends Component {
     const {...props} = this.props
     return (
       <div className="app-container">
-        <App>
+       
           <Switch>
+          <App  {...props}>
               {routes.map((item, index) => (
                  <Route key={index} path={item.path} exact render={() => 
                  <item.component {...props} />} />
               ))}
+                </App>
           </Switch>
-          </App>
+        
       </div>
     );
   }

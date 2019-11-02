@@ -50,14 +50,18 @@ export const signIn = async ctx => {
     const data = await User.findOne(condition)
     try {
         if(bcrypt.compareSync(password,data.password)){
-            ctx.body = {id:data._id,msg:"登录成功"}
+            const d = await User.findByIdAndUpdate(data._id,{logindate:new Date()})
+            console.log(d)
+            ctx.body = {id:data._id,msg:"登录成功"} 
+            //更新登录时间
+           
         }else{
             ctx.status = 401 //表示用户没有权限（令牌、用户名、密码错误）。
             ctx.body = {msg:"用户名或密码错误"};
         }
     } catch (error) {
         // ctx.status = 500 //服务器发生错误，用户将无法判断发出的请求是否成功。
-        ctx.body = {msg:"服务器发生错误"};
+        ctx.body = {msg:"服务器发生错误",error};
     }
 };
 
@@ -80,7 +84,7 @@ export const signUp = async ctx => {
         }
     } catch (error) {
         ctx.status = 500
-        ctx.body = {msg:"服务器发生错误"};
+        ctx.body = {msg:"服务器发生错误",error};
     }
   
 };

@@ -1,0 +1,29 @@
+.text-start{
+    text-align: left;
+}
+
+.text-center{
+    text-align:center;
+}
+.text-right{
+    text-align: right;
+}
+
+.text-no-wrap{
+    white-space: nowrap !important;
+}
+.text-truncate{
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+.text-lowercase{
+    text-transform: lowercase !important;
+}
+.text-uppercase{
+    text-transform: uppercase !important;
+}
+
+.text-capitalize{
+    text-transform: capitalize !important;
+}
