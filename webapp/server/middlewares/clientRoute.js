@@ -42,12 +42,13 @@ async function clientRoute(ctx, next) {
     //   })
    
  
-    // for (let item of routes) {
-        // if (item.path == ctx.url) {
+    for (let item of routes) {
+        if (item.path == ctx.url) {
             // const data = await getData(ctx.url);
             console.log(ctx.url)
             const branch = matchRoutes(routes,ctx.url)
             var data = {}
+            console.log(branch)
             var com = await branch[0].route.component
             if(com.load){ // 如果是动态加载的
                 com = await com.load()
@@ -70,8 +71,8 @@ async function clientRoute(ctx, next) {
                 propsData:propsData
             });
             // break;
-        // }
-    // }
+        }
+    }
     await next();
 }
 

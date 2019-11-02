@@ -17,20 +17,16 @@ class First extends Component {
   }
   
   async componentDidMount() {
-    if (!this.props.context) { //非服务端渲染需要自身进行数据获取
- 
-      Index.getInitialProps(this.props.krsOpt).then(data => {
-       
+    let checkInit = JSON.stringify(this.props.initialData) === "{}"
+    console.log(checkInit)
+    if (checkInit) { //非服务端渲染需要自身进行数据获取
+      
+     const data = await First.getInitialProps()
+     console.log(data)
         this.setState({
-        
         ...data
-        
-        }, () => {
-        
-        //可有的一些操作
-        
-        });
-      })
+        })
+      
     }
   }
 

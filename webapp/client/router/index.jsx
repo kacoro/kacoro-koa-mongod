@@ -12,6 +12,8 @@ import asyncComponent from '@app/components/AsyncComponent'
 const AsyncFirst = loadable(() => import('@app/views/First'));
 const AsyncSecond = loadable(() => import('@app/views/Second'));
 const AsyncThird = loadable(() => import('@app/views/Third'));
+const AsyncSignin = loadable(() => import('@app/views/Signin'));
+const AsyncSignup = loadable(() => import('@app/views/Signup'));
 // const AsyncFirst2 = Loadable({
 //   loading: <div>loading...</div>,
 //   loader: () => import( '@app/views/First'), 
@@ -53,7 +55,7 @@ const routes = [
           },
           {
               path: "/first",
-              component: withRouter(AsyncFirst),
+              component: AsyncFirst,
               routes: [
                   {
                       path: "/child/:id/grand-child",
@@ -68,7 +70,15 @@ const routes = [
           {
               path: '/third', exact: true,
               component: withRouter(AsyncThird)
-          }
+          },
+          {
+            path: '/signin', exact: true,
+            component: withRouter(AsyncSignin)
+        },
+        {
+          path: '/signup', exact: true,
+          component: withRouter(AsyncSignup)
+      }
 ];
 
 class RoutesIndex extends Component {
@@ -77,14 +87,15 @@ class RoutesIndex extends Component {
   };
 
   render () {
-    const { ...props } = this.props
- 
+    console.log(this.props)
+    const {...props} = this.props
     return (
       <div className="app-container">
         <App>
           <Switch>
               {routes.map((item, index) => (
-                 <Route key={index} path={item.path} exact render={() => <item.component {...props} />  } />
+                 <Route key={index} path={item.path} exact render={() => 
+                 <item.component {...props} />} />
               ))}
           </Switch>
           </App>

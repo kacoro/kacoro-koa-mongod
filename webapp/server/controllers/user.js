@@ -1,5 +1,6 @@
-const User = require('../models/user')
-
+import User from '../models/user'
+import bcrypt from 'bcrypt'
+const config = require('../config')
 // const findUserInfo = () => {
 //     const _sql = 'select * from user';
 //     return query(_sql, []);
@@ -23,7 +24,7 @@ export const list = async (ctx, next) => {
   let hasMore = totle - (page - 1) * size > size ? true : false;
   let num = Math.ceil(totle / size)
   
-  ctx.bod = { title, list: result, page, size, hasMore, totle, hasMore, num }
+  ctx.body = { title, list: result, page, size, hasMore, totle, hasMore, num }
 }
 
 export const getUser = async ctx => {
@@ -40,6 +41,48 @@ export const getUser = async ctx => {
         age: 24
     };
     ctx.body = data;
+};
+
+export const signIn = async ctx => {
+    
+    const {username,password} = ctx.request.body
+    var condition = {username:username}; //条件 
+    const data = await User.findOne(condition)
+    try {
+        if(bcrypt.compareSync(password,data.password)){
+            ctx.body = {id:data._id,msg:"登录成功"}
+        }else{
+            ctx.status = 401 //表示用户没有权限（令牌、用户名、密码错误）。
+            ctx.body = {msg:"用户名或密码错误"};
+        }
+    } catch (error) {
+        // ctx.status = 500 //服务器发生错误，用户将无法判断发出的请求是否成功。
+        ctx.body = {msg:"服务器发生错误"};
+    }
+};
+
+export const signUp = async ctx => {
+    const {username,password} = ctx.request.body
+    var condition = {username:username}; //条件 
+    if(username==''|| password==''){
+        ctx.status = 422 //当创建一个对象时，发生一个验证错误。
+        ctx.body = {msg:"用户名密码不能为空"};
+    }
+    try {
+        const data = await User.findOne(condition)
+        if(data){
+            ctx.status = 422 //当创建一个对象时，发生一个验证错误。
+            ctx.body = {msg:"用户已注册"};
+        }else{
+            let user=  new User({username,password:bcrypt.hashSync(password,config.saltRounds)})
+            var result = await user.save()
+            ctx.body = {id:result.id,msg:"注册成功！"};
+        }
+    } catch (error) {
+        ctx.status = 500
+        ctx.body = {msg:"服务器发生错误"};
+    }
+  
 };
 
  

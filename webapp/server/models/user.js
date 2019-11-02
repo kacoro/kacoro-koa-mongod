@@ -11,4 +11,4 @@ var UserSchema = new Schema({ username : { type: String }, //用户账号
     nickname:{type: String},
     createTime : { type:Date, default:Date.now }
 })
-module.exports = mongoose.model('User',UserSchema);
+export default mongoose.model('User',UserSchema);
