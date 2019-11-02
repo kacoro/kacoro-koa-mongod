@@ -10,11 +10,11 @@ class ConfigRouter extends Component {
   };
 
   render () {
-    console.log('wo xuan rang le')
+    
     return (
-      <Provider store={store}>
-      <Router >
-              <Connect>
+      <Provider store={store} >
+      <Router>
+              <Connect  {...this.props}>
                 
               </Connect>
       </Router>

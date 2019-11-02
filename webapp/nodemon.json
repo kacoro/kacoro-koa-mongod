@@ -2,13 +2,9 @@
     "restartable": "rs",
     "verbose": true,
     "watch": [
-        "dist/",
+        "dist/"
     ],
     "ignore": [
-        "dist/client/**",
-        "client/**",
-        "build/**",
-        "server/**",
-        "views/**"
+      
     ]
 }
