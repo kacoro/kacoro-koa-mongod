@@ -1,7 +1,7 @@
 import React, { Component  } from 'react'
 import { BrowserRouter as Router,Switch} from "react-router-dom";
 
-import Connect from '../views'
+import Connect from '../pages'
 import { Provider } from 'react-redux';
 import store from '../redux/store';
 class ConfigRouter extends Component {

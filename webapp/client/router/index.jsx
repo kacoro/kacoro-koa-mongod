@@ -1,31 +1,31 @@
 import React, { Component,Suspense, lazy  } from 'react'
 import { BrowserRouter as Router, Route, Redirect, Switch,withRouter } from "react-router-dom";
-import App from '@app/views/App'
+import App from '@app/pages/App'
 import loadable from '@loadable/component'
 
 import asyncComponent from '@app/components/AsyncComponent'
 
-// const AsyncFirst = asyncComponent(() => import(/* webpackChunkName: 'First' */ '@app/views/First'));
-// const AsyncSecond = asyncComponent(() => import(/* webpackChunkName: 'Second' */ '@app/views/Second'));
-// const AsyncThird = asyncComponent(() => import(/* webpackChunkName: 'Second' */ '@app/views/Third'));
+// const AsyncFirst = asyncComponent(() => import(/* webpackChunkName: 'First' */ '@app/pages/First'));
+// const AsyncSecond = asyncComponent(() => import(/* webpackChunkName: 'Second' */ '@app/pages/Second'));
+// const AsyncThird = asyncComponent(() => import(/* webpackChunkName: 'Second' */ '@app/pages/Third'));
 
-const AsyncFirst = loadable(() => import('@app/views/First'));
-const AsyncSecond = loadable(() => import('@app/views/Second'));
-const AsyncThird = loadable(() => import('@app/views/Third'));
-const AsyncSignin = loadable(() => import('@app/views/Signin'));
-const AsyncSignup = loadable(() => import('@app/views/Signup'));
+const AsyncFirst = loadable(() => import('@app/pages/First'));
+const AsyncSecond = loadable(() => import('@app/pages/Second'));
+const AsyncThird = loadable(() => import('@app/pages/Third'));
+const AsyncSignin = loadable(() => import('@app/pages/Signin'));
+const AsyncSignup = loadable(() => import('@app/pages/Signup'));
 // const AsyncFirst2 = Loadable({
 //   loading: <div>loading...</div>,
-//   loader: () => import( '@app/views/First'), 
+//   loader: () => import( '@app/pages/First'), 
 //  })
  
 //  const AsyncSecond = Loadable({
 //   loading: <div>loading...</div>,
-//   loader: () => import( '@app/views/Second'), 
+//   loader: () => import( '@app/pages/Second'), 
 //  })
 //  const AsyncThird = Loadable({
 //   loading: <div>loading...</div>,
-//   loader: () => import( '@app/views/Third'), 
+//   loader: () => import( '@app/pages/Third'), 
 //  })
 
 

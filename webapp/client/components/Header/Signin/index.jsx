@@ -1,7 +1,7 @@
 import React from 'react';
 import './index.scss';
 import request from '@app/common/request';
-import Modal from '@app/components/Modal';
+import Modal from '@app/UI/Modal';
 import { Input } from '@app/UI/Form';
 
 import { Flex,FlexItem } from '@app/UI/Layout';
@@ -74,7 +74,9 @@ class Index extends React.Component {
             
           </Flex>
           <Flex align="center" className={styles['pb-15']}>
-            密码：<Input type="password" name="password" value={this.state.password} onChange={this.handleInputChange}></Input>
+            密码：<FlexItem flex="auto">
+            <Input type="password" name="password" value={this.state.password} onChange={this.handleInputChange}></Input>
+            </FlexItem>
           </Flex>
           <Flex align="center" justify="center">
             <Button onClick={this.handleLogin}>登 录</Button>  <Button className="outlined" onClick={this.changeRouter}>注 册</Button>
