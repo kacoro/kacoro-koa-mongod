@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import {Link} from "react-router-dom";
 import getData from '../../common/getData';
-class First extends Component {
+class Index extends Component {
   constructor(props) {
     super(props);
      console.log("super",this.props)
@@ -11,9 +12,9 @@ class First extends Component {
   }
   //数据预取方法 静态 异步 方法
   static  async getInitialProps() {
-    const user = await getData("user");
+    const data = await getData("news");
   
-    return {user}
+    return {data}
   }
   
   async componentDidMount() {
@@ -21,7 +22,7 @@ class First extends Component {
     console.log(checkInit)
     if (checkInit) { //非服务端渲染需要自身进行数据获取
       
-     const data = await First.getInitialProps()
+     const data = await Index.getInitialProps()
      console.log(data)
         this.setState({
         ...data
@@ -45,17 +46,29 @@ class First extends Component {
   }
   render() {
     console.log('first',this.state)
-    const { user } = this.state;
+    if(!this.state){
+      return (<div>news1</div>)
+    }
+    const { data } = this.state;
+    if(!data){
+      return (<div>news2</div>)
+    }
+    const listItems = data.list.map((item,index) =>
+    <div key={index} >
+     
+        <Link to={`/news/${item._id}`}>{item.title}</Link>
+        <span>{item.addTime}</span>
+        <p>{item.note}</p>
+     </div>
+
+    );
     return (
       <div>
         <p  onClick={this.changeRouter}>First</p>
-        <p>{user && user.userId}</p>
-                <p>{user && user.name}</p>
-                <p>{user && user.gender}</p>
-                <p>{user && user.age}</p>
+         {listItems}
       </div>
     );
   }
 }
 
-export default First;
+export default Index;

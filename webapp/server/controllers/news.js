@@ -23,7 +23,7 @@ export const getNews = async (ctx, next) => {
   let hasMore = totle - (page - 1) * size > size ? true : false;
   let num = Math.ceil(totle / size)
   
-  ctx.body = { title, list: result, page, size, hasMore, totle, hasMore, num }
+  ctx.body = {  list: result, page, size, hasMore, totle, hasMore, num }
 }
 
 export const getNewsById = async ctx => {

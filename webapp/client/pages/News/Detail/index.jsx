@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import getData from '../../common/getData';
-class First extends Component {
+import {Link} from "react-router-dom";
+import getData from '@app/common/getData';
+class Index extends Component {
   constructor(props) {
     super(props);
      console.log("super",this.props)
@@ -11,9 +12,9 @@ class First extends Component {
   }
   //数据预取方法 静态 异步 方法
   static  async getInitialProps() {
-    const user = await getData("user");
+    const data = await getData("news");
   
-    return {user}
+    return {data}
   }
   
   async componentDidMount() {
@@ -21,8 +22,8 @@ class First extends Component {
     console.log(checkInit)
     if (checkInit) { //非服务端渲染需要自身进行数据获取
       
-     const data = await First.getInitialProps()
-     console.log(data)
+     const data = await Index.getInitialProps()
+    
         this.setState({
         ...data
         })
@@ -36,26 +37,18 @@ class First extends Component {
   
   changeRouter = () => {
     
-    this.props.history.push({
-      pathname: '/second',
-      state: {
-        text: 'from first'
-      }
-    });
+   
   }
   render() {
-    console.log('first',this.state)
-    const { user } = this.state;
+    console.log('detail')
+   
     return (
       <div>
-        <p  onClick={this.changeRouter}>First</p>
-        <p>{user && user.userId}</p>
-                <p>{user && user.name}</p>
-                <p>{user && user.gender}</p>
-                <p>{user && user.age}</p>
+        <p  onClick={this.changeRouter}>detail</p>
+       
       </div>
     );
   }
 }
 
-export default First;
+export default Index;

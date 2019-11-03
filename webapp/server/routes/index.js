@@ -8,5 +8,5 @@ router.post('/signin', signIn);
 router.post('/signup', signUp);
 
 router.get('/news', getNews);
-router.get('/news:id', getNewsById);
+router.get('/news/:id', getNewsById);
 export default router;

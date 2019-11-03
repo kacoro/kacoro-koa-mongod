@@ -42,8 +42,8 @@ async function clientRoute(ctx, next) {
     //   })
    
  
-    for (let item of routes) {
-        if (item.path == ctx.url) {
+    // for (let item of routes) {
+    //     if (item.path == ctx.url) {
             // const data = await getData(ctx.url);
             console.log(ctx.url)
             const branch = matchRoutes(routes,ctx.url)
@@ -71,8 +71,8 @@ async function clientRoute(ctx, next) {
                 propsData:propsData
             });
             // break;
-        }
-    }
+    //     }
+    // }
     await next();
 }
 

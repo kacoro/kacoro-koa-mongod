@@ -4,10 +4,10 @@ const mongoose = require('../module/mongoose.js')
 const Schema = mongoose.Schema
 var NewsSchema = new Schema({ username : { type: String }, //用户账号 
     title: {type: String}, //标题 
-    keywords: {type: Number}, //关键字 
-    description : { type: Date}, //描述 
+    keywords: {type: String}, //关键字 
+    description : { type: String}, //描述 
     cate_id:{type: Number,default:0 }, //分类id
-    cate_name : { type:Date, default:Date.now }, //分类名称
+    cate_name : { type:String}, //分类名称
     content:{type: String}, //内容
     note:{type: String},    //概述
     thumbnails:{type: Array},

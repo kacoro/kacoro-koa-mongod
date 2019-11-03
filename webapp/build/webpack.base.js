@@ -16,7 +16,8 @@ const clientConfig  = {
     output:{
         path:path.resolve(__dirname,'../dist'), // 打包文件的输出目录
         // chunkFilename: '[name].bundle.js',
-        filename:"js/[name].bundle.js"
+        filename:"js/[name].[hash].js",
+        publicPath:'/'
         // publicPath:path.resolve(__dirname,'../dist/') // js引用路径或者CDN地址
     },
     module:{
