@@ -47,29 +47,33 @@ async function clientRoute(ctx, next) {
             // const data = await getData(ctx.url);
             console.log(ctx.url)
             const branch = matchRoutes(routes,ctx.url)
-            var data = {}
-            console.log(branch)
-            var com = await branch[0].route.component
-            if(com.load){ // 如果是动态加载的
-                com = await com.load()
-                com = com.default
-            }
-            console.log(com.getInitialProps)
-            if(com.getInitialProps){
-                data = await com.getInitialProps()
+          
+            if(branch.length > 0) {
+              var data = {}
+              var com = await branch[0].route.component
+              if(com.load){ // 如果是动态加载的
+                  com = await com.load()
+                  com = com.default
+              }
+              console.log(com.getInitialProps)
+              if(com.getInitialProps){
+                  data = await com.getInitialProps()
+              }
+            
+             
+              console.log(data)
+              //数据注水
+              const propsData = `<textarea id="krs-server-render-data-BOX" style="display:none" >${JSON.stringify(data)}</textarea>`;
+              const chunks = extractor.collectChunks(<Provider store={store}><StaticRouter location={ctx.url} ><RoutesIndex {...store.getState()}   context={data} /></StaticRouter></Provider>)
+             
+              await ctx.render('index', {
+                  root: renderToString(chunks),
+                  helmet:Helmet.renderStatic(),
+                  propsData:propsData
+              });
             }
           
            
-            console.log(data)
-            //数据注水
-            const propsData = `<textarea id="krs-server-render-data-BOX" style="display:none" >${JSON.stringify(data)}</textarea>`;
-            const chunks = extractor.collectChunks(<Provider store={store}><StaticRouter location={ctx.url} ><RoutesIndex {...store.getState()}   context={data} /></StaticRouter></Provider>)
-           
-            await ctx.render('index', {
-                root: renderToString(chunks),
-                helmet:Helmet.renderStatic(),
-                propsData:propsData
-            });
             // break;
     //     }
     // }
