@@ -12,21 +12,24 @@ class BasePage extends Component {
   
     //获得初始化数据 有数据则表示为服务端渲染
     getInitialData = (props) => {
-      console.log(props)
-      const contextData = props.context 
+      
       const initPath = props.initPath
-      console.log(initPath)
+     const {context,location,initialData} = props
       this.isSSR = false;
       this.hasSpaCacheData = false;//单页数据是否保存
       // 根据入口的url和当前的url判断。是否一直
 
-      if (contextData) {
+      if (context) {
           this.isSSR = true;//表示服务端渲染的首屏
-          return contextData;
+          return context;
       }else{
           if(__CLIENT__){
-              
-              return props.initialData;
+            if(location.pathname+location.search ===this.props.initPath &&JSON.stringify(initialData) !== "{}"){
+                this.hasSpaCacheData=true;
+                return initialData
+            }
+            
+            return {};
           }
           return null;
       }

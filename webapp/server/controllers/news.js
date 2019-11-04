@@ -9,10 +9,10 @@ export const getNews = async (ctx, next) => {
   let totle = await News.countDocuments();//表总记录数
   //koa-bodyparser解析前端参数
 
-  let reqParam = ctx.query;
-  let page = Number(reqParam.page) || 1;//当前第几页
-  let size = Number(reqParam.size) || 10;//每页显示的记录条数
-
+  let query = ctx.query;
+  let page = Number(query.page) || 1;//当前第几页
+  let size = Number(query.size) || 10;//每页显示的记录条数
+  let catename = query.catename || '';
   //显示符合前端分页请求的列表查询
   var condition = {}; //条件 
   var sort = { 'createTime': -1 }; //排序（按登录时间倒序） 
@@ -30,7 +30,6 @@ export const getNews = async (ctx, next) => {
 }
 
 export const getNewsById = async ctx => {
-    console.log("ctx12313",ctx.request,ctx.query,ctx.params)
     const {id} = ctx.params
     var condition = {_id:id}; //条件 
     const data = await News.findOne(condition)

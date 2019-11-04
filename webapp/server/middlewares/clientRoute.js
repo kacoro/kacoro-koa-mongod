@@ -17,12 +17,12 @@ global.__SERVER__=true;
 global.__CLIENT__ = false;
 
 async function clientRoute(ctx, next) {
-
-
-
-
-  const branch = matchRoutes(routes, ctx.url)
-
+  
+  var pathname = ctx.req._parsedUrl.pathname
+  const search = ctx.req._parsedUrl.search
+ 
+  const branch = matchRoutes(routes,pathname)
+   console.log(branch)
   if (branch.length > 0) {
     var data = {}
     var com = await branch[0].route.component
@@ -37,9 +37,11 @@ async function clientRoute(ctx, next) {
       //   query: ctx.query,
       //   params:  branch[0].match
       // }
+      console.log()
       const opt = {
         isSSR:true,
-        path:branch[0].match.params.id}
+        search:search,
+        params:branch[0].match.params}
       data = await com.getInitialProps(opt)
     }
     //参数带入
@@ -71,6 +73,7 @@ function matchRoutes(routes, pathname,
   }
 
   routes.some(function (route) {
+
     var match = route.path ? reactRouter.matchPath(pathname, route) : branch.length ? branch[branch.length - 1].match // use parent match
       : reactRouter.Router.computeMatch(pathname); // use default "root" match
 

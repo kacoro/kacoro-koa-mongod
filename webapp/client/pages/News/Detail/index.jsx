@@ -11,20 +11,18 @@ class Index extends BasePage {
 
   //数据预取方法 静态 异步 方法
   static  async getInitialProps(opt) {
-    const res = await getData(`news/${opt.path}`);
+    const res = await getData(`news/${opt.params.id}`);
     return {data:res.data}
   }
   
   async componentDidMount() {
-    console.log()
-    console.log(this)
     // let checkInit = JSON.stringify(this.props.initialData) === "{}"
     // console.log("detail",this.state)
 
-   
-    if (this.props.match.url!=this.props.initPath) { //非服务端渲染需要自身进行数据获取
+    console.log("Mount",this.isSSR,this.hasSpaCacheData)
+    if (!this.isSSR && !this.hasSpaCacheData) { //非服务端渲染需要自身进行数据获取
      
-     const res = await Index.getInitialProps({path:this.props.match.params.id})
+     const res = await Index.getInitialProps({params:this.props.match.params})
         this.setState({data:res.data})
     }
   }
@@ -42,6 +40,9 @@ class Index extends BasePage {
   render() {
     console.log('detail')
     const {data} = this.state
+    if(!data){
+      return <div>loading</div>
+    }
     const {title,content} = data
     return (
       <div>

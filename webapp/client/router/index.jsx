@@ -62,9 +62,7 @@ const routes = [
   {
     path: "/news",exact:true,
     component: withRouter(AsyncNews),
-   
   },
- 
   {
     path: "/first", exact:true,
     component: withRouter(AsyncFirst),

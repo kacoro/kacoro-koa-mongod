@@ -29,7 +29,7 @@ function entryIndex() {
     }
      
     if (APP_INIT_DATA) {//客户端渲染
-    let APP_INIT_PATH = location.pathname
+    let APP_INIT_PATH = location.pathname + location.search
     renderUI(APP_INIT_DATA,APP_INIT_PATH);
      
     }
