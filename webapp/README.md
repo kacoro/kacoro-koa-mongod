@@ -8,3 +8,16 @@ react + redux + scss + koa2 + typescript 的 SSR
 npm run all
 
 ```
+
+
+# client dev
+
+```
+npm run client:dev
+```
+
+# webapck build analazy 
+
+```
+npm run build --report
+```

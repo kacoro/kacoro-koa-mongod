@@ -15,7 +15,7 @@ export const getNews = async (ctx, next) => {
   let catename = query.catename || '';
   //显示符合前端分页请求的列表查询
   var condition = {}; //条件 
-  var sort = { 'createTime': -1 }; //排序（按登录时间倒序） 
+  var sort = { 'addTime': -1 }; //排序（按登录时间倒序） 
   var skip = (page - 1) * size; //跳过数 
   let result = await News.find(condition).skip(skip).limit(size).sort(sort)
   
@@ -24,7 +24,7 @@ export const getNews = async (ctx, next) => {
   let num = Math.ceil(totle / size)
   
   ctx.body = {
-    data:{  list: result, page, size, hasMore, totle, hasMore, num },
+    data:{  list: result, page, size, hasMore, totle,  num },
     msg:'成功'
   }
 }

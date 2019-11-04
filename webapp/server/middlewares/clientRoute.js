@@ -17,12 +17,12 @@ global.__SERVER__=true;
 global.__CLIENT__ = false;
 
 async function clientRoute(ctx, next) {
-  
+  console.log(ctx)
   var pathname = ctx.req._parsedUrl.pathname
   const search = ctx.req._parsedUrl.search
  
   const branch = matchRoutes(routes,pathname)
-   console.log(branch)
+ 
   if (branch.length > 0) {
     var data = {}
     var com = await branch[0].route.component

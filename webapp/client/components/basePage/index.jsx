@@ -4,9 +4,7 @@ const WindowsInitDataKey ='_initialData_';
 class BasePage extends Component {
   constructor(props) {
     super(props);
-    console.log('base constructor');
     this.state = this.getInitialData(props)
-    console.log('this.isssr', this.isSSR);
 }
 
   
@@ -34,9 +32,7 @@ class BasePage extends Component {
           return null;
       }
   }
-  componentDidMount(){
-      console.log('father did mount');
-  }
+ 
   async UNSAFE_componentWillUnmount(){
     //组件销毁前
     console.log('unmount');

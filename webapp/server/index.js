@@ -4,7 +4,7 @@ import views from 'koa-views'
 import path from 'path'
 import router from './routes/index';
 const app = require('./app.js').default;
-const clientRoute = require('./middlewares/clientRoute').default;
+
 
 
 // 将dist文件夹设置为静态路径
@@ -14,6 +14,9 @@ app.use(views(path.resolve('./views/'), { map: { html: 'ejs' } }))
 
 app.use(router.routes());
 app.use(router.allowedMethods());
+
+
+const clientRoute = require('./middlewares/clientRoute').default;
 app.use(clientRoute);
  
 const port = '5200';

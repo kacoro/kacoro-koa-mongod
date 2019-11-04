@@ -1,11 +1,18 @@
 require('@babel/polyfill');
 require('source-map-support').install();
 require('@babel/register')({
-    presets: ['@babel/preset-env','@babel/preset-react',"@babel/preset-typescript"],
+    presets: [['@babel/preset-env', {
+        "targets": {"node": "current"},
+        "useBuiltIns": "usage",
+        "corejs": "3.0.0"
+        }],'@babel/preset-react',"@babel/preset-typescript"],
 });
 require('@babel/core').transform('code', {
-    plugins: ['@babel/plugin-transform-runtime','@babel/plugin-transform-modules-commonjs',"@babel/plugin-proposal-class-properties","@babel/plugin-proposal-throw-expressions","@babel/plugin-syntax-dynamic-import", "@babel/plugin-syntax-import-meta","@babel/plugin-proposal-export-namespace-from"]
-
+    plugins: [
+     '@babel/plugin-transform-runtime','@babel/plugin-transform-modules-commonjs',
+     "@babel/plugin-proposal-class-properties","@babel/plugin-proposal-throw-expressions","@babel/plugin-syntax-dynamic-import",
+     "@babel/plugin-syntax-import-meta","@babel/plugin-proposal-export-namespace-from"
+    ]
 });
 require('css-modules-require-hook')({
     extensions: ['.scss'],
@@ -27,7 +34,7 @@ const path = require('path');
 const views = require('koa-views');
 const convert = require('koa-convert');
 const webpack = require('webpack');
-const config = require('../build/webpack.dev');
+const config = require('../build/webpack.server.dev');
 const compiler = webpack(config);
 const devMiddleware = require('koa-webpack-dev-middleware');
 const hotMiddleware = require('koa-webpack-hot-middleware');

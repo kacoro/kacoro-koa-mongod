@@ -20,6 +20,8 @@ const clientConfig  = {
         publicPath:'/'
         // publicPath:path.resolve(__dirname,'../dist/') // js引用路径或者CDN地址
     },
+
+  
     module:{
         rules: [
             { test: /\.js(x?)$/, use: "babel-loader", exclude: /node_modules/ },
@@ -77,7 +79,7 @@ const clientConfig  = {
       }),
       new MinCssExtractPlugin( {
         //为抽取出的独立的CSS文件设置配置参数
-        filename: "css/[name].css"
+        filename: "css/[name][hash].css"
     } ),
     new LoadablePlugin()],
     
@@ -95,7 +97,17 @@ const serverConfig = { // node环境打包
   module: { // 模块：栗子 解读css，图片如何转换、压缩
     rules:[
       { test: /\.js(x?)$/, use: "babel-loader", exclude: /node_modules/ },
-      { test: /\.ts(x?)$/, use:[{loader:'babel-loader'},{loader:"ts-loader"}] , exclude: /node_modules/ },
+      { test: /\.ts(x?)$/, use:[{loader:"babel-loader"},{loader:"ts-loader"}] , exclude: /node_modules/ },
+      {
+               
+        test: /\.js$/,
+        use:[{loader:"babel-loader"}] , exclude: /node_modules/
+    },
+      {
+         
+          test: /\.js$/,
+          use:[{loader:"babel-loader"}] , exclude: /node_modules/
+      },
       {
         test: /\.(s?)css$/,
         exclude: /node_modules/,
@@ -113,7 +125,7 @@ const serverConfig = { // node环境打包
     ]
   },
   
-  // plugins: [new LoadablePlugin()],
+ 
   resolve: {
     modules: [APP_PATH, 'node_modules'],
     extensions: ['*', '.js', '.jsx','.ts','.tsx'],
