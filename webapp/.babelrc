@@ -1,33 +1,76 @@
 {
-    "presets": [
-        [
-            "@babel/preset-env",
-            {
-            "modules": false,
-             "targets": {
-                "esmodules": true
-                },
-              "useBuiltIns": "usage",
-              "corejs": "3.0.0"
-            }
-          ],
-          "@babel/preset-react"
-    ],
-    "plugins": [
-      "@loadable/babel-plugin",
-      "transform-react-remove-prop-types",
-      "transform-react-pure-class-to-function",
-      "@babel/plugin-transform-runtime",
-      "react-hot-loader/babel",
-      ["@babel/plugin-proposal-decorators", { "legacy": true }],
-      "@babel/plugin-proposal-function-sent",
-      "@babel/plugin-proposal-export-namespace-from",
-      "@babel/plugin-proposal-numeric-separator",
-      "@babel/plugin-proposal-throw-expressions",
-      "@babel/plugin-syntax-dynamic-import",
-      "@babel/plugin-syntax-import-meta",
-      ["@babel/plugin-proposal-class-properties", { "loose": true }],
-      "@babel/plugin-proposal-json-strings"
-    ]
+ 
+   
+    
+    "env": {
+      "development":{
+        "presets": [
+          [
+              "@babel/preset-env",
+              {
+             
+                  "targets": {
+                      "browsers": [
+                          ">1%","last 2 versions",
+                          "not ie <= 8"
+                      ]
+                  },
+                
+                "useBuiltIns": "usage",
+                "corejs": "3.0.0"
+              }
+            ],
+            "@babel/preset-react"
+        ],
+        "plugins": [
+          "@loadable/babel-plugin",
+          "transform-react-remove-prop-types",
+          "transform-react-pure-class-to-function",
+          "@babel/plugin-transform-runtime",
+          "react-hot-loader/babel",
+          ["@babel/plugin-proposal-decorators", { "legacy": true }],
+          "@babel/plugin-proposal-function-sent",
+          "@babel/plugin-proposal-export-namespace-from",
+          "@babel/plugin-proposal-numeric-separator",
+          "@babel/plugin-proposal-throw-expressions",
+          "@babel/plugin-syntax-dynamic-import",
+          "@babel/plugin-syntax-import-meta",
+          ["@babel/plugin-proposal-class-properties", { "loose": true }],
+          "@babel/plugin-proposal-json-strings"
+        ]
+      },
+      // test 是提前设置的环境变量，如果没有设置BABEL_ENV则使用NODE_ENV，如果都没有设置默认就是development
+        "node": {
+          "presets": [
+            [
+                "@babel/preset-env",
+                {
+                    "targets": {
+                      "node": "current"
+                    },
+                  
+                  "useBuiltIns": "usage",
+                  "corejs": "3.0.0"
+                }
+              ],
+              "@babel/preset-react"
+        ],
+        "plugins": [
+          "@loadable/babel-plugin",
+          "transform-react-remove-prop-types",
+          "transform-react-pure-class-to-function",
+          "@babel/plugin-transform-runtime",
+          "react-hot-loader/babel",
+          ["@babel/plugin-proposal-decorators", { "legacy": true }],
+          "@babel/plugin-proposal-function-sent",
+          "@babel/plugin-proposal-export-namespace-from",
+          "@babel/plugin-proposal-numeric-separator",
+          "@babel/plugin-proposal-throw-expressions",
+          "@babel/plugin-syntax-dynamic-import",
+          "@babel/plugin-syntax-import-meta",
+          ["@babel/plugin-proposal-class-properties", { "loose": true }],
+          "@babel/plugin-proposal-json-strings"]
+        }
+    }
    
   }

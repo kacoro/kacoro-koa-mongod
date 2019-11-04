@@ -8,7 +8,7 @@ import {
 class App extends Component {
  
   render() {
-    console.log("app",this.props)
+ 
     return (
       <div className="App">
           <Meta title="kacoro" keywords="kacoro,前端,网站,全栈,网页设计,kacoro博客,陈卫杰,Kacoro's blog" desc="Kacoro's blog" />

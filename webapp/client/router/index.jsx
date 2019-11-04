@@ -66,7 +66,7 @@ const routes = [
   },
  
   {
-    path: "/first", 
+    path: "/first", exact:true,
     component: withRouter(AsyncFirst),
     routes: [
       {
@@ -76,19 +76,19 @@ const routes = [
     ]
   },
   {
-    path: '/second',
+    path: '/second',exact:true,
     component: withRouter(AsyncSecond),
   },
   {
-    path: '/third',
+    path: '/third',exact:true,
     component: withRouter(AsyncThird)
   },
   {
-    path: '/signin', 
+    path: '/signin', exact:true,
     component: withRouter(AsyncSignin)
   },
   {
-    path: '/signup',
+    path: '/signup',exact:true,
     component: withRouter(AsyncSignup)
   }
 ];
@@ -99,7 +99,7 @@ class RoutesIndex extends Component {
   };
 
   render() {
-    console.log(this.props)
+   
     const { ...props } = this.props
     return (
       <div className="app-container">
@@ -107,8 +107,9 @@ class RoutesIndex extends Component {
         <Switch>
           <App  {...props}>
             {routes.map((item, index) => (
-              <Route key={index} path={item.path}  exact={item.exact}   render={() =>
-                <item.component {...props} />} />
+              <Route key={index} path={item.path}  exact={item.exact}   render={() =>{
+                return <item.component {...props} />
+              }} />
             ))}
            
           </App>

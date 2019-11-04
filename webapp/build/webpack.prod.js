@@ -1,25 +1,23 @@
+const webpack = require('webpack');
 const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base')
-const OptimizeCssAssetsWebpackPlugin = require( "optimize-css-assets-webpack-plugin" )
-const devWebpackConfig = merge(baseWebpackConfig.clientConfig, {
-  
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin")
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const {
+  CleanWebpackPlugin
+} = require('clean-webpack-plugin');
+const clientConfig = merge(baseWebpackConfig.clientConfig, {
+
   mode: 'production', // 生产环境
-  optimization :{
-    // minimizer: [
-    //   new UglifyJsPlugin({
-    //     uglifyOptions: {
-    //       compress: false
-    //     }
-    //   })
-    // ],
+  optimization: {
     splitChunks: {
       cacheGroups: {
         vendors: {
           test: /[\\/]node_modules[\\/]/,
           chunks: 'initial',
-                    name: 'vendor',
-                    priority: 10,
-                    enforce: true
+          name: 'vendor',
+          priority: 10,
+          enforce: true
         },
         commons: {
           chunks: 'initial',
@@ -29,9 +27,38 @@ const devWebpackConfig = merge(baseWebpackConfig.clientConfig, {
       }
     },
     runtimeChunk: true,
-      minimizer: [
-        new OptimizeCssAssetsWebpackPlugin()
+    minimizer: [
+      new UglifyJsPlugin({
+        sourceMap: true,
+        parallel: true,
+        cache: true,
+        uglifyOptions:{
+          warnings: false,
+          parse: {},
+          compress: {},
+          mangle: true, // Note `mangle.properties` is `false` by default.
+          output: null,
+          toplevel: false,
+          nameCache: null,
+          ie8: false,
+          keep_fnames: false
+        }
+
+      }),
+      
+      new OptimizeCssAssetsPlugin()
     ]
   }
 })
-module.exports = devWebpackConfig
+
+const plugins = [
+   // 删除文件 保留新文件
+  
+   new webpack.DefinePlugin({
+       __SERVER__: false,
+       __CLIENT__: true
+   }),
+]
+clientConfig.plugins = clientConfig.plugins.concat(plugins);
+
+module.exports = clientConfig

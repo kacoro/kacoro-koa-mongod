@@ -1,4 +1,4 @@
-const mongoose = require('../module/mongoose.js')
+import mongoose from '../module/mongoose'
 // const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema

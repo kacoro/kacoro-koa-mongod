@@ -23,11 +23,11 @@ const clientConfig  = {
     module:{
         rules: [
             { test: /\.js(x?)$/, use: "babel-loader", exclude: /node_modules/ },
-            { test: /\.ts(x?)$/, use:[{loader:'babel-loader'},{loader:"ts-loader"}] , exclude: /node_modules/ },
+            { test: /\.ts(x?)$/, use:[{loader:"babel-loader"},{loader:'ts-loader'}] , exclude: /node_modules/ },
             {
-                enforce: "pre",
+               
                 test: /\.js$/,
-                loader: "source-map-loader"
+                use:[{loader:"babel-loader"}] , exclude: /node_modules/
             },
             {
               test: /\.[(png)|(obj)|(json)]$/,

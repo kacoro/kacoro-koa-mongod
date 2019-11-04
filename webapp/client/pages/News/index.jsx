@@ -1,34 +1,38 @@
 import React, { Component } from 'react';
 import {Link} from "react-router-dom";
-import getData from '../../common/getData';
-class Index extends Component {
-  constructor(props) {
-    super(props);
+import getData from '@app/common/getData';
+import BasePage from '@app/components/BasePage';
+class Index extends BasePage {
+  constructor(props,context) {
+    super(props,context);
      console.log("super",this.props)
       this.state = props.context || props.initialData
      
 
     // console.log(this.state)
   }
-  //数据预取方法 静态 异步 方法
-  static  async getInitialProps() {
-    const data = await getData("news");
+
   
-    return {data}
+
+  //数据预取方法 静态 异步 方法
+  static  async getInitialProps(opt) {
+    
+    const res = await getData("news");
+    return {data:res.data}
   }
   
   async componentDidMount() {
-    let checkInit = JSON.stringify(this.props.initialData) === "{}"
-    console.log(checkInit)
-    if (checkInit) { //非服务端渲染需要自身进行数据获取
-      
-     const data = await Index.getInitialProps()
-     console.log(data)
-        this.setState({
-        ...data
-        })
-      
-    }
+    // let checkInit = JSON.stringify(this.props.initialData) === "{}"
+    // console.log(checkInit)
+    if (this.props.match.url!=this.props.initPath) { //非服务端渲染需要自身进行数据获取
+     
+      const res = await Index.getInitialProps({path:this.props.match.params.id})
+      console.log(res)
+         this.setState({
+           data:res.data
+         })
+       
+     }
   }
 
   async UNSAFE_componentWillMount () {
@@ -51,6 +55,9 @@ class Index extends Component {
     }
     const { data } = this.state;
     if(!data){
+      return (<div>news2</div>)
+    }
+    if(!data.list){
       return (<div>news2</div>)
     }
     const listItems = data.list.map((item,index) =>

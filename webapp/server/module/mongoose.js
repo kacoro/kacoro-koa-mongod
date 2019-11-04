@@ -18,4 +18,4 @@ mongoose.connection.on('disconnected', function () {/** * 连接断开 */
     console.log('Mongoose connection disconnected');
 });
 
-module.exports = mongoose
+export default mongoose

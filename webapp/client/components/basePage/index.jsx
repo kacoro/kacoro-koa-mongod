@@ -1,61 +1,56 @@
 import React, { Component } from 'react';
-import getData from '../../common/getData';
-class First extends Component {
+
+const WindowsInitDataKey ='_initialData_';
+class BasePage extends Component {
   constructor(props) {
     super(props);
-     console.log("super",this.props)
-      this.state = props.context || props.initialData
-     
-
-    // console.log(this.state)
-  }
-  //数据预取方法 静态 异步 方法
-  static  async getInitialProps() {
-    const user = await getData("/");
-  
-    return {user}
-  }
-  
-  async componentDidMount() {
-    let checkInit = JSON.stringify(this.props.initialData) === "{}"
-    console.log(checkInit)
-    if (checkInit) { //非服务端渲染需要自身进行数据获取
-      
-     const data = await First.getInitialProps()
-     console.log(data)
-        this.setState({
-        ...data
-        })
-      
-    }
-  }
-
-  async UNSAFE_componentWillMount () {
-    // this.setState({ user: await getData('/') });
-  }
-  
-  changeRouter = () => {
-    
-    this.props.history.push({
-      pathname: '/second',
-      state: {
-        text: 'from first'
-      }
-    });
-  }
-  render() {
-    console.log('first',this.state)
-    const { user } = this.state;
-    return (
-      <div>
-        <p  onClick={this.changeRouter}>First</p>
-        <p>{user && user.userId}</p>
-                <p>{user && user.name}</p>
-                <p>{user && user.gender}</p>
-                <p>{user && user.age}</p>
-      </div>
-    );
-  }
+    console.log('base constructor');
+    this.state = this.getInitialData(props)
+    console.log('this.isssr', this.isSSR);
 }
 
-export default First;
+  
+    //获得初始化数据 有数据则表示为服务端渲染
+    getInitialData = (props) => {
+      console.log(props)
+      const contextData = props.context 
+      const initPath = props.initPath
+      console.log(initPath)
+      this.isSSR = false;
+      this.hasSpaCacheData = false;//单页数据是否保存
+      // 根据入口的url和当前的url判断。是否一直
+
+      if (contextData) {
+          this.isSSR = true;//表示服务端渲染的首屏
+          return contextData;
+      }else{
+          if(__CLIENT__){
+              
+              return props.initialData;
+          }
+          return null;
+      }
+  }
+  componentDidMount(){
+      console.log('father did mount');
+  }
+  async UNSAFE_componentWillUnmount(){
+    //组件销毁前
+    console.log('unmount');
+    console.log(this.isSSR);
+    if (!this.isSSR && this.enableSpaDataCache){
+        let url =this.props.match.url;
+
+        if (!window[WindowsInitDataKey]) window[WindowsInitDataKey]={};
+        
+        window[WindowsInitDataKey][url]={
+            ...this.state
+        }
+        
+    }
+}
+  
+  
+}
+
+export default BasePage;

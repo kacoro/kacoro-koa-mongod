@@ -23,13 +23,16 @@ export const getNews = async (ctx, next) => {
   let hasMore = totle - (page - 1) * size > size ? true : false;
   let num = Math.ceil(totle / size)
   
-  ctx.body = {  list: result, page, size, hasMore, totle, hasMore, num }
+  ctx.body = {
+    data:{  list: result, page, size, hasMore, totle, hasMore, num },
+    msg:'成功'
+  }
 }
 
 export const getNewsById = async ctx => {
-    
-    const {username,password} = ctx.request.body
-    var condition = {username:username}; //条件 
+    console.log("ctx12313",ctx.request,ctx.query,ctx.params)
+    const {id} = ctx.params
+    var condition = {_id:id}; //条件 
     const data = await News.findOne(condition)
     ctx.body = {
         data,
