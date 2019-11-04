@@ -10,7 +10,7 @@ const clientRoute = require('./middlewares/clientRoute').default;
 // 将dist文件夹设置为静态路径
 app.use(require('koa-static')('./dist'))
 // 将ejs设置为我们的模板引擎
-app.use(views(path.resolve('./dist/views'), { map: { html: 'ejs' } }))
+app.use(views(path.resolve('./views/'), { map: { html: 'ejs' } }))
 
 app.use(router.routes());
 app.use(router.allowedMethods());

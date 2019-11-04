@@ -64,10 +64,16 @@ async function clientRoute(ctx, next) {
               console.log(data)
               //数据注水
               const propsData = `<textarea id="krs-server-render-data-BOX" style="display:none" >${JSON.stringify(data)}</textarea>`;
-              const chunks = extractor.collectChunks(<Provider store={store}><StaticRouter location={ctx.url} ><RoutesIndex {...store.getState()}   context={data} /></StaticRouter></Provider>)
-             
+              const jsx  = extractor.collectChunks(<Provider store={store}><StaticRouter location={ctx.url} ><RoutesIndex {...store.getState()}   context={data} /></StaticRouter></Provider>)
+              const html = renderToString(jsx)
+              const scriptTags = extractor.getScriptTags() // or extractor.getScriptElements();
+              const linkTags = extractor.getLinkTags()
+              const styleTags = extractor.getStyleTags()
               await ctx.render('index', {
-                  root: renderToString(chunks),
+                  root: html,
+                  scriptTags:scriptTags,
+                  linkTags:linkTags,
+                  styleTags:styleTags,
                   helmet:Helmet.renderStatic(),
                   propsData:propsData
               });
