@@ -3,6 +3,7 @@ import React from 'react';
 import styles from './index.scss';
 import classnames from 'classnames';
 import Icon from '@app/UI/Icons';
+ReactModal.setAppElement("#root")
 class Modal extends React.Component {
     constructor(props) {
         super(props);

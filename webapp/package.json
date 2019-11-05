@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "npm run build:server && npm run start:server",
+    "start": "npm run build && npm run start:server",
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client \"",
-    "prd": "pm2 start dist",
+    "prd": "pm2 start dist/server",
     "all": "npm-run-all --parallel  hmr:client hmr:server hmr",
     "hmr": " cross-env nodemon  dist/client dist/server  --config ./nodemon.json",
     "hmr:client": "webpack --config=./build/webpack.prod.js --watch",

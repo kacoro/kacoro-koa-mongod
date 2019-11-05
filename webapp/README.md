@@ -2,19 +2,22 @@
 react + redux + scss + koa2 + typescript 的 SSR
 
 
+# start
+
+
 # dev
+
+```
+npm run dev
+```
+
+# production dev
 
 ```
 npm run all
 
 ```
 
-
-# client dev
-
-```
-npm run client:dev
-```
 
 # webapck build analazy 
 

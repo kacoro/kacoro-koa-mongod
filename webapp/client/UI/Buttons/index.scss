@@ -2,9 +2,6 @@
 
 .button {
     display: inline-block;
-    color:$wihteColor;
-    background-color: $primary;
-    border: 1px solid $primary;
     outline: 0;
     font-size: 14px;
     border: none;
@@ -13,12 +10,24 @@
     transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
     cursor: pointer;
     margin:0 8px;
+    border: 1px solid $primary;
+    background-color:$wihteColor;
+    color: $primary;
     &:hover{
         
-        background-color: lighten($primary,10%);
-        
+        background-color: lighten($primary,40%)!important;
     }
     
+}
+
+.primary ,.active{
+   
+    color:$wihteColor;
+    background-color: $primary;
+    border: 1px solid $primary;
+    &:hover{
+        background-color: lighten($primary,10%);
+    }
 }
 
 

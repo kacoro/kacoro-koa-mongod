@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {Link} from "react-router-dom";
 import getData from '@app/common/getData';
 import BasePage from '@app/components/BasePage';
+import  Meta  from "@app/components/Meta.tsx";
+import Pagination from '@app/UI/Pagination';
 class Index extends BasePage {
   constructor(props) {
     super(props);
@@ -43,9 +45,10 @@ class Index extends BasePage {
     if(!data){
       return <div>loading</div>
     }
-    const {title,content} = data
+    const {title,content,keywords,description} = data
     return (
       <div>
+        <Meta title={title} keywords={keywords} desc={description} />
         <Link to="/news">新闻</Link>
         <h3>{title}</h3>
        <div dangerouslySetInnerHTML={{__html:content}} />
