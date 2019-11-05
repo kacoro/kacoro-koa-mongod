@@ -39,8 +39,9 @@ class PrevNext extends React.Component {
             if(next){
                 //下一页
                 pages.push(<Button onClick={this.pageClick.bind(this,next)} key={next._id}>下一页</Button>)
-                return pages;
+                
             }
+            return pages;
         }
     
     render() {

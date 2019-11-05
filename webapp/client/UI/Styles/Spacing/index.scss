@@ -5,8 +5,8 @@ $length:50;
 
 //through
 @for $i from 1 through $length {
-    .px-#{$i} { padding: $size * $i 0; }
-    .py-#{$i} { padding: 0 $size * $i; }
+    .px-#{$i} { padding:0 $size * $i ; }
+    .py-#{$i} { padding:  $size * $i 0; }
     .pa-#{$i} { padding: $size * $i; }
     .pt-#{$i} { padding-top: $size * $i; }
     .pr-#{$i} { padding-right: $size * $i; }
@@ -15,8 +15,8 @@ $length:50;
 }
   
 @for $i from 1 through $length {
-  .mx-#{$i} { margin: $size * $i 0; }
-  .my-#{$i} { margin: 0 $size * $i; }
+  .mx-#{$i} { margin:0 $size * $i ; }
+  .my-#{$i} { margin: $size * $i 0; }
   .ma-#{$i} { margin: $size * $i; }
   .mt-#{$i} { margin-top: $size * $i; }
   .mr-#{$i} { margin-right: $size * $i; }

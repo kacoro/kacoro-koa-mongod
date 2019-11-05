@@ -5,7 +5,10 @@ import BasePage from '@app/components/BasePage';
 import  Meta  from "@app/components/Meta.tsx";
 import PrevNext from '@app/UI/Pagination/PrevNext';
 import { Flex,FlexItem } from '@app/UI/Layout';
+import classnames from 'classnames'
 import dayjs from 'dayjs'
+import Styles from '@app/UI/Styles'
+import PostStyles from './index.scss'
 class Index extends BasePage {
   constructor(props) {
     super(props);
@@ -63,19 +66,27 @@ class Index extends BasePage {
       return <div>loading</div>
     }
     const {prev,next} = data
-    const {title,content,addTime,updateTime,keywords,description} = data.data
+    const {title,content,addTime,updateTime,keywords,description,cate_name} = data.data
     return (
-      <div>
+      <article className="post">
         <Meta title={title} keywords={keywords} desc={description} />
-        <Link to="/news">新闻</Link>
-          <FlexItem align="baseline"> <h3>{title}</h3></FlexItem>
-          <Flex justify="between" >
-          <FlexItem align="baseline"><span>创建时间:{dayjs(addTime).format('YYYY-MM-DD HH:mm:ss ')}</span></FlexItem>
-          <FlexItem align="baseline"><span>更新时间：{dayjs(updateTime).format('YYYY-MM-DD HH:mm:ss ')}</span></FlexItem>
+          <div className="post-header main-content-wrap text-left">
+          <h1>{title}</h1>
+          <Flex  >
+          <FlexItem align="baseline" className={classnames('post-meta',Styles['pr-10'])}>
+            <time>{dayjs(addTime).format('YYYY-MM-DD ')}</time>发布在：<Link className={classnames(Styles.textLink)} to="/news">新闻</Link> / <Link className='categorLink' to={`/news?catename=${cate_name}`}>{cate_name}</Link>
+          </FlexItem>
         </Flex>
-       <div  dangerouslySetInnerHTML={{__html:content}} />
-       <PrevNext prev={prev} next={next} onItemClick={this.getCurrentPage}></PrevNext>
-      </div>
+          
+          </div>
+          
+          <div className="post-content markdown">
+          
+            <div className={classnames("main-content-wrap",Styles['px-10'],Styles['text-pre'])}  dangerouslySetInnerHTML={{__html:content}} />
+          
+          <PrevNext  prev={prev} next={next} onItemClick={this.getCurrentPage}></PrevNext>
+          </div>
+      </article>
 
     );
   }

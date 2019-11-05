@@ -48,11 +48,11 @@ const clientConfig  = {
             },
             {
               test: /\.css$/,
-              loader: 'style-loader!css-loader',exclude: /node_modules/
+              use: ['style-loader','css-loader'],exclude: /node_modules/
               },
             {
               test: /\.scss$/,
-              exclude: /node_modules/,
+              exclude: [/node_modules/],
               use: [
                 // {loader: 'style-loader'}, // 当配置MinCssExtractPlugin.loader后，此项就无需配置，原因看各自作用
                  {loader: MinCssExtractPlugin.loader},  // 将处理后的CSS代码提取为独立的CSS文件
@@ -64,12 +64,13 @@ const clientConfig  = {
                  }}, 
               ]
             },
+           
             { test: /\.html$/, loader: 'html-loader' }
           ]
     },
     resolve: {
         modules: [APP_PATH, 'node_modules'],
-        extensions: ['*', '.js', '.jsx','.ts','.tsx'],
+        extensions: ['*', '.js', '.jsx','.ts','.tsx','.css','.scss'],
         alias:{
           '@app': APP_PATH
         }

@@ -61,7 +61,7 @@ app.use(passport.session())
 app.use(json())
 app.use(logger())
 app.use(Static( __dirname + '/static'))
-
+app.use(Static( __dirname + '/public'))
 
 // logger
 app.use(async (ctx, next) => {
