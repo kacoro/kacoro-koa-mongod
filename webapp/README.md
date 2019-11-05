@@ -1,9 +1,10 @@
 # 说明
-react + redux + scss + koa2 + typescript 的 SSR
+react + redux + scss + koa2 + mongodb + typescript + resful  SSR
 
 
+# 准备
 
-# 
+
 
 
 ## add config.js in server directory
@@ -20,6 +21,12 @@ module.exports = {
 ```
 
 # Script
+
+## install global npm
+
+```
+ npm install -g webpack webpack-cli concurrently
+``
 
 ## start
 
