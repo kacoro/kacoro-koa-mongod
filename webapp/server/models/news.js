@@ -14,7 +14,7 @@ var NewsSchema = new Schema({ username : { type: String }, //用户账号
     sort:{type:Number,default:0},
     addTime: { type:Date, default:Date.now },
     updateTime: { type:Date, default:Date.now },
-    status:{type:Number,default:0},
+    status:{type:String,default:''},
 
 })
 export default mongoose.model('News',NewsSchema);

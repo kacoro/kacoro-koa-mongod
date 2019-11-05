@@ -59,7 +59,7 @@ class Index extends BasePage {
     console.log(obj)
     var obj = Object.assign(obj, { page: currentPage })
 
-
+    this.props.history.replace(`/news?${qs.stringify(obj)}`)
     const res = await Index.getInitialProps({ params: this.props.match.params, search: '?' + qs.stringify(obj) })
     this.setState({
       data: res.data

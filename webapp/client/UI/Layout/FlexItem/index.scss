@@ -30,19 +30,19 @@
     &.align-auto {
         align-self: auto ;
     }
-    &.align-auto {
+    &.align-start {
         align-self: flex-start ;
     }
-    &.align-start{
+    &.align-end{
         align-self:  flex-end;
     }   
-    &.align-start{
+    &.align-center{
         align-self:   center ;
     }
-    &.align-start{
+    &.align-baseline{
         align-self: baseline;
     }
-    &.align-start{
+    &.align-stretch{
         align-self:  stretch;
     }
 

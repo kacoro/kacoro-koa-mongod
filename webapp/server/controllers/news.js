@@ -14,13 +14,13 @@ export const getNews = async (ctx, next) => {
   let page = Number(query.page) || 1;//当前第几页
   let size = Number(query.size) || 10;//每页显示的记录条数
   let catename = query.catename || '';
-  var condition = {}; //条件 
+  var condition = {status:'on'}; //条件 
   //显示符合前端分页请求的列表查询
   if(catename){
      console.log(catename)
      condition = Object.assign(condition,{cate_name:catename})
   }
-  console.log(condition)
+ 
   var sort = { 'addTime': -1 }; //排序（按登录时间倒序） 
   var skip = (page - 1) * size; //跳过数 
   const query1 = News.find(condition)
@@ -39,10 +39,14 @@ export const getNews = async (ctx, next) => {
 
 export const getNewsById = async ctx => {
     const {id} = ctx.params
-    var condition = {_id:id}; //条件 
-    const data = await News.findOne(condition)
+    var condition = {status:'on'}; //条件 
+    console.log(id)
+    const data = await News.findOne(Object.assign({},condition,{_id:id}))
+    const prev = await News.findOne(condition, '_id title').where('addTime').gt(data.addTime)
+    const next = await News.findOne(condition, '_id title').lt('addTime', data.addTime)
+    console.log(data,prev,next)
     ctx.body = {
-        data,
+        data:{data,prev,next},
         msg:'成功'
     }
 };

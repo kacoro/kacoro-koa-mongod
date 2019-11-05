@@ -47,7 +47,11 @@ const clientConfig  = {
               }
             },
             {
-              test: /\.(s?)css$/,
+              test: /\.css$/,
+              loader: 'style-loader!css-loader',exclude: /node_modules/
+              },
+            {
+              test: /\.scss$/,
               exclude: /node_modules/,
               use: [
                 // {loader: 'style-loader'}, // 当配置MinCssExtractPlugin.loader后，此项就无需配置，原因看各自作用
