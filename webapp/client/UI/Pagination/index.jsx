@@ -22,6 +22,21 @@ class Pagination extends React.Component {
             hasMore:hasMore
         }
     }
+    componentWillReceiveProps = (nextProps) => {
+        
+        const check = Object.is(this.props.location, nextProps.location)
+        if(!check)
+        console.log("nextProps:",nextProps)
+        const {page,hasMore,num,size,total} = nextProps.data
+        this.setState({
+            currentPage: page || 1, //当前页码
+            groupCount: 5, //页码分组，显示7个页码，其余用省略号显示
+            startPage: page,  //分组开始页码
+            totalPage:num || 1 ,//总页数
+            hasMore:hasMore
+        })    
+      }
+  
     //页码点击
     pageClick(currentPage) {
         const {groupCount} = this.state

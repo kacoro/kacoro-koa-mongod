@@ -4,6 +4,9 @@ import getData from '@app/common/getData';
 import BasePage from '@app/components/BasePage';
 import Pagination from '@app/UI/Pagination';
 import qs from 'qs';
+import dayjs from 'dayjs'
+import { Flex, FlexItem } from '@app/UI/Layout';
+import classnames from 'classnames'
 class Index extends BasePage {
   constructor(props, context) {
     super(props, context);
@@ -29,9 +32,7 @@ class Index extends BasePage {
 
     console.log("Mount", this.isSSR, this.hasSpaCacheData)
     if (!this.isSSR && !this.hasSpaCacheData) { //非服务端渲染需要自身进行数据获取
-
       const res = await Index.getInitialProps({ params: this.props.match.params, search: location.search })
-
       this.setState({
         data: res.data
       })
@@ -43,27 +44,30 @@ class Index extends BasePage {
     // this.setState({ user: await getData('/') });
   }
 
-  changeRouter = () => {
+  changeRouter = async(search) => {
 
-    this.props.history.push({
-      pathname: '/second',
-      state: {
-        text: 'from first'
-      }
-    });
+    // this.props.history.push({
+    //   pathname: path
+    // });
+    this.props.history.replace(`/news${search}`)
+    const res = await Index.getInitialProps({ params: this.props.match.params, search: search })
+    this.setState({
+      data: res.data
+    })
   }
   async getCurrentPage(currentPage) {
-    console.log(this, this.props)
+    // console.log(this, this.props)
     const { location } = this.props;
     var obj = qs.parse(location.search.replace('?', ''));
     console.log(obj)
     var obj = Object.assign(obj, { page: currentPage })
 
     this.props.history.replace(`/news?${qs.stringify(obj)}`)
-    const res = await Index.getInitialProps({ params: this.props.match.params, search: '?' + qs.stringify(obj) })
+    const res = await Index.getInitialProps({ params: this.props.match.params, search:`?`+ qs.stringify(obj) })
     this.setState({
       data: res.data
     })
+    // this.props.history.push(`/news?${qs.stringify(obj)}`)
 
   }
   render() {
@@ -78,20 +82,28 @@ class Index extends BasePage {
     if (!data.list) {
       return (<div>news2</div>)
     }
+    
     const listItems = data.list.map((item, index) =>
-      <div key={index} >
-
-        <Link to={`/news/${item._id}`}>{item.title}</Link>
-        <span>{item.addTime}</span>
-        <p>{item.note}</p>
-      </div>
-
+     <div className="post-header main-content-wrap text-left" key={index} >
+         <h1>{item.title}</h1>
+          <Flex  >
+            <FlexItem align="baseline" className={classnames('post-meta')}>
+              <time>{dayjs(item.addTime).format('YYYY-MM-DD ')}</time>发布在：<a onClick={this.changeRouter.bind(this,``)} className='categorLink' to="">新闻</a> / <a className='categorLink'  onClick={this.changeRouter.bind(this,`?catename=${item.cate_name}`)}>{item.cate_name}</a>
+            </FlexItem>
+          </Flex>
+          <div className="postShorten-excerpt">
+            <div>{item.note}</div>
+            <Link className="postShorten-excerpt_link link" to={`/news/${item._id}`}>阅读全文</Link>
+          </div>
+        
+        </div>
     );
+    console.log(this.props)
     return (
       <div>
-        <p onClick={this.changeRouter}>First</p>
+       
         {listItems}
-        <Pagination data={data.pagination} onItemClick={this.getCurrentPage} />
+        <Pagination data={data.pagination} onItemClick={this.getCurrentPage} location={this.props.location}/>
       </div>
     );
   }

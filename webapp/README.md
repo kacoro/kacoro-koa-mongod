@@ -2,16 +2,35 @@
 react + redux + scss + koa2 + typescript 的 SSR
 
 
-# start
+
+# 
 
 
-# dev
+## add config.js in server directory
+```
+module.exports = {
+	dbhost: "xxxx:27017",
+	dbName:'yourDB',
+	dbUsername:'yourName',
+	dbPassword:'yourPassword',
+	tokenSecret:'yourtokensecret',
+	saltRounds:10,
+	webapp:'webapp'
+}
+```
+
+# Script
+
+## start
+
+
+## dev
 
 ```
 npm run dev
 ```
 
-# production dev
+## production dev
 
 ```
 npm run all
@@ -19,7 +38,7 @@ npm run all
 ```
 
 
-# webapck build analazy 
+## webapck build analazy 
 
 ```
 npm run build --report
