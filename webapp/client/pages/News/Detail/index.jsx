@@ -40,19 +40,26 @@ class Index extends BasePage {
 
     // this.setState({ user: await getData('/') });
   }
-
+  componentWillReceiveProps = async(nextProps) => {
+   
+    if (this.props.history.location !== this.props.location) {
+      const res = await Index.getInitialProps({ params: nextProps.match.params  })
+      this.setState({
+        data: res.data
+      })
+    }
+  }
   async getCurrentPage(currentPage) {
+    // const res = await Index.getInitialProps({ params: { id: currentPage } })
+    // console.log(res)
+    // this.setState({
+    //   data: res.data
+    // })
+    // this.props.history.replace(`/news/${currentPage}`)
+    this.props.history.push({
+      pathname: `/news/${currentPage}`
 
-    const res = await Index.getInitialProps({ params: { id: currentPage } })
-    console.log(res)
-    this.setState({
-      data: res.data
-    })
-    this.props.history.replace(`/news/${currentPage}`)
-    // this.props.history.push({
-    //   pathname: `/news/${currentPage}`
-
-    // });
+    });
 
   }
   changeRouter = () => {
@@ -82,7 +89,6 @@ class Index extends BasePage {
               <time>{dayjs(addTime).format('YYYY-MM-DD ')}</time>发布在：<Link className={classnames(Styles.textLink)} to="/news">新闻</Link> / <Link className='categorLink' to={`/news?catename=${cate_name}`}>{cate_name}</Link>
             </FlexItem>
           </Flex>
-
         </div>
 
         <div className="post-content markdown">

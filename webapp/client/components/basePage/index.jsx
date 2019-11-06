@@ -6,8 +6,6 @@ class BasePage extends Component {
     super(props);
     this.state = this.getInitialData(props)
 }
-
-  
     //获得初始化数据 有数据则表示为服务端渲染
     getInitialData = (props) => {
       console.log('init')

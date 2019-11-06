@@ -57,29 +57,11 @@ class Index extends BasePage {
   }
   componentWillReceiveProps = async(nextProps) => {
     if (this.props.history.location !== this.props.location) {
-      console.log(this.props.history.location,this.props.location)
-      // let params = this.props.history.location.pathname.split('/')
-      // const [ , courseName, episodeName] = params
-      // this.props.fetchEpisode({courseName, episodeName})
       const res = await Index.getInitialProps({ params: this.props.match.params, search: this.props.history.location.search })
       this.setState({
         data: res.data
       })
     }
-
-    // console.log("NewsNextProps",nextProps,this.props)
-    // const check = Object.is(this.props.location, nextProps.location)
-    // if(!check){
-    //   console.log("不一致")
-    // }
-    // const {page,hasMore,num,size,total} = nextProps.data
-    // this.setState({
-    //     currentPage: page || 1, //当前页码
-    //     groupCount: 5, //页码分组，显示7个页码，其余用省略号显示
-    //     startPage: page,  //分组开始页码
-    //     totalPage:num || 1 ,//总页数
-    //     hasMore:hasMore
-    // })    
   }
   async getCurrentPage(currentPage) {
     // console.log(this, this.props)
