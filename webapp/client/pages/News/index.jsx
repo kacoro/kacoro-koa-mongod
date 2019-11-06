@@ -55,6 +55,32 @@ class Index extends BasePage {
       data: res.data
     })
   }
+  componentWillReceiveProps = async(nextProps) => {
+    if (this.props.history.location !== this.props.location) {
+      console.log(this.props.history.location,this.props.location)
+      // let params = this.props.history.location.pathname.split('/')
+      // const [ , courseName, episodeName] = params
+      // this.props.fetchEpisode({courseName, episodeName})
+      const res = await Index.getInitialProps({ params: this.props.match.params, search: this.props.history.location.search })
+      this.setState({
+        data: res.data
+      })
+    }
+
+    // console.log("NewsNextProps",nextProps,this.props)
+    // const check = Object.is(this.props.location, nextProps.location)
+    // if(!check){
+    //   console.log("不一致")
+    // }
+    // const {page,hasMore,num,size,total} = nextProps.data
+    // this.setState({
+    //     currentPage: page || 1, //当前页码
+    //     groupCount: 5, //页码分组，显示7个页码，其余用省略号显示
+    //     startPage: page,  //分组开始页码
+    //     totalPage:num || 1 ,//总页数
+    //     hasMore:hasMore
+    // })    
+  }
   async getCurrentPage(currentPage) {
     // console.log(this, this.props)
     const { location } = this.props;
@@ -62,12 +88,12 @@ class Index extends BasePage {
     console.log(obj)
     var obj = Object.assign(obj, { page: currentPage })
 
-    this.props.history.replace(`/news?${qs.stringify(obj)}`)
-    const res = await Index.getInitialProps({ params: this.props.match.params, search:`?`+ qs.stringify(obj) })
-    this.setState({
-      data: res.data
-    })
-    // this.props.history.push(`/news?${qs.stringify(obj)}`)
+    // this.props.history.replace(`/news?${qs.stringify(obj)}`)
+    // const res = await Index.getInitialProps({ params: this.props.match.params, search:`?`+ qs.stringify(obj) })
+    // this.setState({
+    //   data: res.data
+    // })
+    this.props.history.push(`/news?${qs.stringify(obj)}`)
 
   }
   render() {
@@ -84,27 +110,32 @@ class Index extends BasePage {
     }
     
     const listItems = data.list.map((item, index) =>
-     <div className="post-header main-content-wrap text-left" key={index} >
+    <article className="postShorten">
+     <div className="post-header text-left" key={index} >
          <h1>{item.title}</h1>
           <Flex  >
             <FlexItem align="baseline" className={classnames('post-meta')}>
-              <time>{dayjs(item.addTime).format('YYYY-MM-DD ')}</time>发布在：<a onClick={this.changeRouter.bind(this,``)} className='categorLink' to="">新闻</a> / <a className='categorLink'  onClick={this.changeRouter.bind(this,`?catename=${item.cate_name}`)}>{item.cate_name}</a>
+              <time>{dayjs(item.addTime).format('YYYY-MM-DD ')}</time>发布在：
+              <Link className="postShorten-excerpt_link link" to={`/news`}>新闻</Link>
+              <Link className="postShorten-excerpt_link link" to={`/news?catename=${item.cate_name}`}>{item.cate_name}</Link>
+              {/* <a onClick={this.changeRouter.bind(this,``)} className='categorLink' to="">新闻</a>
+               / 
+              < a className='categorLink'  onClick={this.changeRouter.bind(this,`?catename=${item.cate_name}`)}>{item.cate_name}</a> */}
             </FlexItem>
           </Flex>
           <div className="postShorten-excerpt">
-            <div>{item.note}</div>
+            <div className="text-break">{item.note}</div>
             <Link className="postShorten-excerpt_link link" to={`/news/${item._id}`}>阅读全文</Link>
           </div>
-        
         </div>
+        </article>
     );
-    console.log(this.props)
     return (
-      <div>
+      <section className="postShorten-group main-content-wrap">
        
         {listItems}
         <Pagination data={data.pagination} onItemClick={this.getCurrentPage} location={this.props.location}/>
-      </div>
+      </section>
     );
   }
 }

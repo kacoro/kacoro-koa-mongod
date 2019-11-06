@@ -11,6 +11,7 @@ export interface metaProps {title:string; keywords: string; desc: string; }
             <title>{this.props.title}</title>
             <meta name="keywords" content={this.props.keywords} />
             <meta name="description" content={this.props.desc} />
+            {this.props.children}
         </Helmet>
     }
 }

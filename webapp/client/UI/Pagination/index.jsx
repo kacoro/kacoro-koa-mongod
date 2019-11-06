@@ -25,16 +25,19 @@ class Pagination extends React.Component {
     componentWillReceiveProps = (nextProps) => {
         
         const check = Object.is(this.props.location, nextProps.location)
-        if(!check)
-        console.log("nextProps:",nextProps)
-        const {page,hasMore,num,size,total} = nextProps.data
-        this.setState({
-            currentPage: page || 1, //当前页码
-            groupCount: 5, //页码分组，显示7个页码，其余用省略号显示
-            startPage: page,  //分组开始页码
-            totalPage:num || 1 ,//总页数
-            hasMore:hasMore
-        })    
+        const check2 = Object.is(this.props.data, nextProps.data)
+        if(!(check&&check2)){
+            console.log("nextProps:",nextProps)
+            const {page,hasMore,num,size,total} = nextProps.data
+            this.setState({
+                currentPage: page || 1, //当前页码
+                groupCount: 5, //页码分组，显示7个页码，其余用省略号显示
+                startPage: page,  //分组开始页码
+                totalPage:num || 1 ,//总页数
+                hasMore:hasMore
+            })    
+        }
+       
       }
   
     //页码点击
@@ -95,13 +98,13 @@ class Pagination extends React.Component {
                 /*总页码小于等于10时，全部显示出来*/
                 for (let i = 1; i <= totalPage; i++) {
                     pages.push(<Button key={i} onClick={this.pageClick.bind(this, i)}
-                                   className={currentPage === i ? "active" : null}>{i}</Button>)
+                    color={currentPage === i ? "active" : null}>{i}</Button>)
                 }
             } else {
                 /*总页码大于10时，部分显示*/
     
                 //第一页
-                pages.push(<Button className={currentPage === 1 ? "active" : null} key={1}
+                pages.push(<Button color={currentPage === 1 ? "active" : null} key={1}
                                onClick={this.pageClick.bind(this, 1)}>1</Button>)
     
                 let pageLength = 0;
@@ -117,7 +120,7 @@ class Pagination extends React.Component {
                 //非第一页和最后一页显示
                 for (let i = startPage; i < pageLength; i++) {
                     if (i <= totalPage - 1 && i > 1) {
-                        pages.push(<Button className={currentPage === i ? "active" : null} key={i}
+                        pages.push(<Button color={currentPage === i ? "active" : null} key={i}
                                        onClick={this.pageClick.bind(this, i)}>{i}</Button>)
                     }
                 }
@@ -126,11 +129,11 @@ class Pagination extends React.Component {
                     pages.push(<Button className="" key={-2}>···</Button>)
                 }
                 //最后一页
-                pages.push(<Button className={currentPage === totalPage ? "active" : null} key={totalPage}
+                pages.push(<Button color={currentPage === totalPage ? "active" : null} key={totalPage}
                                onClick={this.pageClick.bind(this, totalPage)}>{totalPage}</Button>)
             }
             //下一页
-            pages.push(<Button className={currentPage === totalPage ? "nomore" : null}
+            pages.push(<Button color={currentPage === totalPage ? "nomore" : null}
                            onClick={this.nextPageHandeler.bind(this)}
                            key={totalPage + 1}>下一页</Button>)
             return pages;

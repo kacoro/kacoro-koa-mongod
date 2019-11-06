@@ -69,7 +69,12 @@ class Index extends BasePage {
     const { title, content, addTime, updateTime, keywords, description, cate_name } = data.data
     return (
       <article className="post">
-        <Meta title={title} keywords={keywords} desc={description} />
+        <Meta title={title} keywords={keywords} desc={description} >
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        </Meta>
+        
         <div className="post-header main-content-wrap text-left">
           <h1>{title}</h1>
           <Flex  >

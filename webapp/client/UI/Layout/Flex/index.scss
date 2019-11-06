@@ -44,7 +44,7 @@
    &.justify-around{
       justify-content:space-around; //每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。
    }
-
+  
    //align-items属性定义项目在垂直轴上如何对齐。
    &.align-start{
       align-items:start; //起点对齐
@@ -63,5 +63,19 @@
    }
 
    // align-content属性定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。
-  
+   &.content-start{
+      align-content:start; //起点对齐
+   }
+   &.content-end{
+      align-content:end;  // 终点对齐
+   }
+   &.content-center{
+      align-content:center; //中点对齐
+   }
+   &.content-baseline{
+      align-content:baseline; //项目的第一行文字的基线对齐
+   }
+   &.content-stretch{
+      align-content:stretch; // 如果项目未设置高度或设为auto，将占满整个容器的高度。
+   }
 }

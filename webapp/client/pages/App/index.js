@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import  Header  from "@app/components/Header";
+import  Nav  from "@app/components/Nav";
 import  Meta  from "@app/components/Meta.tsx";
 import classnames from 'classnames'
 import  Styles  from "@app/UI/Styles";
@@ -15,8 +16,11 @@ class App extends Component {
       <div className={classnames(Styles.App)}>
           <Meta title="kacoro" keywords="kacoro,前端,网站,全栈,网页设计,kacoro博客,陈卫杰,Kacoro's blog" desc="Kacoro's blog" />
           <Header {...this.props} />
+          <Nav {...this.props} />
+          <div id="main">
+             {this.props.children}
+          </div>
         
-          {this.props.children}
       </div>
     );
   }

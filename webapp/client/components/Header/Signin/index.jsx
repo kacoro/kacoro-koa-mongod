@@ -57,7 +57,7 @@ class Index extends React.Component {
   render() {
     return <div className="login-layout">
       <Button onClick={this.handleOpenModal}>登录</Button>
-      <Button className="active" onClick={this.handleOpenModal}>注册</Button>
+      <Button className="primary" color="primary" onClick={this.handleOpenModal}>注册</Button>
       <Modal
         {...this.props}
         isOpen={this.state.showModal}
