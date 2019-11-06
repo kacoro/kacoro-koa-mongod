@@ -78,28 +78,17 @@ class Index extends BasePage {
     this.props.history.push(`/news?${qs.stringify(obj)}`)
 
   }
-  render() {
-
-    if (!this.state) {
-      return (<div>news1</div>)
-    }
+  creatList(){
     const { data } = this.state;
-    if (!data) {
-      return (<div>news2</div>)
-    }
-    if (!data.list) {
-      return (<div>news2</div>)
-    }
-    
     const listItems = data.list.map((item, index) =>
     <article className="postShorten">
      <div className="post-header text-left" key={index} >
          <h1>{item.title}</h1>
           <Flex  >
             <FlexItem align="baseline" className={classnames('post-meta')}>
-              <time>{dayjs(item.addTime).format('YYYY-MM-DD ')}</time>发布在：
-              <Link className="postShorten-excerpt_link link" to={`/news`}>新闻</Link>
-              <Link className="postShorten-excerpt_link link" to={`/news?catename=${item.cate_name}`}>{item.cate_name}</Link>
+              <time>{dayjs(item.addTime).format('YYYY-MM-DD ')}</time>
+              <Link className="categorLink" to={`/news`}>新闻</Link> /&nbsp;
+              <Link className="categorLink" to={`/news?catename=${item.cate_name}`}>{item.cate_name}</Link>
               {/* <a onClick={this.changeRouter.bind(this,``)} className='categorLink' to="">新闻</a>
                / 
               < a className='categorLink'  onClick={this.changeRouter.bind(this,`?catename=${item.cate_name}`)}>{item.cate_name}</a> */}
@@ -111,11 +100,25 @@ class Index extends BasePage {
           </div>
         </div>
         </article>
-    );
+          );
+      return  listItems
+  }
+  render() {
+
+    if (!this.state) {
+      return (<div className="postShorten-group main-content-wrap">loading...</div>)
+    }
+    const { data } = this.state;
+    if (!data) {
+      return (<div className="postShorten-group main-content-wrap">loading...</div>)
+    }
+    if (!data.list) {
+      return (<div className="postShorten-group main-content-wrap">loading...</div>)
+    }
+    
     return (
       <section className="postShorten-group main-content-wrap">
-       
-        {listItems}
+        {this.creatList()}
         <Pagination data={data.pagination} onItemClick={this.getCurrentPage} location={this.props.location}/>
       </section>
     );

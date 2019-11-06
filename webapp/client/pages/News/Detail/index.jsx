@@ -70,7 +70,7 @@ class Index extends BasePage {
     console.log('detail')
     const { data } = this.state
     if (!data) {
-      return <div>loading</div>
+      return <div  className="main-content-wrap">loading</div>
     }
     const { prev, next } = data
     const { title, content, addTime, updateTime, keywords, description, cate_name } = data.data

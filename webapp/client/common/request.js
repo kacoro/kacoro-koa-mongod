@@ -16,6 +16,7 @@ class Request {
     }
     config(obj) {
         this.options = obj;
+      
         return this.run();
     }
     setConfig(type) {

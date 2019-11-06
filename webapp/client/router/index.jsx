@@ -16,6 +16,8 @@ const AsyncSignin = loadable(() => import('@app/pages/Signin'));
 const AsyncSignup = loadable(() => import('@app/pages/Signup'));
 const AsyncNews = loadable(() => import('@app/pages/News'));
 const AsyncNewsDetail = loadable(() => import('@app/pages/News/Detail'));
+const AsyncAbout = loadable(() => import('@app/pages/About'));
+
 // const AsyncFirst2 = Loadable({
 //   loading: <div>loading...</div>,
 //   loader: () => import( '@app/pages/First'), 
@@ -88,6 +90,10 @@ const routes = [
   {
     path: '/signup',exact:true,
     component: withRouter(AsyncSignup)
+  },
+  {
+    path: '/about',exact:true,
+    component: withRouter(AsyncAbout)
   }
 ];
 

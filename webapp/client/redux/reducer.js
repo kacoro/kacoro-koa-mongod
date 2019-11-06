@@ -12,6 +12,15 @@ function count(state = 0, action) {
     }
 }
 
+function menu(state = false, action) {
+    switch (action.type) {
+        case types.CHANGE_MENU:
+            return !state;
+        default:
+            return state;
+    }
+}
+
 export default combineReducers({
-    count
+    count,menu
 });

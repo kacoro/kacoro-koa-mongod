@@ -1,0 +1,108 @@
+:global {
+    html {
+        font-size: 12px;
+        text-size-adjust: 100%;
+    }
+    body{
+        font-size: 1.4rem;
+        line-height: 1.9em;
+        letter-spacing: .01em;
+        color: #5d686f;
+    }
+    color: #5d686f;
+    a, abbr, acronym, address, applet, article, aside, audio, big, blockquote, body, canvas, caption, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, ul, var, video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        vertical-align: baseline;
+    }
+    a{
+        color: #349ef3;
+        text-decoration: none;
+        cursor: pointer;
+        
+    }
+    .categorLink{
+        color: #9eabb3;
+    
+    }
+    a:active, a:hover {
+        outline: 0;
+    }
+    a:hover {
+        text-decoration: underline;
+    }  
+    *, :after, :before {
+        box-sizing: inherit;
+    }
+    body, h1, h2, h3, h4, h5, h6, html {
+        font-family: "Open Sans",sans-serif;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        letter-spacing: -.04em;
+        font-weight: 700;
+        line-height: 1.45em;
+        color: #4a4a4a;
+    }
+    h1 {
+        font-size: 2.8rem;
+    }
+    .post {
+        position: relative;
+        width: 100%;
+        display: inline-block;
+    }
+    .postShorten-group .postShorten{
+        margin-top: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eef2f8;
+    }
+    .postShorten .postShorten-content, .postShorten .postShorten-excerpt{
+        color: #5d686f;
+    }
+    .postShorten .postShorten-excerpt_link, .postShorten .postShorten-meta, .postShorten .postShorten-readingtime{
+        font-size: 1.2rem;
+    }
+    .postShorten {
+        position: relative;
+        width: 100%;
+        display: inline-block;
+        vertical-align: top;
+    }
+    .main-content-wrap {
+        display: block;
+        max-width: 750px;
+        margin: 0 auto;
+        padding-right: 20px;
+        padding-left: 20px;
+    }
+   
+    #header, #main {
+        
+        transition: transform .25s ease-in-out;
+    
+
+    }
+   
+    
+    .text-break{
+        word-wrap: break-word;
+        word-break: normal;
+    }
+    .text-truncate{
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+    .post-meta{
+        font-size: 1.3rem;
+        color: #9eabb3;
+    }
+    .text-left{
+        text-align: left;
+    }
+   
+}
+
+
+

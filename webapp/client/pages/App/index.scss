@@ -1,0 +1,63 @@
+.App{
+    @media only screen and (max-width: 767px){
+        &[data-pushed="true"] {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+          }
+        &{
+            display: block;
+            width: 100%;
+        }
+    }
+}
+.main{
+    padding-top: 70px;
+    transition:all 0.25s ease-in-out;
+    &[data-pushed="true"] {
+        display: block;
+        width: 100%;
+      }
+    @media only screen and (min-width: 1280px){
+        &[data-pushed="true"] {
+            display: block;
+            width: 100%;
+          }
+       &{
+            float: right;
+            width: calc(100% - 250px);
+        }
+    }
+
+    @media only screen and (max-width: 1279px) and (min-width: 1024px){
+        &[data-pushed="true"] {
+            display: block;
+            width: 100%;
+          }
+        & {
+            float: right;
+            width: calc(100% - 250px);
+        }
+    }
+    @media only screen and (max-width: 1023px) and (min-width: 768px){
+        &[data-pushed="true"] {
+            display: block;
+            width: 100%;
+          }
+        & {
+            float: right;
+            width: calc(100% - 75px);
+        }
+    }
+    @media only screen and (max-width: 767px){
+        &[data-pushed="true"] {
+            transform: translate3d(250px,0,0);
+            width: 100%;
+          }
+        &{
+            display: block;
+            width: 100%;
+        }
+    }
+   
+}
