@@ -13,6 +13,7 @@ import { Flex, FlexItem } from '@app/UI/Layout';
 import { DiffTime } from '@app/UI/Time';
 import Website from './WebSite';
 import logo from '@app/assets/images/logo.png'
+import Lazyload from '@app/components/Lazyload';
 class Index extends Component {
     constructor(props) {
         super(props);
@@ -28,6 +29,7 @@ class Index extends Component {
         let list = this.getTree(data, '', '_id', 'replyId')
         console.log(list)
         this.setState({ list: list, data: data, count: data.length })
+        Lazyload(this.refs)
     }
 
     getTree(data, root, idTxt, pidTxt, pushTxt) {
@@ -89,7 +91,7 @@ class Index extends Component {
             return (
                 <Flex key={index}>
                     <Website website={item.website} className={classnames(styles.avatar)} alt="kacoro's blog"   >
-                        <img src={src} />
+                        <img data-src={`http://127.0.0.1:5200${src}`} ref={`img-${item._id}`} />
                     </Website>
                     <FlexItem flex="auto">
                         <Flex direction="column" className={styles.content}>
@@ -118,7 +120,7 @@ class Index extends Component {
             <div>
                 <Flex>
                     <div className={classnames(styles.avatar)} alt="kacoro's blog"   >
-                        <img />
+                        <img  />
                     </div>
                     <FlexItem flex="auto">
                         <Textarea

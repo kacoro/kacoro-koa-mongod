@@ -14,5 +14,6 @@ app.use(bodyParser());
 app.use(cors());
 app.use(json());
 app.use(logger());
+app.use(require('koa-static')('./static'))
 require('module-alias/register')
 export default app;

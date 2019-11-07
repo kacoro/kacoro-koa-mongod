@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import Button from '@app/UI/Buttons';
 import styles from './index.scss';
 import Icon from '@app/UI/Icons';
+import Lazyload from '@app/components/Lazyload';
 import {
   Link
 } from "react-router-dom";
@@ -23,8 +24,10 @@ class Index extends Component {
       ]
     };
   }
-
-
+  
+ componentDidMount(){
+  Lazyload(this.refs)
+ }
   creatButton(){
     let buttons = []
     console.log(this.props)
@@ -52,11 +55,11 @@ class Index extends Component {
   render() {
     return (
         <nav data-behavior="1" data-pushed={this.props.menu} className={classnames(styles.sidebar)} >
-        <img className={styles.bg} src={bg} />
+        <img className={styles.bg} ref="bg"  data-src={bg} />
           <div className={styles.container}>
             <div className={styles.profile}>
               <a href="/about">
-                <img className={styles.picture}  src={logo} alt="kacoro's blog" />
+                <img className={styles.picture} data-src={logo} ref="logo"  alt="kacoro's blog" />
               </a>
               <h4 className={styles.name}>kacoro</h4>
               <h5 className={styles.bio}>思考不止，生命不息.</h5>

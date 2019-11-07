@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import rootReducer from './reducer';
 import {persistStore, persistCombineReducers} from 'redux-persist';
 import storage from 'redux-persist/lib/storage'
+// import storage from 'redux-persist/es/storage'
 const config = {
     key: 'root',
     storage,

@@ -13,7 +13,7 @@ import { ChunkExtractor } from '@loadable/server'
 // import store from '@app/redux/store.js';
 import { PersistGate } from 'redux-persist/integration/react'
 import configureStore from '@app/redux/configureStore';
-const { persistor, store } = configureStore()
+const {  store } = configureStore()
 
 const statsFile = path.resolve('./dist/loadable-stats.json')
 const extractor = new ChunkExtractor({ statsFile })
