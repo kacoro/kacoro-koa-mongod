@@ -91,7 +91,7 @@ class Index extends Component {
             return (
                 <Flex key={index}>
                     <Website website={item.website} className={classnames(styles.avatar)} alt="kacoro's blog"   >
-                        <img data-src={`http://127.0.0.1:5200${src}`} ref={`img-${item._id}`} />
+                        <img data-src={`/static${src}`} ref={`img-${item._id}`} />
                     </Website>
                     <FlexItem flex="auto">
                         <Flex direction="column" className={styles.content}>

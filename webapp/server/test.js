@@ -24,7 +24,7 @@ const app = require('./app.js').default;
 const router = require('./routes').default;
 
 
-const port = process.env.port || 5200;
+const port = process.env.port || 5300;
 
 
 app.use(router.routes());

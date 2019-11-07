@@ -55,7 +55,7 @@ class Index extends Component {
   render() {
     return (
         <nav data-behavior="1" data-pushed={this.props.menu} className={classnames(styles.sidebar)} >
-        <img className={styles.bg} ref="bg"  data-src={bg} />
+        <img className={styles.bg} ref="bg"  data-src={bg}  />
           <div className={styles.container}>
             <div className={styles.profile}>
               <a href="/about">

@@ -15,7 +15,6 @@ const css = {
   }
 
 const io = new IntersectionObserver((entries)=>{ // 观察者
-    console.log(entries)
     entries.forEach((item)=>{ // entries 是被监听的元素集合它是一个数组
       if (item.intersectionRatio <= 0 ) return // intersectionRatio 是可见度 如果当前元素不可见就结束该函数。
     
@@ -27,7 +26,7 @@ const io = new IntersectionObserver((entries)=>{ // 观察者
   });
   
   // onload 函数
-  const onload = (refs)=>{
+  const LazyLoad = (refs)=>{
      
       Object.getOwnPropertyNames(refs).forEach(function(key){
           if(refs[key].dataset.src){
@@ -51,4 +50,4 @@ const LazyLoadPage = (images)=>(
     </div>
   )
   
-  export default onload
+  export default LazyLoad
