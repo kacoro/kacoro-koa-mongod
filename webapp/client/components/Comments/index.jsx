@@ -22,7 +22,8 @@ class Index extends Component {
         super(props);
         this.state = {
             list: [],
-            count: 0
+            count: 0,
+            content:''
         };
     }
 
@@ -87,6 +88,20 @@ class Index extends Component {
             list: list
         })
     }
+    handleInputChange =(e) => {
+        const target = e.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+        console.log(e,value,name)
+        this.setState({
+          [name]: value
+        });
+      }
+    handleLogout  = () => {
+        this.props.dispatch({
+            type: reduxTypes.USER_LOGOUT
+        });
+    }
     creatComments(list) {
         if(!list) return null
         const comments = list.map((item, index) => {
@@ -118,25 +133,25 @@ class Index extends Component {
         return comments
 
     }
-    handleLogout  = () => {
-        this.props.dispatch({
-            type: reduxTypes.USER_LOGOUT
-        });
-    }
+    
     creatForm = () => {
         const {user} = this.props
         return (
             <div>
                 <Flex>
                     <div className={classnames(styles.avatar)} alt="kacoro's blog"   >
-                        <img  />
+                        {user?
+                         <img  />
+                          :null}
+                       
                     </div>
                     <FlexItem flex="auto">
                         <Textarea
                             name="content"
                             id="content"
-                            placeholder="评论"
-                        ></Textarea>
+                            value={this.state.content}
+                            placeholder="评论" rows="10"  onChange={this.handleInputChange}
+                        >{this.state.content}</Textarea>
                     </FlexItem>
                 </Flex>
                 <Flex justify="end" className={classnames(RootStyles['pt-10'])}>

@@ -84,8 +84,15 @@ class Index extends React.Component {
             <Input type="password" name="password" value={this.state.password} onChange={this.handleInputChange}></Input>
             </FlexItem>
           </Flex>
-          <Flex align="center" justify="center">
-            <Button color="primary" onClick={this.handleLogin}>登 录</Button>  <Button className="outlined" onClick={this.changeRouter}>注 册</Button>
+          <Flex  align="center" justify="center">
+          <Button type="text" onClick={this.changeRouter}>忘记密码</Button>
+          <Button type="text" onClick={this.changeRouter}>注 册</Button>
+           
+            <Button color="primary" onClick={this.handleLogin}>登 录</Button>
+          
+          </Flex>
+          <Flex  align="center" justify="center">
+            
           </Flex>
       </Modal>
     </div>

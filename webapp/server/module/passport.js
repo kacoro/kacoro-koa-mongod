@@ -1,10 +1,10 @@
 // passport.js
 const  passport = require('koa-passport'),
        LocalStrategy = require('passport-local').Strategy,
-       DB = require('./db'),
+       
        config = require('../config.js'),
        bcrypt = require('bcrypt')
-
+import User from '../models/user'
 // 序列化ctx.login()触发
 passport.serializeUser(function(user, done) {
   // console.log('serializeUser: ', user)
@@ -12,27 +12,27 @@ passport.serializeUser(function(user, done) {
 })
 // 反序列化（请求时，session中存在"passport":{"user":"1"}触发）
 passport.deserializeUser(async function(user, done) {
-//   console.log('deserializeUser: ', user)
+  // console.log('deserializeUser: ', user)
 //   var user = {id: 1, username: 'admin', password: '123456'}
-  done(null, user)
+  return done(null, user)
 })
 // 提交数据(策略)
 passport.use(new LocalStrategy({
   // usernameField: 'email',
   // passwordField: 'passwd'
 }, async(username, password, done)=> {
-    var result = await DB.findOne('users',{username:username});
-    console.log("result",result)
-    if (!result) { return done(null, false); }
-    if(bcrypt.compareSync(password,result.password)){
-        done(null, result, {msg: 'this is a test'})
-        // var  result = await DB.find('user',{username:username});
-    }else{
-        return done(null, false);
+    var result = await User.findOne({username:username});
+    if (result!= null) {
+      if(bcrypt.compareSync(password,result.password)){
+            done(null, result,'登录成功',200)
+            // var  result = await DB.find('user',{username:username});
+        }else{
+          return done(null, false, '密码错误',401)
+        }
+      }else{
+        return done(null, false, '未知用户',401)
+      }
     }
-//   console.log('LocalStrategy', username, password)
- 
-  // done(err, user, info)
-}))
+))
 
 module.exports = passport
