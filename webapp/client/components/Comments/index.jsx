@@ -16,7 +16,7 @@ import logo from '@app/assets/images/logo.png'
 import Lazyload from '@app/components/Lazyload';
 import Signin from '@app/components/Header/Signin';
 import reduxTypes from '@app/redux/types';
-
+import request from '@app/common/request';
 class Index extends Component {
     constructor(props) {
         super(props);
@@ -58,7 +58,13 @@ class Index extends Component {
         // 使用根节点
         return getNode(root)
     }
-    replay = async (data) => {
+    handleReplay = async () => {
+      
+        //
+         this.props.dispatch({
+            type: reduxTypes.USER_LOGOUT
+        });
+        await request.config({ type: 'post', url: '/api/signup' })
         // var res = await postData(`comment/article/${this.props.id}`,{
         //     content:data.content
         //  })
@@ -88,6 +94,9 @@ class Index extends Component {
             list: list
         })
     }
+    handleReply(){
+
+    }
     handleInputChange =(e) => {
         const target = e.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -98,9 +107,10 @@ class Index extends Component {
         });
       }
     handleLogout  = () => {
-        this.props.dispatch({
-            type: reduxTypes.USER_LOGOUT
-        });
+
+        // this.props.dispatch({
+        //     type: reduxTypes.USER_LOGOUT
+        // });
     }
     creatComments(list) {
         if(!list) return null
@@ -157,7 +167,7 @@ class Index extends Component {
                 <Flex justify="end" className={classnames(RootStyles['pt-10'])}>
                  {user?
                     <div>
-                     <Button type="text" onClick={this.handleLogout}>退出</Button><Button color="primary">提交</Button>
+                     <Button type="text" onClick={this.handleReplay}>退出</Button><Button color="primary" onClick={this.handleReply}>提交</Button>
                      {/* <Button>取消</Button> */}
                      </div>
                  :

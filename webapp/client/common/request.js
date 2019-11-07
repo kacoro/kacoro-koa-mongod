@@ -2,6 +2,20 @@ import qs from 'qs';
 import axios from 'axios';
 import isNode from 'isnode';
 
+axios.interceptors.request.use(
+    config => {
+        var user =  JSON.parse(localStorage.getItem('persist:root')).user
+       
+        if(user){
+            user = JSON.parse(user)
+            config.headers.Authorization = user.token
+        }
+      return config
+    },
+    err => {
+      return Promise.reject(err)
+    }
+  )
 class Request {
     constructor() {
         this.base = {
@@ -20,6 +34,7 @@ class Request {
         return this.run();
     }
     setConfig(type) {
+       
         return {
             method: type || this.base.type,
             url: this.base.meta + this.options.url,

@@ -5,6 +5,7 @@ const config = require('../config')
 //     const _sql = 'select * from user';
 //     return query(_sql, []);
 // };
+const jwt = require('jsonwebtoken'); //token 认证
 export const list = async (ctx, next) => {
     let title = "首页"
   let totle = await User.countDocuments();//表总记录数
@@ -48,11 +49,18 @@ export const signIn = async ctx => {
     const {username,password} = ctx.request.body
     var condition = {username:username}; //条件 
     const data = await User.findOne(condition)
+   
     try {
         if(bcrypt.compareSync(password,data.password)){
-            const d = await User.findByIdAndUpdate(data._id,{logindate:new Date()})
-            console.log(d)
-            ctx.body = {id:data._id,msg:"登录成功"} 
+            // const d = await User.findByIdAndUpdate(data._id,{logindate:new Date()})
+            const payload = {
+                _id:data._id
+            };
+            const token = jwt.sign(payload, config.secretKey, {
+                expiresIn: 3600
+            });
+            console.log(token)
+            ctx.body = {id:data._id,msg:"登录成功",token: 'Bearer ' + token} 
             //更新登录时间
            
         }else{

@@ -6,7 +6,7 @@ import session from 'koa-session';
 import compress from 'koa-compress';
 import convert from 'koa-convert';
 import cors from 'koa2-cors';
-
+const passport = require('koa-passport');
 const app = new Koa();
 app.keys = ['newest secret key', 'older secret key'];
 // app.use(convert(session(app)));
@@ -24,10 +24,10 @@ app.use(logger());
 app.use(require('koa-static')('./static'))
 require('module-alias/register')
 
-import passport from './module/passport'
+
 
 //passport
 app.use(passport.initialize())
 app.use(passport.session())
-
+require('./module/passport')(passport);
 export default app;

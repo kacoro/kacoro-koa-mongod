@@ -17,8 +17,8 @@ class Index extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '', //账号
-      password: '', // 密码
+      username: 'admin@kacoro.com', //账号
+      password: 'we4849824131', // 密码
       showModal: false
     }
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -37,7 +37,7 @@ class Index extends React.Component {
     const { password, username } = this.state
     if (password == "" || username == "") return false
       var data = await request.config({ type: 'post', url: '/api/signin', data: { username, password } })
-      if(data.id){
+      if(data){
         console.log(this.props.dispatch)
         this.props.dispatch({
           type: reduxTypes.USER_LOGIN,payload:data
