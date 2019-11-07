@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import  Button from '@app/components/Button';
+import  Button from '@app/UI/Buttons';
 import reduxTypes from '@app/redux/types';
 
 console.log(reduxTypes)

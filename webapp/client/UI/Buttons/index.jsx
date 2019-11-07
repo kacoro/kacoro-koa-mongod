@@ -9,9 +9,9 @@ import styles from './index.scss';
 
 class Button extends React.Component {
     render() {
-        const { children,color, className, ...others } = this.props;
+        const { children,type , color, className, ...others } = this.props;
         return (
-            <button className={classnames(styles.button, className ? className : null,color ? styles[color]:null )} {...others}>
+            <button className={classnames(styles.button,type?styles[type]:null,color ? styles[color]:null, className ? className : null )} {...others}>
                 {children}
             </button>
         );

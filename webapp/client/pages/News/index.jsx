@@ -81,8 +81,8 @@ class Index extends BasePage {
   creatList(){
     const { data } = this.state;
     const listItems = data.list.map((item, index) =>
-    <article className="postShorten">
-     <div className="post-header text-left" key={index} >
+    <article className="postShorten" key={index} >
+     <div className="post-header text-left" >
          <h1>{item.title}</h1>
           <Flex  >
             <FlexItem align="baseline" className={classnames('post-meta')}>

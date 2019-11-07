@@ -30,6 +30,7 @@ class Index extends BasePage {
       const res = await Index.getInitialProps({ params: this.props.match.params })
       this.setState({ data: res.data })
     }
+    if (window.hljs) { hljs.initHighlightingOnLoad() }
   }
 
   async UNSAFE_componentWillMount() {
@@ -37,48 +38,36 @@ class Index extends BasePage {
 
     // this.setState({ user: await getData('/') });
   }
-  componentWillReceiveProps = async(nextProps) => {
-   
+  componentWillReceiveProps = async (nextProps) => {
+
     if (this.props.history.location !== this.props.location) {
-      const res = await Index.getInitialProps({ params: nextProps.match.params  })
+      const res = await Index.getInitialProps({ params: nextProps.match.params })
       this.setState({
         data: res.data
       })
     }
   }
-  getCurrentPage = async(currentPage)=> {
-    // const res = await Index.getInitialProps({ params: { id: currentPage } })
-    // console.log(res)
-    // this.setState({
-    //   data: res.data
-    // })
-    // this.props.history.replace(`/news/${currentPage}`)
+  getCurrentPage = async (currentPage) => {
     this.props.history.push({
       pathname: `/news/${currentPage}`
-
     });
-
   }
   changeRouter = () => {
 
-
   }
   render() {
-    console.log('detail')
     const { data } = this.state
     if (!data) {
-      return <div  className="main-content-wrap">loading</div>
+      return <div className="main-content-wrap">loading</div>
     }
     const { prev, next } = data
     const { title, content, addTime, updateTime, keywords, description, cate_name } = data.data
     return (
       <article className="post">
         <Meta title={title} keywords={keywords} desc={description} >
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script>
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" />
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         </Meta>
-        
         <div className="post-header main-content-wrap text-left">
           <h1>{title}</h1>
           <Flex  >
@@ -87,18 +76,14 @@ class Index extends BasePage {
             </FlexItem>
           </Flex>
         </div>
-
         <div className="post-content markdown main-content-wrap">
-
           <div className={classnames(Styles['py-10'], Styles['text-pre'])} dangerouslySetInnerHTML={{ __html: content }} />
           <div >
-          <PrevNext justify="between" prev={prev} next={next} onItemClick={this.getCurrentPage}  className={classnames( Styles['my-20'])} ></PrevNext>
-          <Comments id={this.props.match.params.id} {...this.props} className={classnames( Styles['my-20'])}></Comments>
+            <PrevNext justify="between" prev={prev} next={next} onItemClick={this.getCurrentPage} className={classnames(Styles['my-20'])} ></PrevNext>
+            <Comments id={this.props.match.params.id} {...this.props} className={classnames(Styles['my-20'])}></Comments>
           </div>
-        
         </div>
       </article>
-
     );
   }
 }

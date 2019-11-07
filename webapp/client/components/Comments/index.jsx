@@ -142,7 +142,7 @@ class Index extends Component {
                 <Flex justify="end" className={classnames(RootStyles['pt-10'])}>
                  {user?
                     <div>
-                     <Button onClick={this.handleLogout}>退出</Button><Button color="primary">提交</Button>
+                     <Button type="text" onClick={this.handleLogout}>退出</Button><Button color="primary">提交</Button>
                      {/* <Button>取消</Button> */}
                      </div>
                  :
