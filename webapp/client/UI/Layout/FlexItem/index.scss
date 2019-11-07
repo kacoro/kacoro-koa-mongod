@@ -45,6 +45,9 @@
     &.align-stretch{
         align-self:  stretch;
     }
+    &.align-right{ //让最后一个元素右对齐
+        margin-left: auto;
+    }
 
     input{
         box-sizing:border-box; 

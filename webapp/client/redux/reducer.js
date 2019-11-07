@@ -21,6 +21,10 @@ function menu(state = false, action) {
     }
 }
 
-export default combineReducers({
+// export default combineReducers({
+//     count,menu
+// });
+
+export default {
     count,menu
-});
+};

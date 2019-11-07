@@ -32,13 +32,12 @@ class PrevNext extends React.Component {
             console.log(prev,next)
             if(prev){
                 //上一页
-                pages.push(<Button  onClick={this.pageClick.bind(this,prev)} key={prev._id}>
-                上一页</Button>)
+                pages.push(<FlexItem><Button  onClick={this.pageClick.bind(this,prev)} key={prev._id}>上一页</Button></FlexItem>)
             }
            
             if(next){
                 //下一页
-                pages.push(<Button onClick={this.pageClick.bind(this,next)} key={next._id}>下一页</Button>)
+                pages.push(<FlexItem align="right"><Button onClick={this.pageClick.bind(this,next)} key={next._id}>下一页</Button></FlexItem>)
                 
             }
             return pages;
