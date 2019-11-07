@@ -109,10 +109,21 @@ const serverConfig = { // node环境打包
         use:[{loader:"babel-loader"}] , exclude: /node_modules/
     },
       {
-         
-          test: /\.js$/,
-          use:[{loader:"babel-loader"}] , exclude: /node_modules/
+        test: /\.[(png)|(obj)|(json)]$/,
+        loader: "file-loader"
       },
+      {
+        test: /\.(woff|woff2|jpg|png)$/,
+        use: {
+            loader: 'url-loader',
+            options: {
+                name: 'imanges/[hash].[ext]',
+                limit: 5000,
+                mimetype: 'application/font-woff'
+            }
+        }
+      },
+     
       {
         test: /\.(s?)css$/,
         exclude: /node_modules/,
@@ -133,7 +144,7 @@ const serverConfig = { // node环境打包
  
   resolve: {
     modules: [APP_PATH, 'node_modules'],
-    extensions: ['*', '.js', '.jsx','.ts','.tsx'],
+    extensions: ['*', '.js', '.jsx','.ts','.tsx','.css','.scss'],
     alias:{
       '@app': APP_PATH
     }

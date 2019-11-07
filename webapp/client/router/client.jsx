@@ -4,7 +4,7 @@ import { BrowserRouter as Router,Switch} from "react-router-dom";
 import Connect from '../pages'
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react'
-import { persistStore } from 'redux-persist';
+
 // import store from '../redux/store';
 import configureStore from '../redux/configureStore';
 const { persistor, store } = configureStore()

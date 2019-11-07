@@ -4,12 +4,17 @@ import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import reactRouter, { match, RoutingContext } from 'react-router'
 import { Provider } from 'react-redux';
-import store from '@app/redux/store.js';
+
 import path from 'path'
 import { RoutesIndex, routes } from '@app/router/index.jsx';
 import getData from '@app/common/getData';
 
 import { ChunkExtractor } from '@loadable/server'
+// import store from '@app/redux/store.js';
+import { PersistGate } from 'redux-persist/integration/react'
+import configureStore from '@app/redux/configureStore';
+const { persistor, store } = configureStore()
+
 const statsFile = path.resolve('./dist/loadable-stats.json')
 const extractor = new ChunkExtractor({ statsFile })
 
@@ -48,7 +53,7 @@ async function clientRoute(ctx, next) {
 
     //数据注水
     const propsData = `<textarea id="krs-server-render-data-BOX" style="display:none" >${JSON.stringify(data)}</textarea>`;
-    const jsx = extractor.collectChunks(<Provider store={store}><StaticRouter location={ctx.url} ><RoutesIndex {...store.getState()} context={data} /></StaticRouter></Provider>)
+    const jsx = extractor.collectChunks(<Provider store={store}> <PersistGate loading={null} persistor={persistor}><StaticRouter location={ctx.url} ><RoutesIndex {...store.getState()} context={data} /></StaticRouter></PersistGate></Provider>)
     const html = renderToString(jsx)
     const scriptTags = extractor.getScriptTags() // or extractor.getScriptElements();
     const linkTags = extractor.getLinkTags()

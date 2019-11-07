@@ -1,14 +1,11 @@
-{
- 
-   
-    
+{ 
     "env": {
       "development":{
         "presets": [
           [
               "@babel/preset-env",
               {
-             
+                "loose":true,
                   "targets": {
                       "browsers": [
                           ">1%","last 2 versions",
@@ -45,6 +42,8 @@
             [
                 "@babel/preset-env",
                 {
+                  "debug":true,
+                  "loose":true,
                     "targets": {
                       "node": "current"
                     },
