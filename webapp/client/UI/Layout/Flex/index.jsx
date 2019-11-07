@@ -16,6 +16,7 @@ class Index extends React.Component {
                     styles.Flex,
                     align?styles['align-'+align]:null, 
                     justify?styles['justify-'+justify]:null, 
+                    direction?styles['direction-'+direction]:null, 
                     className ? className : null)
                 } {...others} >
                 {children}

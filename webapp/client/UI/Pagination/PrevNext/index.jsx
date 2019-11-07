@@ -46,12 +46,12 @@ class PrevNext extends React.Component {
     
     render() {
         console.log(this.props)
-        const { data, children, className, ...others } = this.props;
+        const { data,justify, children, className, ...others } = this.props;
         const pageList = this.createPage();
         return (
-            <div  className={classnames(styles.root, className ? styles[className] : null)} {...others}>
+            <div  className={classnames(styles.root, className ? className : null)} {...others}>
             <ul className="PrevNext">
-            <Flex justify="center">
+            <Flex justify={justify?justify:''}>
               {pageList}
             </Flex>
             </ul>

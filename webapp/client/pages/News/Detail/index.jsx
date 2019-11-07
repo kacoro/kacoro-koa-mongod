@@ -9,6 +9,7 @@ import classnames from 'classnames'
 import dayjs from 'dayjs'
 import Styles from '@app/UI/Styles'
 import PostStyles from './index.scss'
+import Comments from '@app/components/Comments'
 class Index extends BasePage {
   constructor(props) {
     super(props);
@@ -94,8 +95,11 @@ class Index extends BasePage {
         <div className="post-content markdown">
 
           <div className={classnames("main-content-wrap", Styles['px-10'], Styles['text-pre'])} dangerouslySetInnerHTML={{ __html: content }} />
-
-          <PrevNext prev={prev} next={next} onItemClick={this.getCurrentPage}></PrevNext>
+          <div className="main-content-wrap">
+          <PrevNext justify="between" prev={prev} next={next} onItemClick={this.getCurrentPage}  className={classnames( Styles['my-20'])} ></PrevNext>
+          <Comments id={this.props.match.params.id} className={classnames( Styles['my-20'])}></Comments>
+          </div>
+        
         </div>
       </article>
 

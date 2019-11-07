@@ -5,13 +5,13 @@
 
 import React from 'react';
 import classnames from 'classnames';
-import styles from './index.scss';
+import styles from '../index.scss';
 
 class Index extends React.Component {
     render() {
         const { children, className, ...others } = this.props;
         return (
-            <input className={classnames(styles.Input, className ? className : null)} {...others} />
+            <input className={classnames(styles.Control, className ? className : null)} {...others} />
         );
     }
 }
