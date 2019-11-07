@@ -32,7 +32,7 @@ class Index extends Component {
             <a className={styles.link} href="/">Kacoro 's blog</a>
           </div>
           <div className={styles.right}>
-             <Signin {...this.props} />
+             {/* <Signin {...this.props} /> */}
           </div>
           </div>
       

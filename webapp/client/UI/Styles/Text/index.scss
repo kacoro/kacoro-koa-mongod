@@ -38,7 +38,9 @@ a.textLink{
 
 .text-pre{
   
-       
+    word-break: break-all;
+    white-space: pre-wrap;
+    word-wrap: break-word;     
   pre{
    
     overflow: visible;
