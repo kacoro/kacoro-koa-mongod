@@ -14,7 +14,6 @@ class Index extends BasePage {
   constructor(props) {
     super(props);
     // console.log(this.state)
-    this.getCurrentPage = this.getCurrentPage.bind(this)
   }
 
 
@@ -27,10 +26,7 @@ class Index extends BasePage {
   async componentDidMount() {
     // let checkInit = JSON.stringify(this.props.initialData) === "{}"
     // console.log("detail",this.state)
-
-    console.log("Mount", this.isSSR, this.hasSpaCacheData)
     if (!this.isSSR && !this.hasSpaCacheData) { //非服务端渲染需要自身进行数据获取
-
       const res = await Index.getInitialProps({ params: this.props.match.params })
       this.setState({ data: res.data })
     }
@@ -50,7 +46,7 @@ class Index extends BasePage {
       })
     }
   }
-  async getCurrentPage(currentPage) {
+  getCurrentPage = async(currentPage)=> {
     // const res = await Index.getInitialProps({ params: { id: currentPage } })
     // console.log(res)
     // this.setState({
@@ -97,7 +93,7 @@ class Index extends BasePage {
           <div className={classnames(Styles['py-10'], Styles['text-pre'])} dangerouslySetInnerHTML={{ __html: content }} />
           <div >
           <PrevNext justify="between" prev={prev} next={next} onItemClick={this.getCurrentPage}  className={classnames( Styles['my-20'])} ></PrevNext>
-          <Comments id={this.props.match.params.id} className={classnames( Styles['my-20'])}></Comments>
+          <Comments id={this.props.match.params.id} {...this.props} className={classnames( Styles['my-20'])}></Comments>
           </div>
         
         </div>

@@ -21,10 +21,23 @@ function menu(state = false, action) {
     }
 }
 
+function user(state = null, action) {
+    switch (action.type) {
+        case types.USER_LOGIN:
+            return action.payload;
+        case types.USER_LOGOUT:
+            return null;
+        default:
+            return state;
+    }
+}
+
+
+
 // export default combineReducers({
 //     count,menu
 // });
 
 export default {
-    count,menu
+    count,menu,user
 };

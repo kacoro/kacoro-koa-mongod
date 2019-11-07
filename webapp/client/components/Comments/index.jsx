@@ -14,6 +14,9 @@ import { DiffTime } from '@app/UI/Time';
 import Website from './WebSite';
 import logo from '@app/assets/images/logo.png'
 import Lazyload from '@app/components/Lazyload';
+import Signin from '@app/components/Header/Signin';
+import reduxTypes from '@app/redux/types';
+
 class Index extends Component {
     constructor(props) {
         super(props);
@@ -115,7 +118,13 @@ class Index extends Component {
         return comments
 
     }
-    creatForm() {
+    handleLogout  = () => {
+        this.props.dispatch({
+            type: reduxTypes.USER_LOGOUT
+        });
+    }
+    creatForm = () => {
+        const {user} = this.props
         return (
             <div>
                 <Flex>
@@ -131,10 +140,14 @@ class Index extends Component {
                     </FlexItem>
                 </Flex>
                 <Flex justify="end" className={classnames(RootStyles['pt-10'])}>
-                    <Button color="primary">登录</Button>
-                    {/* <Button>退出</Button>
-                    <Button>取消回复</Button> */}
-                    {/* <Button>提交</Button> */}
+                 {user?
+                    <div>
+                     <Button onClick={this.handleLogout}>退出</Button><Button color="primary">提交</Button>
+                     {/* <Button>取消</Button> */}
+                     </div>
+                 :
+                 <Signin {...this.props} />
+                }
                 </Flex>
             </div>
 
@@ -145,7 +158,6 @@ class Index extends Component {
             <div className={classnames(styles.comment,RootStyles['pb-20'])} >
                 {this.state.count}条评论
                {this.creatForm()}
-
                 {this.creatComments(this.state.list)}
             </div>
         );

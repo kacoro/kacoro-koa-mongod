@@ -7,6 +7,7 @@ import { Input } from '@app/UI/Form';
 import { Flex,FlexItem } from '@app/UI/Layout';
 import styles from '@app/UI/Styles/index.scss';
 import Button from '@app/UI/Buttons';
+import reduxTypes from '@app/redux/types';
 
 import {
   Link, withRouter
@@ -31,18 +32,24 @@ class Index extends React.Component {
   handleCloseModal() {
     this.setState({ showModal: false });
   }
-  handleLogin = async (e) => {
-    console.log(this.state)
+  handleLogin = async () => {
+    console.log(this.props)
     const { password, username } = this.state
     if (password == "" || username == "") return false
       var data = await request.config({ type: 'post', url: '/api/signin', data: { username, password } })
+      if(data.id){
+        console.log(this.props.dispatch)
+        this.props.dispatch({
+          type: reduxTypes.USER_LOGIN,payload:data
+         });
+        this.handleCloseModal()
+      }
     console.log(data)
   }
   handleInputChange(e) {
     const target = e.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
-
     this.setState({
       [name]: value
     });
@@ -56,8 +63,7 @@ class Index extends React.Component {
   }
   render() {
     return <div className="login-layout">
-      <Button onClick={this.handleOpenModal}>登录</Button>
-      <Button className="primary" color="primary" onClick={this.handleOpenModal}>注册</Button>
+      <Button color="primary" onClick={this.handleOpenModal}>登录</Button>
       <Modal
         {...this.props}
         isOpen={this.state.showModal}
@@ -79,11 +85,8 @@ class Index extends React.Component {
             </FlexItem>
           </Flex>
           <Flex align="center" justify="center">
-            <Button onClick={this.handleLogin}>登 录</Button>  <Button className="outlined" onClick={this.changeRouter}>注 册</Button>
+            <Button color="primary" onClick={this.handleLogin}>登 录</Button>  <Button className="outlined" onClick={this.changeRouter}>注 册</Button>
           </Flex>
-      
-
-
       </Modal>
     </div>
   }
