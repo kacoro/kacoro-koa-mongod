@@ -53,7 +53,7 @@ async function clientRoute(ctx, next) {
 
     //数据注水
     const propsData = `<textarea id="krs-server-render-data-BOX" style="display:none" >${JSON.stringify(data)}</textarea>`;
-    const jsx = extractor.collectChunks(<Provider store={store}> <PersistGate loading={null} persistor={persistor}><StaticRouter location={ctx.url} ><RoutesIndex {...store.getState()} context={data} /></StaticRouter></PersistGate></Provider>)
+    const jsx = extractor.collectChunks(<StaticRouter location={ctx.url}  ><RoutesIndex {...store.getState()} context={data} /></StaticRouter>)
     const html = renderToString(jsx)
     const scriptTags = extractor.getScriptTags() // or extractor.getScriptElements();
     const linkTags = extractor.getLinkTags()
