@@ -1,12 +1,18 @@
 import News from '../models/news'
 import bcrypt from 'bcrypt'
-const config = require('../config')
+
 // const findUserInfo = () => {
 //     const _sql = 'select * from user';
 //     return query(_sql, []);
 // };
 export const getNews = async (ctx, next) => {
- 
+  
+  var condition = {status:'on'}; //条件 
+  if(ctx.user && ctx.user.status==10000 ){
+      condition = {} //管理员不需要过滤
+  }
+   
+  
   //koa-bodyparser解析前端参数
 
   let query = ctx.query;
@@ -14,7 +20,7 @@ export const getNews = async (ctx, next) => {
   let page = Number(query.page) || 1;//当前第几页
   let size = Number(query.size) || 10;//每页显示的记录条数
   let catename = query.catename || '';
-  var condition = {status:'on'}; //条件 
+  
   //显示符合前端分页请求的列表查询
   if(catename){
      console.log(catename)
@@ -38,8 +44,12 @@ export const getNews = async (ctx, next) => {
 }
 
 export const getNewsById = async ctx => {
+
     const {id} = ctx.params
     var condition = {status:'on'}; //条件 
+    if(ctx.user && ctx.user.status==10000 ){
+        condition = {} //管理员不需要过滤
+    }
     var sort = { 'addTime': -1 }; //排序（按登录时间倒序） 
     const data = await News.findOne(Object.assign({},condition,{_id:id}))
     const prev = await News.findOne(condition, '_id title').where('addTime').gt(data.addTime)

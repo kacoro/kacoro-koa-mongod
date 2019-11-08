@@ -1,11 +1,12 @@
 import User from '../models/user'
 import bcrypt from 'bcrypt'
+const jwt = require('jsonwebtoken'); //token 认证
 const config = require('../config')
 // const findUserInfo = () => {
 //     const _sql = 'select * from user';
 //     return query(_sql, []);
 // };
-const jwt = require('jsonwebtoken'); //token 认证
+
 export const list = async (ctx, next) => {
     let title = "首页"
   let totle = await User.countDocuments();//表总记录数
@@ -34,7 +35,6 @@ export const getUser = async ctx => {
     // await findUserInfo().then(result => {
     //     data = result[0];
     // });
-
     data = {
         userId: 1002,
         name: 'xwb007',
