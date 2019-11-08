@@ -83,14 +83,14 @@ const routes = [
     path: '/third',exact:true,
     component: withRouter(AsyncThird)
   },
-  {
-    path: '/signin', exact:true,
-    component: withRouter(AsyncSignin)
-  },
-  {
-    path: '/signup',exact:true,
-    component: withRouter(AsyncSignup)
-  },
+  // {
+  //   path: '/signin', exact:true,
+  //   component: withRouter(AsyncSignin)
+  // },
+  // {
+  //   path: '/signup',exact:true,
+  //   component: withRouter(AsyncSignup)
+  // },
   {
     path: '/about',exact:true,
     component: withRouter(AsyncAbout)

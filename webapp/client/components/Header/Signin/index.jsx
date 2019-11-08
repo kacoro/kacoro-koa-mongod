@@ -85,9 +85,8 @@ class Index extends React.Component {
             </FlexItem>
           </Flex>
           <Flex  align="center" justify="center">
-          <Button type="text" onClick={this.changeRouter}>忘记密码</Button>
-          <Button type="text" onClick={this.changeRouter}>注 册</Button>
-           
+          {/* <Button type="text" onClick={this.changeRouter}>忘记密码</Button>
+          <Button type="text" onClick={this.changeRouter}>注 册</Button> */}
             <Button color="primary" onClick={this.handleLogin}>登 录</Button>
           
           </Flex>

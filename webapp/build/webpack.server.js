@@ -15,6 +15,8 @@ const serverWebpackConfig = merge(baseWebpackConfig.serverConfig, {
         parallel: true,
         cache: true,
         uglifyOptions:{
+
+          
           warnings: false,
           parse: {},
           compress: {},

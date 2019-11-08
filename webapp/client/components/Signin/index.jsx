@@ -26,7 +26,6 @@ import {
         const target = e.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-
         this.setState({
             [name]: value
         });
@@ -40,8 +39,6 @@ import {
     render(){
         return <div className="login-layout">
             <form>
-
-            
             <div>
             用户：<input type="text" name="username" value={this.state.value} onChange={this.handleInputChange}></input>
             </div>
@@ -52,9 +49,8 @@ import {
                 <button type="button" onClick={this.handleLogin}>登 录</button>
             </div>
             </form>
-            <button onClick={this.changeRouter}>注 册</button>
-            
-            <Link to="/signup">注 册</Link>
+            {/* <button onClick={this.changeRouter}>注 册</button>
+            <Link to="/signup">注 册</Link> */}
         </div>
     }
 }
