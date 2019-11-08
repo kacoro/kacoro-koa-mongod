@@ -41,6 +41,7 @@
     "dayjs": "^1.8.16",
     "debug": "^4.1.1",
     "ejs": "^2.7.1",
+    "fibers": "^4.0.2",
     "html-loader": "^0.5.5",
     "isnode": "^0.0.1",
     "isomorphic-style-loader": "^5.1.0",
@@ -82,6 +83,7 @@
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
     "render-quill": "^1.0.5",
+    "sass": "^1.23.3",
     "ts-loader": "^6.2.1",
     "typescript": "^3.6.4"
   },
