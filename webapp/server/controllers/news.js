@@ -40,9 +40,10 @@ export const getNews = async (ctx, next) => {
 export const getNewsById = async ctx => {
     const {id} = ctx.params
     var condition = {status:'on'}; //条件 
+    var sort = { 'addTime': -1 }; //排序（按登录时间倒序） 
     const data = await News.findOne(Object.assign({},condition,{_id:id}))
     const prev = await News.findOne(condition, '_id title').where('addTime').gt(data.addTime)
-    const next = await News.findOne(condition, '_id title').lt('addTime', data.addTime)
+    const next = await News.findOne(condition, '_id title').where('addTime').lt(data.addTime).sort(sort)
     ctx.body = {
         data:{data,prev,next},
         msg:'成功'

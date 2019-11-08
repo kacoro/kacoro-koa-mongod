@@ -26,13 +26,13 @@ class Index extends Component {
             count: 0,
             content:''
         };
+     
     }
 
     async componentDidMount() {
         const res = await getData(`comment/article/${this.props.id}`);
         const data = res.data.data
         let list = this.getTree(data, '', '_id', 'replyId')
-        console.log(list)
         this.setState({ list: list, data: data, count: data.length })
         Lazyload(this.refs)
     }
@@ -59,7 +59,16 @@ class Index extends Component {
         // 使用根节点
         return getNode(root)
     }
-   
+    
+    componentWillReceiveProps = async (nextProps) => {
+        if (this.props.history.location !== this.props.location) {
+            const res = await getData(`comment/article/${nextProps.id}`);
+            const data = res.data.data
+            let list = this.getTree(data, '', '_id', 'replyId')
+            this.setState({ list: list, data: data, count: data.length })
+            Lazyload(this.refs)
+        }
+      }
     onReplay(obj) {
         let { data } = this.state;
         // 循环遍历 state中的 数组对象
@@ -83,15 +92,19 @@ class Index extends Component {
             list: list
         })
     }
-    handleReply= async() =>{
+    handleReply= async(item) =>{
         //
         // this.props.dispatch({
         //     type: reduxTypes.AXIOS_POST,
         //     payload:{url:'/api/comment',data:{content:this.state.content}}
         // });
-        
-         handlePost.bind(this)({url:`/api/comment/article/${this.props.id}`,data:{content:this.state.content}})
-    
+         console.log(item);
+         var data = {content:this.state.content}
+        if(item){
+            data.replyId = item._id
+        }
+        const res = handlePost.bind(this)({url:`/api/comment/article/${this.props.id}`,data})
+        console.log(res)
         //  handlePost({url:'/api/comment',data:{content:this.state.content}})
         // this.props.dispatch( handlePost({url:'/api/comment',data:{content:this.state.content}}))
        
@@ -142,7 +155,7 @@ class Index extends Component {
                             </FlexItem>
                             <FlexItem>
                                 <span onClick={this.onReplay.bind(this, item)} className={styles.action} data-active={item.isReplay}>回复</span>
-                                {item.isReplay ? this.creatForm() : null}
+                                {item.isReplay ? this.creatForm(item) : null}
                             </FlexItem>
                         </Flex>
                         {item.children ? this.creatComments(item.children) : null}
@@ -154,7 +167,7 @@ class Index extends Component {
 
     }
     
-    creatForm = () => {
+    creatForm = (item) => {
         const {user} = this.props
         return (
             <div>
@@ -177,7 +190,7 @@ class Index extends Component {
                 <Flex justify="end" className={classnames(RootStyles['pt-10'])}>
                  {user?
                     <div>
-                     <Button type="text" onClick={this.handleLogout}>退出</Button><Button color="primary" onClick={this.handleReply}>提交</Button>
+                     <Button type="text" onClick={this.handleLogout}>退出</Button><Button color="primary" onClick={this.handleReply.bind(this, item)}>提交</Button>
                      {/* <Button>取消</Button> */}
                      </div>
                  :
