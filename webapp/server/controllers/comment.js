@@ -53,15 +53,14 @@ export const addCommentByArticleId = async ctx => {
   const {id} = ctx.params
   const user = ctx.state.user 
   const {content,replyId} = ctx.request.body
-  const {_id,nickname,website,email} = ctx.state.user._doc
+  const {_id,nickname,website,email,avatar} = ctx.state.user._doc
   console.log("website",website)
-  var condition = {status:'on',articleId:ctx.params.id,content,replyId,userId:user._id,nickname,website,email}; //条件 
- 
+  var condition = {status:'on',articleId:ctx.params.id,content,replyId,userId:user._id,nickname,website,email,avatar}; //条件 
   let comment=  new Comment(condition)
   var res = await comment.save()
-
+  let {userId,...data} = res._doc
   ctx.body = {
-      data:res,
+      data:data,
       msg:'成功'
   }
 };

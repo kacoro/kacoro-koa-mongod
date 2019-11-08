@@ -48,19 +48,20 @@ export const signIn = async ctx => {
     
     const {username,password} = ctx.request.body
     var condition = {username:username}; //条件 
-    const data = await User.findOne(condition)
+    const res = await User.findOne(condition)
    
     try {
-        if(bcrypt.compareSync(password,data.password)){
+        if(bcrypt.compareSync(password,res.password)){
             // const d = await User.findByIdAndUpdate(data._id,{logindate:new Date()})
+            const {_id,...other} = res._doc
             const payload = {
-                _id:data._id
+                _id:_id
             };
             const token = jwt.sign(payload, config.secretKey, {
                 expiresIn: 3600
             });
-            console.log(token)
-            ctx.body = {id:data._id,msg:"登录成功",token: 'Bearer ' + token} 
+            
+            ctx.body = {data:other,msg:"登录成功",token: 'Bearer ' + token} 
             //更新登录时间
            
         }else{

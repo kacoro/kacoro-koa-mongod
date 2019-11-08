@@ -14,6 +14,7 @@ var CommentSchema = new Schema({
     nickname : { type: String,default:'' }, //用户账号 
     email:{type:String,default:''}, // 邮件
     website:{type:String,default:''}, //网站
+    avatar:{type:String,default:''}, //头像
 
     status:{type:String,default:'on'},
     addTime: { type:Date, default:Date.now },

@@ -24,7 +24,8 @@ class Index extends Component {
         this.state = {
             list: [],
             count: 0,
-            content:''
+            content:'',
+            content2:''
         };
      
     }
@@ -91,6 +92,10 @@ class Index extends Component {
             data: newData,
             list: list
         })
+      
+    }
+    componentDidUpdate(){
+        Lazyload(this.refs)
     }
     handleReply= async(item) =>{
         //
@@ -98,13 +103,31 @@ class Index extends Component {
         //     type: reduxTypes.AXIOS_POST,
         //     payload:{url:'/api/comment',data:{content:this.state.content}}
         // });
-         console.log(item);
-         var data = {content:this.state.content}
+     
+         var payload = {content:this.state.content}
         if(item){
-            data.replyId = item._id
+            payload.content = this.state.content2
+            payload.replyId = item._id
         }
-        const res = handlePost.bind(this)({url:`/api/comment/article/${this.props.id}`,data})
-        console.log(res)
+        const res = await handlePost.bind(this)({url:`/api/comment/article/${this.props.id}`,data:payload})
+        if(res){
+            var newData = this.state.data
+            newData.push(res.data)
+            newData = newData.map(function (item) {
+                return {
+                    ...item,
+                    isReplay:false
+                }
+            })
+            let list = this.getTree(newData, '', '_id', 'replyId')
+            this.setState({
+                content:'',
+                content2:'',
+                        data: newData,
+                        list: list
+             })
+            
+        }
         //  handlePost({url:'/api/comment',data:{content:this.state.content}})
         // this.props.dispatch( handlePost({url:'/api/comment',data:{content:this.state.content}}))
        
@@ -169,22 +192,32 @@ class Index extends Component {
     
     creatForm = (item) => {
         const {user} = this.props
+        console.log(user)
         return (
             <div>
                 <Flex>
                     <div className={classnames(styles.avatar)} alt="kacoro's blog"   >
                         {user?
-                         <img  />
+                         <img data-src={`/static${user.data.avatar}`} ref="commentuser" />
                           :null}
-                       
                     </div>
                     <FlexItem flex="auto">
+                        {item?
                         <Textarea
+                        name="content2"
+                        id="content2"
+                        value={this.state.content2}
+                        placeholder="评论" rows="10"  onChange={this.handleInputChange}
+                    >{this.state.content}</Textarea>
+                            :
+                            <Textarea
                             name="content"
                             id="content"
                             value={this.state.content}
                             placeholder="评论" rows="10"  onChange={this.handleInputChange}
                         >{this.state.content}</Textarea>
+                        }
+                        
                     </FlexItem>
                 </Flex>
                 <Flex justify="end" className={classnames(RootStyles['pt-10'])}>

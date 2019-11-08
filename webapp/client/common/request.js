@@ -1,10 +1,7 @@
 import qs from 'qs';
 import axios from 'axios';
 import isNode from 'isnode';
-import configureStore from '../redux/configureStore';
-const { persistor, store } = configureStore()
-import reduxTypes from '@app/redux/types';
-import Alert from "@app/UI/alert";
+
 axios.interceptors.request.use(
     config => {
         var user =  JSON.parse(localStorage.getItem('persist:root')).user
@@ -19,18 +16,7 @@ axios.interceptors.request.use(
       return Promise.reject(err)
     }
 )
-axios.interceptors.response.use(res=> {
-  
-    return res;
-  }, err=> {
-     if (err.response.status == 404) {
-       
-        
-    }else {
-       
-    }
-    return Promise.resolve(err);
-  })
+
 class Request {
     constructor() {
         this.base = {
