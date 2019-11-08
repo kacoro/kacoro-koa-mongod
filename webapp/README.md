@@ -28,8 +28,10 @@ module.exports = {
  npm install -g webpack webpack-cli concurrently
 ``
 
-## start
-
+## publish after build
+```
+PORT=5200 yarn prd --name kacoro
+```
 
 ## dev
 
