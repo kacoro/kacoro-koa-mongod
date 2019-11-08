@@ -8,7 +8,7 @@ axios.interceptors.request.use(
        
         if(user){
             user = JSON.parse(user)
-            config.headers.Authorization = user.token
+            if(user) config.headers.Authorization = user.token
         }
       return config
     },

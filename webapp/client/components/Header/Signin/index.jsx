@@ -17,8 +17,8 @@ class Index extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: 'admin@kacoro.com', //账号
-      password: 'we4849824131', // 密码
+      username: '', //账号
+      password: '', // 密码
       showModal: false
     }
     this.handleInputChange = this.handleInputChange.bind(this);

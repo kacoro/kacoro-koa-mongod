@@ -20,9 +20,10 @@ router.post('/signin',signIn)
 //         }
 //       })(ctx)
 //   })
-router.post('/signup',passport.authenticate('jwt', { session: false }),async (ctx)=> {
+router.post('/signup',passport.authenticate('jwt', { session: false }),signUp)
 
-    console.log("执行")
+router.post('/comment',passport.authenticate('jwt', { session: false }),async (ctx)=> {
+    console.log(ctx.state.user)
 })
 
 router.get('/news', getNews);
