@@ -23,7 +23,7 @@ class Request {
     constructor() {
         this.base = {
             type: 'get',
-            meta: isNode ? 'http://127.0.0.1:5200' : 'http://127.0.0.1:5200'
+            meta: isNode ? 'https://www.kacoro.com' : 'http://127.0.0.1:5200'
         };
         this.options = {
             url: null,
