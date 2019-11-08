@@ -30,7 +30,11 @@ class BasePage extends Component {
           return null;
       }
   }
- 
+  componentDidUpdate(prevProps) {
+        if (this.props.location !== prevProps.location) {
+        window.scrollTo(0, 0)
+        }
+    }
   async UNSAFE_componentWillUnmount(){
     //组件销毁前
     console.log('unmount');
