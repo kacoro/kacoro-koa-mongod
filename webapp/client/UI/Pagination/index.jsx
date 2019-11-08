@@ -143,7 +143,7 @@ class Pagination extends React.Component {
         const { data, children, className, ...others } = this.props;
         const pageList = this.createPage();
         return (
-            <div  className={classnames(styles.root, className ? styles[className] : null)} {...others}>
+            <div  className={classnames(styles.root, className ? className : null)} {...others}>
             <ul className="pagination">
             <Flex justify="center">
               {pageList}

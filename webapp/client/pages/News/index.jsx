@@ -6,6 +6,7 @@ import Pagination from '@app/UI/Pagination';
 import qs from 'qs';
 import dayjs from 'dayjs'
 import { Flex, FlexItem } from '@app/UI/Layout';
+import Styles from '@app/UI/Styles'
 import classnames from 'classnames'
 class Index extends BasePage {
   constructor(props, context) {
@@ -119,7 +120,7 @@ class Index extends BasePage {
     return (
       <section className="postShorten-group main-content-wrap">
         {this.creatList()}
-        <Pagination data={data.pagination} onItemClick={this.getCurrentPage} location={this.props.location}/>
+        <Pagination className={classnames(Styles['my-20'])} data={data.pagination} onItemClick={this.getCurrentPage} location={this.props.location}/>
       </section>
     );
   }
