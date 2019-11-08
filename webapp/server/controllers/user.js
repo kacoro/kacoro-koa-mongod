@@ -92,9 +92,8 @@ export const signUp = async ctx => {
         }
     } catch (error) {
         ctx.status = 500
-        ctx.body = {msg:"服务器发生错误",error};
+        ctx.body = {msg:"服务器发生错误"};
     }
-  
 };
 
  

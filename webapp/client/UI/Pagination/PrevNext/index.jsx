@@ -29,7 +29,6 @@ class PrevNext extends React.Component {
             // const {prev, next} = this.state;
             const {prev,next} = this.props
             let pages = []
-            console.log(prev,next)
             if(prev){
                 //上一页
                 pages.push(<FlexItem key={prev._id}><Button  onClick={this.pageClick.bind(this,prev)}>上一页</Button></FlexItem>)
@@ -44,7 +43,6 @@ class PrevNext extends React.Component {
         }
     
     render() {
-        console.log(this.props)
         const { data,justify, children, className, ...others } = this.props;
         const pageList = this.createPage();
         return (

@@ -43,10 +43,10 @@ const JwtStrategy = require('passport-jwt').Strategy,
 const opts = {}
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = config.secretKey;
-module.exports=passport=>{
-  passport.use(new JwtStrategy(opts,async (jwt_payload,done)=>{
+
+passport.use(new JwtStrategy(opts,async (jwt_payload,done)=>{
     //jwt_payload 返回的是登录时返回的数据 即payload
-    console.log('d')
+    console.log('验证')
       const user=await User.findOne(jwt_payload.id);
       if(user){
           done(null,user);
@@ -54,4 +54,6 @@ module.exports=passport=>{
           done(null,false);
       }
   }))
-}
+
+
+export default passport

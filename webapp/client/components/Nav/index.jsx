@@ -30,7 +30,6 @@ class Index extends Component {
  }
   creatButton(){
     let buttons = []
-    console.log(this.props)
     this.state.buttons.map((item,i)=>{
       let flex = () =>{
         return (<Flex align="center">

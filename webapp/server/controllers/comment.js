@@ -47,12 +47,31 @@ export const getCommentById = async ctx => {
       msg:'成功'
   }
 };
+
+export const addCommentByArticleId = async ctx => {
+  console.log("user",ctx.state.user)
+  const {id} = ctx.params
+  const user = ctx.state.user 
+  const {content,replyId} = ctx.request.body
+  const {_id,nickname,website,email} = ctx.state.user._doc
+  console.log("website",website)
+  var condition = {status:'on',articleId:ctx.params.id,content,replyId,userId:user._id,nickname,website,email}; //条件 
+ 
+  let comment=  new Comment(condition)
+  var res = await comment.save()
+
+  ctx.body = {
+      data:res,
+      msg:'成功'
+  }
+};
+
 export const getCommentByArticleId = async ctx => {
     const {id} = ctx.params
     var condition = {status:'on',articleId:id}; //条件 
-    console.log(id)
+   
     const data = await Comment.find(condition)
-
+  
     ctx.body = {
         data:{data},
         msg:'成功'

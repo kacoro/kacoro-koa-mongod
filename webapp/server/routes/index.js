@@ -1,8 +1,8 @@
 import Router from 'koa-router';
 import {getUser,signIn,signUp} from '../controllers/user.js';
 import {getNews,getNewsById} from '../controllers/news';
-import {getComment,getCommentById,getCommentByArticleId} from '../controllers/comment';
-const passport=require('koa-passport');
+import {getComment,getCommentById,getCommentByArticleId,addCommentByArticleId} from '../controllers/comment';
+import passport from '../module/passport'
 const router = new Router({ prefix: '/api' });
 const jwt = require('jsonwebtoken');
 router.get('/user', getUser);
@@ -20,11 +20,11 @@ router.post('/signin',signIn)
 //         }
 //       })(ctx)
 //   })
-router.post('/signup',passport.authenticate('jwt', { session: false }),signUp)
-
-router.post('/comment',passport.authenticate('jwt', { session: false }),async (ctx)=> {
+router.post('/signup',passport.authenticate('jwt', { session: false }),async (ctx)=> {
     console.log(ctx.state.user)
 })
+
+router.post('/comment/article/:id',passport.authenticate('jwt', { session: false }),addCommentByArticleId)
 
 router.get('/news', getNews);
 router.get('/news/:id', getNewsById);

@@ -17,6 +17,7 @@ import Lazyload from '@app/components/Lazyload';
 import Signin from '@app/components/Header/Signin';
 import reduxTypes from '@app/redux/types';
 import request from '@app/common/request';
+import {handlePost} from "@app/redux/action"
 class Index extends Component {
     constructor(props) {
         super(props);
@@ -58,19 +59,7 @@ class Index extends Component {
         // 使用根节点
         return getNode(root)
     }
-    handleReplay = async () => {
-      
-        //
-         this.props.dispatch({
-            type: reduxTypes.USER_LOGOUT
-        });
-        await request.config({ type: 'post', url: '/api/signup' })
-        // var res = await postData(`comment/article/${this.props.id}`,{
-        //     content:data.content
-        //  })
-        // this.setState(list:Object.assign(list,{}))
-        //  console.log(res.data)
-    }
+   
     onReplay(obj) {
         let { data } = this.state;
         // 循环遍历 state中的 数组对象
@@ -94,20 +83,37 @@ class Index extends Component {
             list: list
         })
     }
-    handleReply(){
-
+    handleReply= async() =>{
+        //
+        // this.props.dispatch({
+        //     type: reduxTypes.AXIOS_POST,
+        //     payload:{url:'/api/comment',data:{content:this.state.content}}
+        // });
+        
+         handlePost.bind(this)({url:`/api/comment/article/${this.props.id}`,data:{content:this.state.content}})
+    
+        //  handlePost({url:'/api/comment',data:{content:this.state.content}})
+        // this.props.dispatch( handlePost({url:'/api/comment',data:{content:this.state.content}}))
+       
+        // await request.config({ type: 'post', url: '/api/comment' })
+        // var res = await postData(`comment/article/${this.props.id}`,{
+        //     content:data.content
+        //  })
+        // this.setState(list:Object.assign(list,{}))
+        //  console.log(res.data)
     }
     handleInputChange =(e) => {
         const target = e.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-        console.log(e,value,name)
         this.setState({
           [name]: value
         });
       }
     handleLogout  = () => {
-
+        this.props.dispatch({
+            type: reduxTypes.USER_LOGOUT
+        });
         // this.props.dispatch({
         //     type: reduxTypes.USER_LOGOUT
         // });
@@ -115,16 +121,20 @@ class Index extends Component {
     creatComments(list) {
         if(!list) return null
         const comments = list.map((item, index) => {
-            var src = '/upload/userIcon/' + item.name.toLowerCase() + '.jpg';
+            var src = ''
+            if(item.name){
+                src = '/upload/userIcon/' + item.name.toLowerCase() + '.jpg';
+            }
+           
             return (
                 <Flex key={index}>
                     <Website website={item.website} className={classnames(styles.avatar)} alt="kacoro's blog"   >
-                        <img data-src={`/static${src}`} ref={`img-${item._id}`} />
+                        <img data-src={`/static${item.avatar}`} ref={`img-${item._id}`} />
                     </Website>
                     <FlexItem flex="auto">
                         <Flex direction="column" className={styles.content}>
                             <FlexItem>
-                                <Website website={item.website}>{item.name}</Website> ·&nbsp;
+                                <Website website={item.website}>{item.nickname}</Website> ·&nbsp;
                           <DiffTime start={item.addTime}></DiffTime>
                             </FlexItem>
                             <FlexItem>
@@ -167,7 +177,7 @@ class Index extends Component {
                 <Flex justify="end" className={classnames(RootStyles['pt-10'])}>
                  {user?
                     <div>
-                     <Button type="text" onClick={this.handleReplay}>退出</Button><Button color="primary" onClick={this.handleReply}>提交</Button>
+                     <Button type="text" onClick={this.handleLogout}>退出</Button><Button color="primary" onClick={this.handleReply}>提交</Button>
                      {/* <Button>取消</Button> */}
                      </div>
                  :

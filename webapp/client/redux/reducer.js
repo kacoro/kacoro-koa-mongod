@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import types from './types';
-
+import request from '@app/common/request';
 function count(state = 0, action) {
     switch (action.type) {
         case types.ADD_COUNTER:
@@ -34,10 +34,11 @@ function user(state = null, action) {
 
 
 
+
 // export default combineReducers({
 //     count,menu
 // });
 
 export default {
-    count,menu,user
+    count, menu, user
 };
