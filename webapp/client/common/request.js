@@ -4,13 +4,15 @@ import isNode from 'isnode';
 
 axios.interceptors.request.use(
     config => {
-        var user =  JSON.parse(localStorage.getItem('persist:root')).user
-       
-        if(user){
-            user = JSON.parse(user)
-            if(user) config.headers.Authorization = user.token
+        if(typeof localStorage=='object'){
+            var user =  JSON.parse(localStorage.getItem('persist:root')).user
+            if(user){
+                user = JSON.parse(user)
+                if(user) config.headers.Authorization = user.token
+            }
         }
-      return config
+        return config
+        
     },
     err => {
       return Promise.reject(err)

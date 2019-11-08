@@ -14,7 +14,12 @@ const css = {
     },
   }
 
-const io = new IntersectionObserver((entries)=>{ // 观察者
+
+  console.log(typeof document)
+  console.log(typeof IntersectionObserver =='function')
+  var io = null
+if(typeof IntersectionObserver =='function'){
+   io =  new IntersectionObserver((entries)=>{ // 观察者
     entries.forEach((item)=>{ // entries 是被监听的元素集合它是一个数组
       if (item.intersectionRatio <= 0 ) return // intersectionRatio 是可见度 如果当前元素不可见就结束该函数。
     
@@ -24,17 +29,20 @@ const io = new IntersectionObserver((entries)=>{ // 观察者
   }, {
     threshold, // 添加触发时机数组
   });
+}
+    
+
+
   
   // onload 函数
   const LazyLoad = (refs)=>{
-     
+    if(typeof IntersectionObserver =='function'){
       Object.getOwnPropertyNames(refs).forEach(function(key){
           if(refs[key].dataset.src){
             io.observe(refs[key])
           }
-        
-
      })
+    }
   
     // refs.forEach( (item) => {
     //   io.observe(item.current) // 添加需要被观察的元素。
