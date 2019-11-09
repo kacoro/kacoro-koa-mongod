@@ -47,7 +47,7 @@ async function clientRoute(ctx, next) {
         isSSR:true,
         search:search,
         params:branch[0].match.params}
-      data = await com.getInitialProps(opt)
+      data = await com.getInitialProps(opt,ctx)
     }
     //参数带入
 

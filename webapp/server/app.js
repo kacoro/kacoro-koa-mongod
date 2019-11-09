@@ -6,7 +6,6 @@ import session from 'koa-session';
 import compress from 'koa-compress';
 import convert from 'koa-convert';
 import cors from 'koa2-cors';
-
 const app = new Koa();
 app.keys = ['newest secret key', 'older secret key'];
 // app.use(convert(session(app)));

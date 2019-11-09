@@ -8,6 +8,7 @@ import dayjs from 'dayjs'
 import { Flex, FlexItem } from '@app/UI/Layout';
 import Styles from '@app/UI/Styles'
 import classnames from 'classnames'
+
 class Index extends BasePage {
   constructor(props, context) {
     super(props, context);
@@ -16,7 +17,12 @@ class Index extends BasePage {
   }
 
   //数据预取方法 静态 异步 方法
-  static async getInitialProps(opt) {
+  static async getInitialProps(opt,ctx) {
+    if(ctx){
+      //如何取得token呢?
+      console.log("cookie:",ctx.cookies)
+    }
+   
     const { search, params } = opt
     var url = "news"
     if (JSON.stringify(params) !== "{}") url += '/' + params.id

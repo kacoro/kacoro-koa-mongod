@@ -54,11 +54,11 @@ class Index extends Component {
   render() {
     return (
         <nav data-behavior="1" data-pushed={this.props.menu} className={classnames(styles.sidebar)} >
-        <img className={styles.bg} ref="bg"  data-src={bg}  />
+        <img className={styles.bg} ref="bg"  data-src={bg} src="data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs="  />
           <div className={styles.container}>
             <div className={styles.profile}>
               <a href="/about">
-                <img className={styles.picture} data-src={logo} ref="logo"  alt="kacoro's blog" />
+                <img className={styles.picture} data-src={logo} ref="logo" src="data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" alt="kacoro's blog" />
               </a>
               <h4 className={styles.name}>kacoro</h4>
               <h5 className={styles.bio}>思考不止，生命不息.</h5>

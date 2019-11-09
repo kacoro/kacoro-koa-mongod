@@ -23,7 +23,6 @@ export const getNews = async (ctx, next) => {
   
   //显示符合前端分页请求的列表查询
   if(catename){
-     console.log(catename)
      condition = Object.assign(condition,{cate_name:catename})
   }
  

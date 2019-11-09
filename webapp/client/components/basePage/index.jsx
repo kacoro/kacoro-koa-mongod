@@ -8,7 +8,7 @@ class BasePage extends Component {
 }
     //获得初始化数据 有数据则表示为服务端渲染
     getInitialData = (props) => {
-      console.log('init')
+     
       const initPath = props.initPath
      const {context,location,initialData} = props
       this.isSSR = false;
@@ -37,8 +37,6 @@ class BasePage extends Component {
     }
   async UNSAFE_componentWillUnmount(){
     //组件销毁前
-    console.log('unmount');
-    console.log(this.isSSR);
     if (!this.isSSR && this.enableSpaDataCache){
         let url =this.props.match.url;
 

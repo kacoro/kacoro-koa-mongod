@@ -37,8 +37,10 @@ const clientConfig = merge(baseWebpackConfig.clientConfig, {
         uglifyOptions:{
           warnings: false,
           parse: {},
-          compress: {drop_console: true,
-            drop_debugger:true,},
+          compress: {
+            drop_console: true,
+            drop_debugger:true,
+          },
           mangle: true, // Note `mangle.properties` is `false` by default.
           output: null,
           toplevel: false,
