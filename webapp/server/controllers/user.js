@@ -52,8 +52,8 @@ export const signIn = async ctx => {
    
     try {
         if(bcrypt.compareSync(password,res.password)){
-            // const d = await User.findByIdAndUpdate(data._id,{logindate:new Date()})
-            const {_id,...other} = res._doc
+            const d = await User.findByIdAndUpdate(res._id,{logindate:new Date()})
+            const {_id,password,...other} = res._doc //过滤掉id和密码
             const payload = {
                 _id:_id
             };

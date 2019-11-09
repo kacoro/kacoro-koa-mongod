@@ -7,7 +7,7 @@ mongoose.connect(DB_URL,{useNewUrlParser: true,useUnifiedTopology: true})
 mongoose.connection.on('connected', function () {  /** * 连接成功 */ 
     console.log('Mongoose connection open to ' + DB_URL);
 }); 
-
+mongoose.set('useFindAndModify', false)
 mongoose.connection.on('error', function (err) { /** * 连接异常 */
 
     console.log('Mongoose connection error: ' + err);
