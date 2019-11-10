@@ -1,0 +1,97 @@
+.Modal {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    right: 40px;
+    bottom: 40px;
+    background-color: papayawhip;
+  }
+
+  .Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rebeccapurple;
+  }
+  .content{
+    position: relative;
+  }
+  .pushed{
+    padding-left: 0!important;
+  }
+  .header{
+    z-index: 2;
+    display: block;
+    height: 55px;
+    position: fixed;
+    border: 1px solid #eef2f8;
+    background: #fff;
+    color: #88909a;
+    z-index: 20;
+    width: 100%;
+    transition: padding 0.25s ;
+    padding-left: 250px;
+    box-sizing: border-box;
+    &[data-pushed="true"]{
+      padding-left: 0;
+    }
+    @media only screen and (min-width: 1280px){
+      &[data-pushed="true"]{
+        padding-left: 0;
+      }
+      &{
+          padding-left: 250px
+       }
+   }
+   @media only screen and (max-width: 1279px) and (min-width: 1024px){
+    &[data-pushed="true"]{
+      padding-left: 0;
+    }
+       &{
+      
+        padding-left: 250px
+       }
+   }
+   @media only screen and (max-width: 1023px) and (min-width: 768px){
+       & {
+       
+        padding-left:75px
+       }
+   }
+   @media only screen and (max-width: 767px){
+    &[data-pushed="true"]{
+      transform: translate3d(250px,0,0);
+    }
+       &{
+           display: block;
+           padding-left:0
+       }
+   }
+  
+  }
+ .title {
+    text-align: center;
+    font-size: 1.6rem;
+    line-height: 55px;
+    margin: 0;
+}
+.title-link {
+    color: #88909a;
+    font-weight: 400;
+}
+
+
+  .right{
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+  }
+  .left{
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    cursor: pointer;
+  }

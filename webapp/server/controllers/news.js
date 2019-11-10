@@ -29,16 +29,20 @@ export const getNews = async (ctx, next) => {
   var sort = { 'addTime': -1 }; //排序（按登录时间倒序） 
   var skip = (page - 1) * size; //跳过数 
   const query1 = News.find(condition)
-  let result = await query1.skip(skip).limit(size).sort(sort)
-  let total = await News.countDocuments(condition).exec();//表总记录数
-
-  //是否还有更多
-  let hasMore = total - (page - 1) * size > size ? true : false;
-  let num = Math.ceil(total / size)
+  try{
+    let result = await query1.skip(skip).limit(size).sort(sort)
+    let total = await News.countDocuments(condition).exec();//表总记录数
   
-  ctx.body = {
-    data:{  list: result,pagination:{page, size, hasMore, total,  num }},
-    msg:'成功'
+    //是否还有更多
+    let hasMore = total - (page - 1) * size > size ? true : false;
+    let num = Math.ceil(total / size)
+    
+    ctx.body = {
+      data:{  list: result,pagination:{page, size, hasMore, total,  num }},
+      msg:'成功'
+    }
+  }catch(err){
+    ctx.body = {msg:"服务器发生错误",err};
   }
 }
 
@@ -50,11 +54,17 @@ export const getNewsById = async ctx => {
         condition = {} //管理员不需要过滤
     }
     var sort = { 'addTime': -1 }; //排序（按登录时间倒序） 
-    const data = await News.findOne(Object.assign({},condition,{_id:id}))
-    const prev = await News.findOne(condition, '_id title').where('addTime').gt(data.addTime)
-    const next = await News.findOne(condition, '_id title').where('addTime').lt(data.addTime).sort(sort)
-    ctx.body = {
+    try{
+      const data = await News.findOne(Object.assign({},condition,{_id:id}))
+      const prev = await News.findOne(condition, '_id title').where('addTime').gt(data.addTime)
+      const next = await News.findOne(condition, '_id title').where('addTime').lt(data.addTime).sort(sort)
+      ctx.body = {
         data:{data,prev,next},
         msg:'成功'
+      }
+    }catch(err){
+      ctx.body = {msg:"服务器发生错误",err};
     }
+   
+    
 };

@@ -8,6 +8,7 @@ import asyncComponent from '@app/components/AsyncComponent'
 // const AsyncFirst = asyncComponent(() => import(/* webpackChunkName: 'First' */ '@app/pages/First'));
 // const AsyncSecond = asyncComponent(() => import(/* webpackChunkName: 'Second' */ '@app/pages/Second'));
 // const AsyncThird = asyncComponent(() => import(/* webpackChunkName: 'Second' */ '@app/pages/Third'));
+import adminRouters from '@app/admin/router'
 
 const AsyncFirst = loadable(() => import('@app/pages/First'));
 const AsyncSecond = loadable(() => import('@app/pages/Second'));
@@ -51,7 +52,7 @@ const AsyncAbout = loadable(() => import('@app/pages/About'));
 //   { path: '/third', component: withRouter(Third) }
 //   ];
 
-const routes = [
+var routes = [
   {
     path: "/",exact:true,
  
@@ -83,10 +84,10 @@ const routes = [
     path: '/third',exact:true,
     component: withRouter(AsyncThird)
   },
-  // {
-  //   path: '/signin', exact:true,
-  //   component: withRouter(AsyncSignin)
-  // },
+  {
+    path: '/signin', exact:true,
+    component: withRouter(AsyncSignin)
+  },
   // {
   //   path: '/signup',exact:true,
   //   component: withRouter(AsyncSignup)
@@ -97,6 +98,7 @@ const routes = [
   }
 ];
 
+
 class RoutesIndex extends Component {
   constructor(props) {
     super(props);
@@ -105,6 +107,7 @@ class RoutesIndex extends Component {
   render() {
    
     const { ...props } = this.props
+    console.log( this.props.user)
     return (
       <div className="app-container">
 
@@ -115,8 +118,26 @@ class RoutesIndex extends Component {
                 return <item.component {...props} />
               }} />
             ))}
-           
+           {adminRouters.map((item, index) => (
+              
+              <Route key={index} path={item.path}  exact={item.exact}  render={({location}) =>{
+              
+                console.log("location:",location)
+                if(this.props.user){
+                  return<item.component {...props} />
+                }else{
+                  console.log("props2:",...props)
+                  return <Redirect {...props} 
+                  to={{
+                    pathname: "/signin",
+                    state: { from:location }
+                  }}
+                />
+                }
+              }} />
+            ))}
           </App>
+         
         </Switch>
 
       </div>
@@ -124,4 +145,6 @@ class RoutesIndex extends Component {
   }
 }
 
+
+routes = routes.concat(adminRouters)
 export { RoutesIndex, routes }

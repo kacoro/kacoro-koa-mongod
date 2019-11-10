@@ -1,0 +1,134 @@
+.sidebar {
+  font-family: "Open Sans",sans-serif;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 20;
+  transition:all 0.25s ease-in-out;
+  width: 250px;
+  font-smoothing: antialiased;
+  &[data-pushed="true"] {
+    left: -250px;
+  }
+  @media only screen and (max-width: 1279px) and (min-width: 1024px){
+    &[data-pushed="true"] {
+      left: -250px;
+    }
+    &[data-behavior="1"],&[data-behavior="2"] {
+      width: 250px;
+    }
+  }
+  @media only screen and (max-width: 1023px) and (min-width: 768px){
+    &[data-pushed="true"] {
+      left: -75px;
+    }
+    &[data-behavior="1"],&[data-behavior="2"] {
+      width: 75px;
+    }
+  }
+  @media only screen and (max-width: 767px){
+    &[data-pushed="true"] {
+      left: 0px;
+    }
+      &{
+        left: -250px;
+        width: 250px;
+      }
+  }
+
+}
+
+.icon{
+  font-size: 2rem;
+  display: inline-block;
+  text-align: center;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  padding-top: 0;
+  vertical-align: middle;
+  margin-right: 15px;
+}
+.container{
+  position: relative;z-index: 2;
+}
+
+.profile{
+  padding-top: 40px;
+  padding-bottom: 7.5px;
+  color: #ebebeb;
+  text-align: center;
+  transition:all 0.25s ease-in-out;
+  @media only screen and (max-width: 1023px) and (min-width: 768px){
+    height: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+}
+.picture{
+    width: 90px;
+    height: 90px;
+    border-radius: 90px;
+    margin-bottom: 5px;
+    margin: 0 auto;
+    transition:all 0.25s ease-in-out;
+    @media only screen and (max-width: 1023px) and (min-width: 768px){
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      vertical-align: middle;
+      border-radius: 50px;
+    }
+}
+
+.name,.bio{
+  font-weight: 400;
+    font-size: 1.2rem;
+    padding: 1em 0 .5em;
+    display: block;
+    color: #ebebeb;
+    transition:all 0.25s ease-in-out;
+  @media only screen and (max-width: 1023px) and (min-width: 768px){
+    &{
+      display: none;
+    }
+  }
+  @media only screen and (max-width: 767px){
+    &{
+      display: block;
+    }
+  }
+}
+.title{
+  display: block;
+  transition:all 0.25s ease-in-out;
+  @media only screen and (max-width: 1023px) and (min-width: 768px){
+    &{
+      display: none;
+    }
+  }
+  @media only screen and (max-width: 767px){
+    &{
+      display: block;
+    }
+}
+}
+.button{
+  text-align: left;
+  width: auto;
+  padding-left: 23px;
+  padding-top: 0;
+  text-decoration: none;
+  color:#ebebeb;
+  display: block;
+    width: 100%;
+    height: 45px;
+    line-height: 45px;
+   
+  &:hover{
+    text-decoration: none;
+  }
+}
+.bg{
+  position: absolute; right: 0px; top: 0px; bottom: 0px; display: block;
+}

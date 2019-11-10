@@ -4,7 +4,7 @@ import request from '@app/common/request';
 import {
     Link,withRouter
   } from "react-router-dom";
-
+  import reduxTypes from '@app/redux/types';
  class Index extends React.Component{
     constructor(props){
         super(props);
@@ -15,11 +15,22 @@ import {
         this.handleInputChange = this.handleInputChange.bind(this);
     }
     
-     handleLogin=async(e)=>{
+     handleLogin=async()=>{
         const {password,username} = this.state
-        if(password!="" && username!="")
-        var data = await request.config({type:'post', url: '/api/signin' ,data:{username,password}})
-    
+        if(password!="" && username!=""){
+         
+            let { from } = this.props.location.state || { from: { pathname: "/" } };
+            var data = await request.config({type:'post', url: '/api/signin' ,data:{username,password}})
+            if(data){
+                this.props.dispatch({
+                    type: reduxTypes.USER_LOGIN,payload:data
+                   });
+                   this.props.history.replace(from)
+            }
+        }
+    }
+    componentDidMount(){
+        console.log(this.props)
     }
     handleInputChange(e){
         const target = e.target;

@@ -11,26 +11,13 @@ class BasePage extends Component {
      
       const initPath = props.initPath
      const {context,location,initialData} = props
-     console.log("props",props)
       this.isSSR = false;
       this.hasSpaCacheData = false;//单页数据是否保存
       // 根据入口的url和当前的url判断。是否一直
 
       if (context) {
           this.isSSR = true;//表示服务端渲染的首屏
-          if(context.token){
-              console.log("token",context.token)
-            axios.interceptors.request.use(
-              config => {
-                config.headers.Authorization = context.token
-                return config
-              },
-              err => {
-                return Promise.reject(err)
-              }
-          )
-            //如何取得token呢?
-          }
+        
           return context;
       }else{
           if(__CLIENT__){

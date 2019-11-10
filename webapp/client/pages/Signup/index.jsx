@@ -31,6 +31,6 @@ export default class Index extends React.Component{
     }
 
     render(){
-        return <Signup />
+        return <Signup  {...this.props} />
     }
 }

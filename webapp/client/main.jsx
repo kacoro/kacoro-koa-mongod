@@ -6,7 +6,7 @@ import { loadableReady } from '@loadable/component'
 function renderUI(initialData,initPath){
     loadableReady(() => {
         const root = document.getElementById('root')
-        ReactDOM.hydrate(<Router  initialData={initialData} initPath={initPath} />, root)
+        ReactDOM.hydrate(<Router  initialData={initialData} initPath={initPath}  />, root)
     })
 }
 

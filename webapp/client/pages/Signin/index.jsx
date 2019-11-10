@@ -10,6 +10,6 @@ export default class Index extends React.Component{
         super(props);
     }
     render(){
-        return <Signin/>
+        return <Signin {...this.props}/>
     }
 }

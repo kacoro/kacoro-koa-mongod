@@ -16,17 +16,7 @@ class Index extends BasePage {
     this.getCurrentPage = this.getCurrentPage.bind(this)
   }
 
-  //数据预取方法 静态 异步 方法
-  static async getInitialProps(opt) {
-    const { search, params } = opt
-    var url = "news"
-    if (JSON.stringify(params) !== "{}") url += '/' + params.id
-    if (search) url += search
-    
-    const res = await handleGet({url,token:opt.token});
-     return { data: res.data }
-  }
-  
+ 
   async componentDidMount() {
     // let checkInit = JSON.stringify(this.props.initialData) === "{}"
     const { location,user } = this.props
