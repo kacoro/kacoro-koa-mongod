@@ -136,7 +136,7 @@ class Index extends Component {
         //     content:data.content
         //  })
         // this.setState(list:Object.assign(list,{}))
-        //  console.log(res.data)
+     
     }
     handleInputChange =(e) => {
         const target = e.target;
@@ -194,7 +194,6 @@ class Index extends Component {
     
     creatForm = (item) => {
         const {user} = this.props
-        console.log(user)
         return (
             <div>
                 <Flex>

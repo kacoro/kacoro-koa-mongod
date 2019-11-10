@@ -31,7 +31,6 @@ class Notifyer extends  BaseDDComponent {
     }
 
     changeContent(obj) {
-        console.log(obj)
         this.setState({
             text:obj.text,
             isShow: obj.isShow === undefined ? 1 : obj.isShow,
@@ -118,7 +117,6 @@ class Notifyer extends  BaseDDComponent {
     render() {
         const {isShow , showBg,type} = this.state
         if (!isShow) return <div></div>
-        console.log('render*********************Notifyer')
 
         let innerContent
         switch (type) {

@@ -13,7 +13,6 @@ import Comments from '@app/components/Comments'
 class Index extends BasePage {
   constructor(props) {
     super(props);
-    // console.log(this.state)
   }
 
 
@@ -25,7 +24,6 @@ class Index extends BasePage {
 
   async componentDidMount() {
     // let checkInit = JSON.stringify(this.props.initialData) === "{}"
-    // console.log("detail",this.state)
     if (!this.isSSR && !this.hasSpaCacheData) { //非服务端渲染需要自身进行数据获取
       const res = await Index.getInitialProps({ params: this.props.match.params })
       this.setState({ data: res.data })

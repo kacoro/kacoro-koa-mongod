@@ -6,7 +6,6 @@ class Third extends Component {
   }
 
   UNSAFE_componentWillMount () {
-    // console.log('state--------', this.props.location.state)
   }
   componentDidMount() {
 

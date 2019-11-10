@@ -33,18 +33,15 @@ class Index extends React.Component {
     this.setState({ showModal: false });
   }
   handleLogin = async () => {
-    console.log(this.props)
     const { password, username } = this.state
     if (password == "" || username == "") return false
       var data = await request.config({ type: 'post', url: '/api/signin', data: { username, password } })
       if(data){
-        console.log(this.props.dispatch)
         this.props.dispatch({
           type: reduxTypes.USER_LOGIN,payload:data
          });
         this.handleCloseModal()
       }
-    console.log(data)
   }
   handleInputChange(e) {
     const target = e.target;
@@ -55,7 +52,6 @@ class Index extends React.Component {
     });
   }
   changeRouter = () => {
-    console.log(this.props)
     this.handleCloseModal()
     this.props.history.push({
       pathname: '/signup'

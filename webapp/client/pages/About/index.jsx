@@ -2,14 +2,12 @@ import React, { Component } from 'react';
 
 import reduxTypes from '@app/redux/types';
 
-console.log(reduxTypes)
 class Second extends Component {
   constructor(props) {
     super(props);
   }
 
   UNSAFE_componentWillMount () {
-    // console.log('state--------', this.props.location.state)
   }
 
   changeRouter = () => {
@@ -26,7 +24,6 @@ class Second extends Component {
     });
   }
   handleDelClick() {
-    console.log(this.props)
       this.props.dispatch({
           type: reduxTypes.DEL_COUNTER
       });

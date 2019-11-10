@@ -8,60 +8,47 @@ import dayjs from 'dayjs'
 import { Flex, FlexItem } from '@app/UI/Layout';
 import Styles from '@app/UI/Styles'
 import classnames from 'classnames'
+import {handleGet} from '@app/redux/action'
 
 class Index extends BasePage {
   constructor(props, context) {
     super(props, context);
-    // console.log(this.state)
     this.getCurrentPage = this.getCurrentPage.bind(this)
   }
 
   //数据预取方法 静态 异步 方法
-  static async getInitialProps(opt,ctx) {
-    if(ctx){
-      //如何取得token呢?
-      console.log("cookie:",ctx.cookies)
-    }
-   
+  static async getInitialProps(opt) {
     const { search, params } = opt
     var url = "news"
     if (JSON.stringify(params) !== "{}") url += '/' + params.id
     if (search) url += search
-
-    const res = await getData(url);
-    return { data: res.data }
+    
+    const res = await handleGet({url,token:opt.token});
+     return { data: res.data }
   }
-
+  
   async componentDidMount() {
     // let checkInit = JSON.stringify(this.props.initialData) === "{}"
-    // console.log(checkInit)
-    const { location } = this.props
-
-    console.log("Mount", this.isSSR, this.hasSpaCacheData)
+    const { location,user } = this.props
     if (!this.isSSR && !this.hasSpaCacheData) { //非服务端渲染需要自身进行数据获取
       const res = await Index.getInitialProps({ params: this.props.match.params, search: location.search })
       this.setState({
         data: res.data
       })
+    }else if(user){
+      // const {id} = this.props.match.params
+      // const res = await handleGet.bind(this)({url:`news${location.search}`})
+      // this.setState({
+      //   data: res.data
+      // })
     }
-
   }
 
   async UNSAFE_componentWillMount() {
     // this.setState({ user: await getData('/') });
   }
 
-  changeRouter = async(search) => {
 
-    // this.props.history.push({
-    //   pathname: path
-    // });
-    this.props.history.replace(`/news${search}`)
-    const res = await Index.getInitialProps({ params: this.props.match.params, search: search })
-    this.setState({
-      data: res.data
-    })
-  }
   componentWillReceiveProps = async(nextProps) => {
     if (this.props.history.location !== this.props.location) {
       const res = await Index.getInitialProps({ params: this.props.match.params, search: this.props.history.location.search })
@@ -71,10 +58,8 @@ class Index extends BasePage {
     }
   }
   async getCurrentPage(currentPage) {
-    // console.log(this, this.props)
     const { location } = this.props;
     var obj = qs.parse(location.search.replace('?', ''));
-    console.log(obj)
     var obj = Object.assign(obj, { page: currentPage })
 
     // this.props.history.replace(`/news?${qs.stringify(obj)}`)

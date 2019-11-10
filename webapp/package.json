@@ -46,6 +46,7 @@
     "html-loader": "^0.5.5",
     "isnode": "^0.0.1",
     "isomorphic-style-loader": "^5.1.0",
+    "js-cookie": "^2.2.1",
     "jsonwebtoken": "^8.5.1",
     "koa": "^2.7.0",
     "koa-art-template": "^1.1.1",

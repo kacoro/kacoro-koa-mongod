@@ -15,11 +15,10 @@ export default class Index extends React.Component{
         this.handleInputChange = this.handleInputChange.bind(this);
     }
     handleSignUp=async(e)=>{
-        console.log(this.state)
         const {password,username} = this.state
         if(password!="" && username!="")
         var data = await request.config({type:'post', url: '/api/signup' ,data:{username,password}})
-        console.log(data)
+      
     }
     handleInputChange(e){
         const target = e.target;

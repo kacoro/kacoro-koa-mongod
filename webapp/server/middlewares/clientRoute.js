@@ -27,7 +27,7 @@ async function clientRoute(ctx, next) {
   const search = ctx.req._parsedUrl.search
  
   const branch = matchRoutes(routes,pathname)
- 
+
   if (branch.length > 0) {
     var data = {}
     var com = await branch[0].route.component
@@ -42,12 +42,15 @@ async function clientRoute(ctx, next) {
       //   query: ctx.query,
       //   params:  branch[0].match
       // }
-      console.log()
+      const token = getCookie(ctx.headers.cookie,'token')
+     
       const opt = {
         isSSR:true,
         search:search,
-        params:branch[0].match.params}
-      data = await com.getInitialProps(opt,ctx)
+        params:branch[0].match.params,
+        token:token
+      }
+      data = await com.getInitialProps(opt)
     }
     //参数带入
 
@@ -69,7 +72,13 @@ async function clientRoute(ctx, next) {
   }
   await next();
 }
-
+const getCookie = (cookie,name) => {
+  var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+  if(arr=cookie.match(reg))
+  return unescape(arr[2]);
+  else
+  return null;
+}
 function matchRoutes(routes, pathname,
   /*not public API*/
   branch) {

@@ -26,7 +26,7 @@ export function dumpClassLists() {
     buffer += "\n";
 
     // eslint-disable-next-line no-console
-    console.log(buffer);
+  
   }
 }
 

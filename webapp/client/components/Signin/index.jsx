@@ -16,11 +16,10 @@ import {
     }
     
      handleLogin=async(e)=>{
-        console.log(this.state)
         const {password,username} = this.state
         if(password!="" && username!="")
         var data = await request.config({type:'post', url: '/api/signin' ,data:{username,password}})
-        console.log(data)
+    
     }
     handleInputChange(e){
         const target = e.target;
@@ -31,7 +30,6 @@ import {
         });
     }
     changeRouter = () => {
-        console.log(this.props)
         this.props.history.push({
           pathname: '/signup'
         });

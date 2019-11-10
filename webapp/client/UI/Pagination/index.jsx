@@ -26,7 +26,6 @@ class Pagination extends React.Component {
         const check = Object.is(this.props.location, nextProps.location)
         const check2 = Object.is(this.props.data, nextProps.data)
         if(!(check&&check2)){
-            console.log("nextProps:",nextProps)
             const {page,hasMore,num,size,total} = nextProps.data
             this.setState({
                 currentPage: page || 1, //当前页码
@@ -139,7 +138,6 @@ class Pagination extends React.Component {
         }
     
     render() {
-        console.log(this.props)
         const { data, children, className, ...others } = this.props;
         const pageList = this.createPage();
         return (

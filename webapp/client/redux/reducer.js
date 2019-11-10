@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import types from './types';
 import request from '@app/common/request';
+import Cookie from 'js-cookie'
 function count(state = 0, action) {
     switch (action.type) {
         case types.ADD_COUNTER:
@@ -24,10 +25,13 @@ function menu(state = false, action) {
 function user(state = null, action) {
     switch (action.type) {
         case types.USER_LOGIN:
+            Cookie.set('token', action.payload.token)
             return action.payload;
         case types.USER_LOGOUT:
+            Cookie.remove('token')
             return null;
         default:
+        
             return state;
     }
 }

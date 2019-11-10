@@ -15,8 +15,6 @@ const css = {
   }
 
 
-  console.log(typeof document)
-  console.log(typeof IntersectionObserver =='function')
   var io = null
 if(typeof IntersectionObserver =='function'){
    io =  new IntersectionObserver((entries)=>{ // 观察者

@@ -7,7 +7,6 @@ ReactModal.setAppElement("#root")
 class Modal extends React.Component {
     constructor(props) {
         super(props);
-        console.log("Modal")
     }
     render(){
         const { children, className,overlayClassName, ...others } = this.props;
