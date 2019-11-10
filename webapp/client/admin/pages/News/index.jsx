@@ -21,7 +21,7 @@ class Index extends BasePage {
     // let checkInit = JSON.stringify(this.props.initialData) === "{}"
     const { location,user } = this.props
     if (!this.isSSR && !this.hasSpaCacheData) { //非服务端渲染需要自身进行数据获取
-      const res = await Index.getInitialProps({ params: this.props.match.params, search: location.search })
+      const res = await handleGet({url:'/news', params: this.props.match.params, search: location.search })
       this.setState({
         data: res.data
       })
@@ -33,7 +33,7 @@ class Index extends BasePage {
   }
   componentWillReceiveProps = async(nextProps) => {
     if (this.props.history.location !== this.props.location) {
-      const res = await Index.getInitialProps({ params: this.props.match.params, search: this.props.history.location.search })
+      const res = await handleGet({url:'/news',params: this.props.match.params, search: this.props.history.location.search })
       this.setState({
         data: res.data
       })
@@ -70,7 +70,7 @@ class Index extends BasePage {
           </Flex>
           <div className="postShorten-excerpt">
             <div className="text-break">{item.note}</div>
-            <Link className="postShorten-excerpt_link link" to={`/news/${item._id}`}>阅读全文</Link>
+            <Link className="postShorten-excerpt_link link" to={`/admin/news/${item._id}`}>阅读全文</Link>
           </div>
         </div>
         </article>

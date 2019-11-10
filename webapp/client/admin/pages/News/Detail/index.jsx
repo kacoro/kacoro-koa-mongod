@@ -17,7 +17,8 @@ class Index extends BasePage {
 
 
   async componentDidMount() {
-    
+    const res = await getData(`news/${ this.props.match.params.id}`);
+    this.setState({ data: res.data })
   }
 
   async UNSAFE_componentWillMount() {
@@ -61,8 +62,8 @@ class Index extends BasePage {
         <div className="post-content markdown main-content-wrap">
           <div className={classnames(Styles['py-10'], Styles['text-pre'])} dangerouslySetInnerHTML={{ __html: content }} />
           <div >
-            <PrevNext justify="between" prev={prev} next={next} onItemClick={this.getCurrentPage} className={classnames(Styles['my-20'])} ></PrevNext>
-            <Comments id={this.props.match.params.id} {...this.props} className={classnames(Styles['my-20'])}></Comments>
+            {/* <PrevNext justify="between" prev={prev} next={next} onItemClick={this.getCurrentPage} className={classnames(Styles['my-20'])} ></PrevNext> */}
+            {/* <Comments id={this.props.match.params.id} {...this.props} className={classnames(Styles['my-20'])}></Comments> */}
           </div>
         </div>
       </article>

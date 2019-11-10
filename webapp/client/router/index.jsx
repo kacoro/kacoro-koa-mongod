@@ -1,6 +1,7 @@
 import React, { Component, Suspense, lazy } from 'react'
 import { BrowserRouter as Router, Route, Redirect, Switch, withRouter } from "react-router-dom";
 import App from '@app/pages/App'
+import AdminApp from '@app/admin/pages/App'
 import loadable from '@loadable/component'
 
 import asyncComponent from '@app/components/AsyncComponent'
@@ -52,7 +53,7 @@ const AsyncAbout = loadable(() => import('@app/pages/About'));
 //   { path: '/third', component: withRouter(Third) }
 //   ];
 
-var routes = [
+var indexRoutes = [
   {
     path: "/",exact:true,
  
@@ -107,26 +108,25 @@ class RoutesIndex extends Component {
   render() {
    
     const { ...props } = this.props
-    console.log( this.props.user)
+    console.log(indexRoutes,adminRouters)
     return (
       <div className="app-container">
-
         <Switch>
           <App  {...props}>
-            {routes.map((item, index) => (
+            {indexRoutes.map((item, index) => (
               <Route key={index} path={item.path}  exact={item.exact}   render={() =>{
                 return <item.component {...props} />
               }} />
             ))}
-           {adminRouters.map((item, index) => (
-              
+          </App>
+        </Switch>
+        <Switch>
+          <AdminApp  {...props}>
+         {adminRouters.map((item, index) => (
               <Route key={index} path={item.path}  exact={item.exact}  render={({location}) =>{
-              
-                console.log("location:",location)
                 if(this.props.user){
-                  return<item.component {...props} />
+                  return <item.component {...props} />
                 }else{
-                  console.log("props2:",...props)
                   return <Redirect {...props} 
                   to={{
                     pathname: "/signin",
@@ -136,15 +136,13 @@ class RoutesIndex extends Component {
                 }
               }} />
             ))}
-          </App>
-         
+            </AdminApp>
         </Switch>
-
       </div>
     );
   }
 }
 
 
-routes = routes.concat(adminRouters)
+const routes = indexRoutes.concat(adminRouters)
 export { RoutesIndex, routes }

@@ -14,20 +14,20 @@ class App extends Component {
   render() {
     const match = this.props.location.pathname.match('/admin')
     if(match && match.index===0){
-      return  <div className={classnames(Styles.App)} >
-        {this.props.children}
-      </div>
+      return null
+    }else{
+      return (
+        <div className={classnames(Styles.App)} data-pushed={this.props.menu}>
+            <Meta title="kacoro" keywords="kacoro,前端,网站,全栈,网页设计,kacoro博客,陈卫杰,Kacoro's blog" desc="Kacoro's blog" />
+            <Header {...this.props} />
+            <Nav {...this.props} />
+            <div className={classnames(Styles.main)} data-pushed={this.props.menu} data-behavior="1">
+               {this.props.children}
+            </div>
+        </div>
+      );
     }
-    return (
-      <div className={classnames(Styles.App)} data-pushed={this.props.menu}>
-          <Meta title="kacoro" keywords="kacoro,前端,网站,全栈,网页设计,kacoro博客,陈卫杰,Kacoro's blog" desc="Kacoro's blog" />
-          <Header {...this.props} />
-          <Nav {...this.props} />
-          <div className={classnames(Styles.main)} data-pushed={this.props.menu} data-behavior="1">
-             {this.props.children}
-          </div>
-      </div>
-    );
+    
   }
 }
 
