@@ -5,7 +5,7 @@ require('@babel/register')({
         "targets": {"node": "current"},
         "useBuiltIns": "usage",
         "corejs": "3.0.0"
-        }],'@babel/preset-react',"@babel/preset-typescript"],
+        }],"@babel/preset-typescript"],
 });
 require('@babel/core').transform('code', {
     plugins: [

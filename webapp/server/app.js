@@ -28,6 +28,7 @@ import passport from './module/passport'
 //passport
 app.use(passport.initialize())
 app.use(passport.session())
+
 // error-handling
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)

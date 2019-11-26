@@ -6,9 +6,9 @@ import bcrypt from 'bcrypt'
 //     return query(_sql, []);
 // };
 export const getNews = async (ctx, next) => {
-  
+  console.log('getnews')
   var condition = {status:'on'}; //条件 
-  if(ctx.user && ctx.user.status==10000 ){
+  if(ctx.state.user && ctx.state.user.status==10000 ){
       condition = {} //管理员不需要过滤
   }
    
@@ -47,10 +47,9 @@ export const getNews = async (ctx, next) => {
 }
 
 export const getNewsById = async ctx => {
-
     const {id} = ctx.params
     var condition = {status:'on'}; //条件 
-    if(ctx.user && ctx.user.status==10000 ){
+    if(ctx.state.user && ctx.state.user.status==10000 ){
         condition = {} //管理员不需要过滤
     }
     var sort = { 'addTime': -1 }; //排序（按登录时间倒序） 
@@ -65,6 +64,27 @@ export const getNewsById = async ctx => {
     }catch(err){
       ctx.body = {msg:"服务器发生错误",err};
     }
-   
-    
+};
+
+export const putNewsById = async ctx => {
+  
+  const {id} = ctx.params
+  console.log(id)
+  const {addTime,_id,updateTime,...other} = ctx.request.body
+  if(ctx.state.user && ctx.state.user.status==10000 ){ //管理员才能修改
+      const condition = {...other,updateTime:new Date()} //管理员不需要过滤
+      try{
+        const data = await News.findByIdAndUpdate(id,condition)
+        ctx.body = {
+          data:data,
+          msg:'成功'
+        }
+      }catch(err){
+        ctx.body = {msg:"服务器发生错误",err};
+      }
+  }else{
+    ctx.status = 401
+    ctx.body = {msg:"无权限",err};
+  }
+  
 };

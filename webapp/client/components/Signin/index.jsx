@@ -20,10 +20,10 @@ import {
         if(password!="" && username!=""){
          
             let { from } = this.props.location.state || { from: { pathname: "/" } };
-            var data = await request.config({type:'post', url: '/api/signin' ,data:{username,password}})
-            if(data){
-                this.props.dispatch({
-                    type: reduxTypes.USER_LOGIN,payload:data
+            var res = await request.config({type:'post', url: '/api/signin' ,data:{username,password}})
+            if(res.data){
+                await this.props.dispatch({
+                    type: reduxTypes.USER_LOGIN,payload:res
                    });
                    this.props.history.replace(from)
             }

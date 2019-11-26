@@ -58,6 +58,7 @@ const clientConfig = merge(baseWebpackConfig.clientConfig, {
 
 const plugins = [
    // 删除文件 保留新文件
+   new CleanWebpackPlugin(),
    new webpack.DefinePlugin({
        __SERVER__: false,
        __CLIENT__: true

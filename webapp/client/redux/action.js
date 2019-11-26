@@ -17,11 +17,10 @@ export async function handlePost (payload){
         }
     }
 }
-
-export async function handleGet (payload){
+export async function handlePut (payload){
     try{
         payload.url ='/api/' + payload.url
-        var res = await request.config({...payload})
+        var res = await request.config({ type: 'put',...payload})
         return res
     }catch(err){
         console.log(err)
@@ -32,6 +31,26 @@ export async function handleGet (payload){
         //   });
         //   return null
         // }
+    }
+}
+export async function handleGet (payload){
+    try{
+        payload.url ='/api/' + payload.url
+        var res = await request.config({type: 'get',...payload})
+        return res
+    }catch(err){
+        console.log(err)
+        var status = err.response.status
+        if(status==401){
+            try{
+                this.props.dispatch({
+                    type: reduxTypes.USER_LOGOUT
+               });
+            }catch(err){
+
+            }
+          return null
+        }
     }
 }
 

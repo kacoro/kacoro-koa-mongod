@@ -15,7 +15,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import configureStore from '@app/redux/configureStore';
 const {  store } = configureStore()
 
-const statsFile = path.resolve('./dist/loadable-stats.json')
+const statsFile = path.resolve('./dist/client/loadable-stats.json')
 const extractor = new ChunkExtractor({ statsFile })
 
 global.__SERVER__=true;

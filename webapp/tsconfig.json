@@ -1,20 +1,25 @@
 {
-    "compilerOptions": {
-    
-      "sourceMap": true,
-      "noImplicitAny": true,
-      "module": "commonjs",
-      "target": "es6",
-      // `preserve`的配置让`tsc`不会去处理它，而是使用后续的`babel-loader`进行处理
-      "jsx": "preserve", 
+  "compilerOptions": {
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "module": "esnext",
+    "target": "es6",
+    "allowSyntheticDefaultImports": true,
+    // import的相对起始路径
+    // `preserve`的配置让`tsc`不会去处理它，而是使用后续的`babel-loader`进行处理
+    "jsx": "preserve",
+    "moduleResolution": "node",
+    // 开启装饰器的使用
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+  },
+  "paths": {
+    "@app": [
+      "client"
+    ],
+  },
  
-    },
-    "paths": {
-      "@app": [
-        "client"
-      ],
-    },
-    "exclude": [
-      "node_modules"
-    ]
-  }
+  "exclude": [
+    "node_modules"
+  ]
+}

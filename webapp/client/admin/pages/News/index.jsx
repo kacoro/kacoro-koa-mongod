@@ -9,7 +9,7 @@ import { Flex, FlexItem } from '@app/UI/Layout';
 import Styles from '@app/UI/Styles'
 import classnames from 'classnames'
 import {handleGet} from '@app/redux/action'
-
+import Button from '@app/UI/Buttons';
 class Index extends BasePage {
   constructor(props, context) {
     super(props, context);
@@ -20,20 +20,20 @@ class Index extends BasePage {
   async componentDidMount() {
     // let checkInit = JSON.stringify(this.props.initialData) === "{}"
     const { location,user } = this.props
-    if (!this.isSSR && !this.hasSpaCacheData) { //非服务端渲染需要自身进行数据获取
-      const res = await handleGet({url:'/news', params: this.props.match.params, search: location.search })
+   console.log(this.props)
+      const res = await handleGet.bind(this)({url:`admin/news${this.props.location.search}`})
       this.setState({
         data: res.data
       })
-    }
   }
 
   async UNSAFE_componentWillMount() {
     // this.setState({ user: await getData('/') });
   }
   componentWillReceiveProps = async(nextProps) => {
-    if (this.props.history.location !== this.props.location) {
-      const res = await handleGet({url:'/news',params: this.props.match.params, search: this.props.history.location.search })
+    if (nextProps.location !== this.props.location) {
+      console.log(nextProps)
+      const res = await handleGet.bind(this)({url:`admin/news${nextProps.location.search}`})
       this.setState({
         data: res.data
       })
@@ -49,7 +49,7 @@ class Index extends BasePage {
     // this.setState({
     //   data: res.data
     // })
-    this.props.history.push(`/news?${qs.stringify(obj)}`)
+    this.props.history.push(`/admin/news?${qs.stringify(obj)}`)
 
   }
   creatList(){
@@ -61,8 +61,8 @@ class Index extends BasePage {
           <Flex  >
             <FlexItem align="baseline" className={classnames('post-meta')}>
               <time>{dayjs(item.addTime).format('YYYY-MM-DD ')}</time>
-              <Link className="categorLink" to={`/news`}>新闻</Link> /&nbsp;
-              <Link className="categorLink" to={`/news?catename=${item.cate_name}`}>{item.cate_name}</Link>
+              <Link className="categorLink" to={`/admin/news`}>新闻</Link> /&nbsp;
+              <Link className="categorLink" to={`/admin/news?catename=${item.cate_name}`}>{item.cate_name}</Link>
               {/* <a onClick={this.changeRouter.bind(this,``)} className='categorLink' to="">新闻</a>
                / 
               < a className='categorLink'  onClick={this.changeRouter.bind(this,`?catename=${item.cate_name}`)}>{item.cate_name}</a> */}
@@ -92,6 +92,7 @@ class Index extends BasePage {
     
     return (
       <section className="postShorten-group main-content-wrap">
+        <Button>添加</Button>
         {this.creatList()}
         <Pagination className={classnames(Styles['my-20'])} data={data.pagination} onItemClick={this.getCurrentPage} location={this.props.location}/>
       </section>

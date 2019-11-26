@@ -5,6 +5,7 @@ import {getComment,getCommentById,getCommentByArticleId,addCommentByArticleId} f
 import passport from '../module/passport'
 const router = new Router({ prefix: '/api' });
 import auth from '../middlewares/auth'
+import adminRouter from './admin'
 router.get('/user', getUser);
 router.post('/signin',signIn)
 
@@ -17,7 +18,7 @@ router.post('/comment/article/:id',passport.authenticate('jwt', { session: false
 router.get('/news', auth,getNews);
 router.get('/news/:id',auth, getNewsById);
 
-
-
 router.get('/comment/article/:id', getCommentByArticleId);
+
+router.use(adminRouter)
 export default router;

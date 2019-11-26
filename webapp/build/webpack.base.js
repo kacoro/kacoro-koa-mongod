@@ -6,13 +6,14 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");       // 每次运�
 const MinCssExtractPlugin = require("mini-css-extract-plugin");   // 将css代码提取为独立文件的插件
 const LoadablePlugin = require('@loadable/webpack-plugin')
 var APP_PATH = path.resolve(__dirname, '../client')
+console.log()
 const clientConfig = {
   mode: 'production',
   entry: {
     main: APP_PATH + '/main.jsx'
   },
   output: {
-    path: path.resolve(__dirname, '../dist'), // 打包文件的输出目录
+    path: path.resolve(__dirname, '../dist/client'), // 打包文件的输出目录
     // chunkFilename: '[name].bundle.js',
     filename: "js/[name].[hash].js",
     publicPath: '/'
@@ -44,7 +45,7 @@ const clientConfig = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'], exclude: /node_modules/
+        use: ['style-loader', 'css-loader']
       },
       {
         test: /\.scss$/,
@@ -104,7 +105,7 @@ const serverConfig = { // node环境打包
       {
 
         test: /\.js$/,
-        use: [{ loader: "babel-loader" }], exclude: /node_modules/
+        use: [{ loader: "babel-loader" }, { loader: "ts-loader" }], exclude: /node_modules/
       },
       {
         test: /\.[(png)|(obj)|(json)]$/,

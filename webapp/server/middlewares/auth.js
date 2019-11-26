@@ -12,7 +12,7 @@ const auth = async (ctx,next)=>{
         try{
           const {_id} = jwt.verify(raw,config.secretKey);
           const user = await User.findById(_id)
-          ctx.user = user._doc
+          ctx.state.user = user._doc
         }catch(err){ //
           console.log(err)
         }
