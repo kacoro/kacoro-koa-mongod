@@ -22,7 +22,7 @@ class Pagination extends React.Component {
             hasMore:hasMore
         }
     }
-    componentWillReceiveProps = (nextProps) => {
+    UNSAFE_componentWillReceiveProps = (nextProps) => {
         const check = Object.is(this.props.location, nextProps.location)
         const check2 = Object.is(this.props.data, nextProps.data)
         if(!(check&&check2)){

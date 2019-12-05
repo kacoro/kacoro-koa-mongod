@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import getData from '../../common/getData';
-import  {Hello}  from "@app/components/Hello.tsx";
 class First extends Component {
   constructor(props) {
     super(props);
@@ -44,7 +43,6 @@ class First extends Component {
     const { user } = this.state;
     return (
       <div>
-          <Hello compiler="TypeScript" framework="React" />
           App6: 如果有每个页面都需要展示的东西，例如自定义的title导航栏
         <p  onClick={this.changeRouter}>First</p>
         <p>{user && user.userId}</p>

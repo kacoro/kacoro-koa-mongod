@@ -1,11 +1,16 @@
-# 说明
+# Base
 react + redux + scss + koa2 + mongodb + typescript + resful  SSR
 
 
-# 准备
+# prepare
 
-
-
+## add config.js in client directory
+module.exports = {
+    prdhost:"http://127.0.0.1", //127.0.0.1
+    prdport:"5200",
+    localhost:"http://127.0.0.1",
+    localport:"5200"
+}
 
 ## add config.js in server directory
 ```

@@ -20,7 +20,6 @@ class Index extends BasePage {
   async componentDidMount() {
     // let checkInit = JSON.stringify(this.props.initialData) === "{}"
     const { location,user } = this.props
-   console.log(this.props)
       const res = await handleGet.bind(this)({url:`admin/news${this.props.location.search}`})
       this.setState({
         data: res.data
@@ -30,7 +29,7 @@ class Index extends BasePage {
   async UNSAFE_componentWillMount() {
     // this.setState({ user: await getData('/') });
   }
-  componentWillReceiveProps = async(nextProps) => {
+  UNSAFE_componentWillReceiveProps = async(nextProps) => {
     if (nextProps.location !== this.props.location) {
       console.log(nextProps)
       const res = await handleGet.bind(this)({url:`admin/news${nextProps.location.search}`})
@@ -70,7 +69,7 @@ class Index extends BasePage {
           </Flex>
           <div className="postShorten-excerpt">
             <div className="text-break">{item.note}</div>
-            <Link className="postShorten-excerpt_link link" to={`/admin/news/${item._id}`}>阅读全文</Link>
+            <Link className="postShorten-excerpt_link link" to={`/admin/news/edit/${item._id}`}>编辑</Link>
           </div>
         </div>
         </article>
@@ -92,7 +91,7 @@ class Index extends BasePage {
     
     return (
       <section className="postShorten-group main-content-wrap">
-        <Button>添加</Button>
+        <Link  to={`/admin/news/create`}>添加</Link>
         {this.creatList()}
         <Pagination className={classnames(Styles['my-20'])} data={data.pagination} onItemClick={this.getCurrentPage} location={this.props.location}/>
       </section>

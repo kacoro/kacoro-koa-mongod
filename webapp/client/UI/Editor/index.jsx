@@ -2,6 +2,7 @@ import React, { Component, PureComponent } from 'react';
 import ReactQuill, { Quill, Mixin, Toolbar } from 'react-quill';
 import Button from '@app/UI/Buttons';
 import 'react-quill/dist/quill.snow.css'; // ES6
+import Styles from './index.scss'
 import Modal from '@app/UI/Modal';
 class Index extends Component {
     constructor(prop) {
@@ -128,7 +129,7 @@ class Index extends Component {
             },
             localStorage.getItem("access_token"));
     }
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         this.setState({ content: nextProps.content })
     }
     handleChange = (value) => {
@@ -136,10 +137,9 @@ class Index extends Component {
     }
     render() {
         const { content } = this.state;
-        console.log("render")
         return (
             <div>
-                <ReactQuill ref="reactQuillRef" value={content} onChange={this.handleChange} modules={this.modules} formats={this.formats} />
+                <ReactQuill className={Styles.Editor}  ref="reactQuillRef" value={content} onChange={this.handleChange} modules={this.modules} formats={this.formats} />
                 <Modal
                     title="上传图片"
                     {...this.props}
@@ -148,11 +148,10 @@ class Index extends Component {
                     onIconClose={this.handleCloseModal}
                     onRequestClose={this.handleCloseModal}
                     width="300"
-                    
                 >
-                    <Button onClick={this.selectImage.bind(this)} style={{background:"#18ade4",border:"none",color:"#fff"}}>
-                                选择图片
-                    </Button>
+                <Button onClick={this.selectImage.bind(this)} style={{background:"#18ade4",border:"none",color:"#fff"}}>
+                        选择图片
+                </Button>
                     <input ref="uploadInput" type='file' accept='image/*'
                                style={{width:"100px",border:"none",visibility:"hidden"}}
                                onChange={this.changeImageBeforeUpload.bind(this)}

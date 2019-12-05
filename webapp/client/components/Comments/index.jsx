@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component ,Fragment} from 'react';
 import classnames from 'classnames';
 import Button from '@app/UI/Buttons';
 import RootStyles from '@app/UI/Styles'
@@ -61,7 +61,7 @@ class Index extends Component {
         return getNode(root)
     }
     
-    componentWillReceiveProps = async (nextProps) => {
+    UNSAFE_componentWillReceiveProps = async (nextProps) => {
         if (this.props.history.location !== this.props.location) {
             const res = await getData(`comment/article/${nextProps.id}`);
             const data = res.data.data
@@ -98,13 +98,7 @@ class Index extends Component {
         Lazyload(this.refs)
     }
     handleReply= async(item) =>{
-        //
-        // this.props.dispatch({
-        //     type: reduxTypes.AXIOS_POST,
-        //     payload:{url:'/api/comment',data:{content:this.state.content}}
-        // });
-     
-         var payload = {content:this.state.content}
+        var payload = {content:this.state.content}
         if(item){
             payload.content = this.state.content2
             payload.replyId = item._id
@@ -128,15 +122,6 @@ class Index extends Component {
              })
             
         }
-        //  handlePost({url:'/api/comment',data:{content:this.state.content}})
-        // this.props.dispatch( handlePost({url:'/api/comment',data:{content:this.state.content}}))
-       
-        // await request.config({ type: 'post', url: '/api/comment' })
-        // var res = await postData(`comment/article/${this.props.id}`,{
-        //     content:data.content
-        //  })
-        // this.setState(list:Object.assign(list,{}))
-     
     }
     handleInputChange =(e) => {
         const target = e.target;
@@ -195,7 +180,7 @@ class Index extends Component {
     creatForm = (item) => {
         const {user} = this.props
         return (
-            <div>
+            <Fragment>
                 <Flex>
                     <div className={classnames(styles.avatar)} alt="kacoro's blog"   >
                         {user?
@@ -231,7 +216,7 @@ class Index extends Component {
                  <Signin {...this.props} />
                 }
                 </Flex>
-            </div>
+            </Fragment>
 
         )
     }

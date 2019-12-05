@@ -12,7 +12,7 @@ import asyncComponent from '@app/components/AsyncComponent'
 const prefix = "/admin"
 const AsyncHome = loadable(() => import('@app/admin/pages/Home'));
 const AsyncNews = loadable(() => import('@app/admin/pages/News'));
-const AsyncNewsDetail = loadable(() => import('@app/admin/pages/News/Detail'));
+const AsyncNewsEdit = loadable(() => import('@app/admin/pages/News/Edit'));
 
 
 var routes = [
@@ -25,8 +25,12 @@ var routes = [
     component: withRouter(AsyncNews),
   },
   {
-    path: "/news/:id",exact:true,
-    component: withRouter(AsyncNewsDetail)
+    path: "/news/create",exact:true,
+    component: withRouter(AsyncNewsEdit)
+  },
+  {
+    path: "/news/edit/:id",exact:true,
+    component: withRouter(AsyncNewsEdit)
   },
 ];
 routes.map( (item)=>{

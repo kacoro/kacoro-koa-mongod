@@ -36,7 +36,7 @@ class Index extends BasePage {
 
     // this.setState({ user: await getData('/') });
   }
-  componentWillReceiveProps = async (nextProps) => {
+  UNSAFE_componentWillReceiveProps = async (nextProps) => {
 
     if (this.props.history.location !== this.props.location) {
       const res = await Index.getInitialProps({ params: nextProps.match.params })

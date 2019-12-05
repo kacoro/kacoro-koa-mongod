@@ -61,7 +61,7 @@ class Index extends Component {
         return getNode(root)
     }
     
-    componentWillReceiveProps = async (nextProps) => {
+    UNSAFE_componentWillReceiveProps = async (nextProps) => {
         if (this.props.history.location !== this.props.location) {
             const res = await getData(`comment/article/${nextProps.id}`);
             const data = res.data.data
