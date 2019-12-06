@@ -8,7 +8,7 @@ import classnames from 'classnames'
 import dayjs from 'dayjs'
 import Styles from '@app/UI/Styles'
 import { Input, Textarea, Select,Checkbox } from '@app/UI/Form';
-import Toast from '@app/UI/Toast'
+
 import Button from '@app/UI/Buttons';
 import Editor from '@app/UI/Editor';
 import { handleGet,handlePost, handlePut } from '@app/redux/action'
@@ -104,10 +104,10 @@ class Index extends BasePage {
     
     if(this.state.isNew){
       const res = await handlePost.bind(this)({url:`admin/news`,data:this.state.data});
-      Toast.info(res.msg)
+     
     }else{
       const res = await handlePut.bind(this)({url:`admin/news/${ this.props.match.params.id}`,data:this.state.data});
-      Toast.info(res.msg)
+      
     }
    
     this.props.history.goBack()

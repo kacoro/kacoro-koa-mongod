@@ -31,7 +31,7 @@ class Index extends BasePage {
   }
   UNSAFE_componentWillReceiveProps = async(nextProps) => {
     if (nextProps.location !== this.props.location) {
-      console.log(nextProps)
+   
       const res = await handleGet.bind(this)({url:`admin/news${nextProps.location.search}`})
       this.setState({
         data: res.data

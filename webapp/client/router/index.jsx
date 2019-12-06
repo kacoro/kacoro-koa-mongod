@@ -108,7 +108,7 @@ class RoutesIndex extends Component {
   render() {
    
     const { ...props } = this.props
-    console.log(indexRoutes,adminRouters)
+  
     return (
       <div className="app-container">
         <Switch>
