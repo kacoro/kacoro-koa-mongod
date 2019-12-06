@@ -119,7 +119,7 @@ class Index extends BasePage {
   }
   render() {
     
-    const {cateList,data} = this.state
+    const {cateList,data,id} = this.state
     const { title, content, addTime, cate_name, keywords, description,cate_id } = data
     return (
       <article className="post">

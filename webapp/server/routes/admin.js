@@ -11,6 +11,7 @@ router.get('/news/:id',getNewsById);
 
 router.post('/news',News.post);
 router.put('/news/:id',putNewsById);
+router.delete('/news/:id',News.remove);
 
 router.get('/newscate',NewsCate.get);
 export default router.routes();

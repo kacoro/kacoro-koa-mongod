@@ -23,7 +23,7 @@ router.get('/',  async (ctx) => {
         //是否还有更多
         let hasMore=totle-(page-1)*size>size?true:false;
         let num = Math.ceil(totle/size)
-        let cate = await DB.find('news_cate',{},{},{sort:1});
+        let cate = await DB.find('news_cates',{},{},{sort:1});
     await ctx.render('admin/news/index',{title,list:result,page,size,hasMore,totle,hasMore,num,cate,cate_name})
 })
 router.get('/add', async (ctx) => {

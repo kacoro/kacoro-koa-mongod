@@ -17,6 +17,23 @@ export async function handlePost (payload){
         }
     }
 }
+export async function handleDelete (payload){
+    try{
+        payload.url ='/api/' + payload.url
+        var res = await request.config({ type: 'delete',...payload})
+        Toast.success(res.msg)
+        return res
+    }catch(err){
+        var status = err.response.status
+        if(status==401){
+          Toast.err("登陆超时，无权限访问！")
+          this.props.dispatch({
+               type: reduxTypes.USER_LOGOUT
+          });
+          return null
+        }
+    }
+}
 export async function handlePut (payload){
     try{
         payload.url ='/api/' + payload.url

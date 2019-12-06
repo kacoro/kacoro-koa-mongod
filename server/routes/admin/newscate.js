@@ -14,7 +14,7 @@ router.get('/',  async (ctx) => {
         let size = Number(reqParam.size) || 10;//每页显示的记录条数
         //显示符合前端分页请求的列表查询
         let options = { "limit": size,"skip": (page-1)*size};
-        let result = await DB.find('news_cate',{},options,{sort:1});
+        let result = await DB.find('news_cates',{},options,{sort:1});
         console.log(result)
         //是否还有更多
         let hasMore=totle-(page-1)*size>size?true:false;

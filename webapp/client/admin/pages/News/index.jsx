@@ -8,7 +8,7 @@ import dayjs from 'dayjs'
 import { Flex, FlexItem } from '@app/UI/Layout';
 import Styles from '@app/UI/Styles'
 import classnames from 'classnames'
-import {handleGet} from '@app/redux/action'
+import {handleGet,handleDelete} from '@app/redux/action'
 import Button from '@app/UI/Buttons';
 class Index extends BasePage {
   constructor(props, context) {
@@ -26,8 +26,20 @@ class Index extends BasePage {
       })
   }
 
-  async UNSAFE_componentWillMount() {
-    // this.setState({ user: await getData('/') });
+  handleDelete =async(index)=>{
+    
+    let list = this.state.data.list
+    const id = list[index]._id
+    list.splice(index,1)
+    const res = await handleDelete.bind(this)({url:`admin/news/${id}`})
+    if(res){
+      this.setState({data:{...this.state.data,list}})
+      if(list.length<1){
+        this.props.history.replace(this.props.location)
+      }
+    }
+    
+    
   }
   UNSAFE_componentWillReceiveProps = async(nextProps) => {
     if (nextProps.location !== this.props.location) {
@@ -69,7 +81,9 @@ class Index extends BasePage {
           </Flex>
           <div className="postShorten-excerpt">
             <div className="text-break">{item.note}</div>
-            <Link className="postShorten-excerpt_link link" to={`/admin/news/edit/${item._id}`}>编辑</Link>
+            <Button type="link" color="primary"  to={`/admin/news/edit/${item._id}`}>编辑</Button>
+            <Button type="link"  to={`/news/${item._id}`} target="_blank" >预览</Button>
+            <Button  color="warning" onClick={this.handleDelete.bind(this,index)}>删除</Button>
           </div>
         </div>
         </article>
@@ -91,7 +105,7 @@ class Index extends BasePage {
     
     return (
       <section className="postShorten-group main-content-wrap">
-        <Link  to={`/admin/news/create`}>添加</Link>
+        <Button type="link" color="primary" to={`/admin/news/create`}>添加</Button>
         {this.creatList()}
         <Pagination className={classnames(Styles['my-20'])} data={data.pagination} onItemClick={this.getCurrentPage} location={this.props.location}/>
       </section>

@@ -5,7 +5,8 @@
     outline: 0;
     font-size: 14px;
     border: none;
-    padding: 8px 20px;
+    padding: 8px 16px;
+    line-height: 14px;
     border-radius: 4px;
     transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
     cursor: pointer;
@@ -16,7 +17,14 @@
     &:hover{
         background-color: lighten($primary,40%);
     }
-    
+}
+
+.link{
+    // border-color: transparent!important;
+    text-decoration: none;
+    &:hover{
+        text-decoration: none;
+    }
 }
 
 .text{
@@ -33,6 +41,15 @@
     }
 }
 
+.warning{
+    color:$wihteColor;
+    background-color: $warning;
+    border: 1px solid $warning;
+    &:hover{
+        border: 1px solid $warning;
+        background-color: darken($warning,10%);
+    }
+}
 
 
 .outlined{

@@ -90,10 +90,24 @@ export const putNewsById = async ctx => {
 };
 
 export const post = async ctx => {
+  
   const {addTime,_id,updateTime,...other} = ctx.request.body
   try {
-      let user=  new News(ctx.request.body)
+      let news = new News(ctx.request.body)
+      await news.save()
       ctx.body = {msg:"发布成功！"};
+  } catch (error) {
+      ctx.status = 500
+      ctx.body = {msg:"服务器发生错误"};
+  }
+};
+
+export const remove = async ctx => {
+  const {id} = ctx.params
+  const {ids} = ctx.request.body
+  try {
+      let news=  await News.remove({_id:id})
+      ctx.body = {msg:"删除成功！"};
   } catch (error) {
       ctx.status = 500
       ctx.body = {msg:"服务器发生错误"};
