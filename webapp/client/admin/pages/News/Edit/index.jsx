@@ -8,10 +8,10 @@ import classnames from 'classnames'
 import dayjs from 'dayjs'
 import Styles from '@app/UI/Styles'
 import { Input, Textarea, Select,Checkbox } from '@app/UI/Form';
-
+import Toast from '@app/UI/Toast'
 import Button from '@app/UI/Buttons';
 import Editor from '@app/UI/Editor';
-import { handleGet, handlePut } from '@app/redux/action'
+import { handleGet,handlePost, handlePut } from '@app/redux/action'
 
 class Index extends BasePage {
   constructor(props) {
@@ -37,7 +37,7 @@ class Index extends BasePage {
         cover: { label: "封面图" }
       }
     }
-    this.handleInputChange = this.handleInputChange.bind(this);
+    // this.handleInputChange = this.handleInputChange.bind(this);
   }
 
   handleChange = (value) => {
@@ -46,9 +46,12 @@ class Index extends BasePage {
     this.setState({ data: data })
 
   }
-  handleInputChange(e) {
+  handleInputChange =(e) => {
     const target = e.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const type =  target.typ
+    console.log(target,this)
+    const value = type === 'checkbox' ? target.checked : target.value;
+    // const value =  target.value;
     const name = target.name;
     if(target.type === 'select-one'){
       const returnText = target.attributes.returntext.nodeValue
@@ -98,12 +101,21 @@ class Index extends BasePage {
 
   }
   save = async () => {
-    console.log(this.state.isNew)
-    console.log(this.state.data)
+    
+    if(this.state.isNew){
+      const res = await handlePost.bind(this)({url:`admin/news`,data:this.state.data});
+      Toast.info(res.msg)
+    }else{
+      const res = await handlePut.bind(this)({url:`admin/news/${ this.props.match.params.id}`,data:this.state.data});
+      Toast.info(res.msg)
+    }
+   
+    this.props.history.goBack()
     // const res = await handlePut.bind(this)({url:`admin/news/${ this.props.match.params.id}`,data:this.state.data});
     // if(res){
     //   this.setState({ data: res.data })
     // } 
+     
   }
   render() {
     
@@ -123,7 +135,7 @@ class Index extends BasePage {
             onChange={this.handleInputChange}
             value={keywords}
           />
-          <Textarea className={classnames(Styles['mt-20'])} name="description" id="description" placeholder="描述不要超过255字">{description}</Textarea>
+          <Textarea className={classnames(Styles['mt-20'])} name="description" id="description" placeholder="描述不要超过255字" value={description} onChange={this.handleInputChange}></Textarea>
           <Select  data={cateList} defaultValue={cate_id} value={cate_id} name="cate_id"   returntext="cate_name" onChange={this.handleInputChange} className={classnames(Styles['mt-20'])}  id='category' />
           
         </div>

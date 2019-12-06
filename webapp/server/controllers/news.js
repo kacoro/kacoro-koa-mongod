@@ -88,3 +88,19 @@ export const putNewsById = async ctx => {
   }
   
 };
+
+export const post = async ctx => {
+  const {addTime,_id,updateTime,...other} = ctx.request.body
+  try {
+      let user=  new News(ctx.request.body)
+      ctx.body = {msg:"发布成功！"};
+  } catch (error) {
+      ctx.status = 500
+      ctx.body = {msg:"服务器发生错误"};
+  }
+};
+
+export default {
+  post:post,
+  remove:remove
+}

@@ -4,12 +4,12 @@ import reduxTypes from './types';
 import request from '@app/common/request';
 
 export async function handlePost (payload){
+    payload.url ='/api/' + payload.url
     try{
         var res = await request.config({ type: 'post',...payload})
         return res
     }catch(err){
-        var status = err.response.status
-        if(status==401){
+        if(err.response.status==401){
           this.props.dispatch({
                type: reduxTypes.USER_LOGOUT
           });
@@ -39,7 +39,6 @@ export async function handleGet (payload){
         var res = await request.config({type: 'get',...payload})
         return res
     }catch(err){
-        console.log(err)
         var status = err.response.status
         if(status==401){
             try{
