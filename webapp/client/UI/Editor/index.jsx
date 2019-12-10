@@ -119,6 +119,10 @@ class Index extends Component {
     handleChange = (value) => {
         this.props.onChange(value)
     }
+    componentWillUnmount(){
+        var html=document.querySelector("html");
+        html.style.userSelect = "" //修复html
+    }
     render() {
         const { content } = this.state;
         return (
