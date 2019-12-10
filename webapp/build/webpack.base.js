@@ -21,13 +21,9 @@ const clientConfig = {
   },
   module: {
     rules: [
-      { test: /\.js(x?)$/, use: "babel-loader", exclude: /node_modules/ },
-      { test: /\.ts(x?)$/, use: [{ loader: "babel-loader" }, { loader: 'ts-loader' }], exclude: /node_modules/ },
-      {
-
-        test: /\.js$/,
-        use: [{ loader: "babel-loader" }], exclude: /node_modules/
-      },
+      { test: /\.js(x?)$/, use: "babel-loader", exclude: /node_modules(?!\/quill-image-drop-module|quill-image-resize-module)/ },
+      { test: /\.ts(x?)$/, use: [{ loader: "babel-loader" }, { loader: 'ts-loader' }], exclude: /node_modules(?!\/quill-image-drop-module|quill-image-resize-module)/ },
+     
       {
         test: /\.[(png)|(obj)|(json)]$/,
         loader: "file-loader"
@@ -80,6 +76,9 @@ const clientConfig = {
     filename: './views/index.html', // 指定输出路径和文件名
     // chunks: ['main'], // 页面中所需要的js
 
+  }),
+  new webpack.ProvidePlugin({
+    'window.Quill': 'quill'
   }),
   new MinCssExtractPlugin({
     //为抽取出的独立的CSS文件设置配置参数

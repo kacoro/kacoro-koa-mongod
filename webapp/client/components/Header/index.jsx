@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 
-import Signin from './Signin';
+
 import styles from './index.scss';
 import { Flex,FlexItem } from '@app/UI/Layout';
 import reduxTypes from '@app/redux/types';

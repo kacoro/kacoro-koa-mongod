@@ -1,7 +1,12 @@
 :global{
+     iframe {
+        pointer-events: none;
+    }
+  
     .ql-container{
         min-height: 400px;
         max-height: 400px;
         overflow: auto;
     }
+    
 }

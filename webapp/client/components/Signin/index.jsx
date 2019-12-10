@@ -25,7 +25,10 @@ import {
                 await this.props.dispatch({
                     type: reduxTypes.USER_LOGIN,payload:res
                    });
-                   this.props.history.replace(from)
+                setTimeout(()=>{
+                    this.props.history.replace(from)
+                },500)
+                
             }
         }
     }

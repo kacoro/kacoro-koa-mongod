@@ -46,7 +46,7 @@ class PrevNext extends React.Component {
         const { data,justify, children, className, ...others } = this.props;
         const pageList = this.createPage();
         return (
-            <div  className={classnames(styles.root, className ? className : null)} {...others}>
+            <div  className={classnames(styles.root, className ? className : null)} >
             <ul className="PrevNext">
             <Flex justify={justify?justify:''}>
               {pageList}

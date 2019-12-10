@@ -42,7 +42,6 @@ router.post('/edit', async (ctx) => {
 
 router.post('/delete',  async (ctx) => {
     const {id} = ctx.request.body;
-    console.log(id)
     let data = await DB.remove('news',{_id:DB.getObjectID(id)})
     // console.log(data)
     ctx.body = data.result

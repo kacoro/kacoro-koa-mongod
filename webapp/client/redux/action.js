@@ -8,7 +8,8 @@ export async function handlePost (payload){
         Toast.success(res.msg)
         return res
     }catch(err){
-        Toast.err("登陆超时，无权限访问！")
+        console.log(err.response)
+        Toast.error(err.response.data)
         if(err.response.status==401){
           this.props.dispatch({
                type: reduxTypes.USER_LOGOUT
@@ -26,7 +27,7 @@ export async function handleDelete (payload){
     }catch(err){
         var status = err.response.status
         if(status==401){
-          Toast.err("登陆超时，无权限访问！")
+          await Toast.error("登陆超时，无权限访问！")
           this.props.dispatch({
                type: reduxTypes.USER_LOGOUT
           });
@@ -43,8 +44,8 @@ export async function handlePut (payload){
     }catch(err){
         var status = err.response.status
         if(status==401){
-          Toast.err("登陆超时，无权限访问！")
-          this.props.dispatch({
+          Toast.error("登陆超时，无权限访问！")
+          await this.props.dispatch({
                type: reduxTypes.USER_LOGOUT
           });
           return null
@@ -59,9 +60,9 @@ export async function handleGet (payload){
     }catch(err){
         var status = err.response.status
         if(status==401){
-            Toast.err("登陆超时，无权限访问！")
+            Toast.error("登陆超时，无权限访问！")
             try{
-                this.props.dispatch({
+                await this.props.dispatch({
                     type: reduxTypes.USER_LOGOUT
                });
             }catch(err){

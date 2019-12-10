@@ -104,13 +104,17 @@ class Index extends BasePage {
     
     if(this.state.isNew){
       const res = await handlePost.bind(this)({url:`admin/news`,data:this.state.data});
-     
+      if(res){
+        this.props.history.goBack()
+      }
     }else{
       const res = await handlePut.bind(this)({url:`admin/news/${ this.props.match.params.id}`,data:this.state.data});
-      
+      if(res){
+        this.props.history.goBack()
+      }
     }
    
-    this.props.history.goBack()
+    
     // const res = await handlePut.bind(this)({url:`admin/news/${ this.props.match.params.id}`,data:this.state.data});
     // if(res){
     //   this.setState({ data: res.data })

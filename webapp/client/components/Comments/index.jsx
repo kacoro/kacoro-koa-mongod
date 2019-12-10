@@ -103,7 +103,7 @@ class Index extends Component {
             payload.content = this.state.content2
             payload.replyId = item._id
         }
-        const res = await handlePost.bind(this)({url:`/api/comment/article/${this.props.id}`,data:payload})
+        const res = await handlePost.bind(this)({url:`/comment/article/${this.props.id}`,data:payload})
         if(res){
             var newData = this.state.data
             newData.push(res.data)
@@ -150,7 +150,7 @@ class Index extends Component {
             return (
                 <Flex key={index}>
                     <Website website={item.website} className={classnames(styles.avatar)} alt="kacoro's blog"   >
-                        {item.avatar?  <img data-src={`/static${item.avatar}`} ref={`img-${item._id}`} />
+                        {item.avatar?  <img data-src={`${item.avatar}`} ref={`img-${item._id}`} />
                         :null
                         }
                     </Website>
@@ -184,7 +184,7 @@ class Index extends Component {
                 <Flex>
                     <div className={classnames(styles.avatar)} alt="kacoro's blog"   >
                         {user?
-                         <img data-src={`/static${user.data.avatar}`} ref="commentuser" />
+                         <img data-src={`${user.data.avatar}`} ref="commentuser" />
                           :null}
                     </div>
                     <FlexItem flex="auto">

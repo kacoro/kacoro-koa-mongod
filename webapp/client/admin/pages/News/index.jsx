@@ -10,6 +10,7 @@ import Styles from '@app/UI/Styles'
 import classnames from 'classnames'
 import {handleGet,handleDelete} from '@app/redux/action'
 import Button from '@app/UI/Buttons';
+import Confirm from '@app/UI/Modal/confirm'
 class Index extends BasePage {
   constructor(props, context) {
     super(props, context);
@@ -38,16 +39,17 @@ class Index extends BasePage {
         this.props.history.replace(this.props.location)
       }
     }
-    
-    
   }
   UNSAFE_componentWillReceiveProps = async(nextProps) => {
     if (nextProps.location !== this.props.location) {
    
       const res = await handleGet.bind(this)({url:`admin/news${nextProps.location.search}`})
-      this.setState({
-        data: res.data
-      })
+      if(res){
+        this.setState({
+          data: res.data
+        })
+      }
+      
     }
   }
   async getCurrentPage(currentPage) {

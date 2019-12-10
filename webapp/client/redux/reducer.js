@@ -26,6 +26,7 @@ function user(state = null, action) {
     switch (action.type) {
         case types.USER_LOGIN:
             Cookie.set('token', action.payload.token)
+            console.log('token')
             return action.payload;
         case types.USER_LOGOUT:
             Cookie.remove('token')

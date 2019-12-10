@@ -9,7 +9,13 @@ import cors from 'koa2-cors';
 const app = new Koa();
 app.keys = ['newest secret key', 'older secret key'];
 // app.use(convert(session(app)));
-
+import koaBody from 'koa-body'
+app.use(koaBody({
+    multipart: true,
+    formidable: {
+        maxFileSize: 200*1024*1024    // 设置上传文件大小最大限制，默认2M
+    }
+}))
 app.use(session({
   key:"SESSIONID",
   // cookie: {secure: false, maxAge:86400000},

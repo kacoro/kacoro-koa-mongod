@@ -14,7 +14,7 @@ const auth = async (ctx,next)=>{
           const user = await User.findById(_id)
           ctx.state.user = user._doc
         }catch(err){ //
-          console.log(err)
+          // console.log(err)
         }
        
       }

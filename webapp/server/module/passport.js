@@ -2,8 +2,7 @@
 const  passport = require('koa-passport'),
 
        LocalStrategy = require('passport-local').Strategy,
-       config = require('../config.js'),
-       bcrypt = require('bcrypt')
+       config = require('../config.js')
 import User from '../models/user'
 // 序列化ctx.login()触发
 // passport.serializeUser(function(user, done) {

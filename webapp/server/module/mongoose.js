@@ -1,8 +1,8 @@
 //DB库
-const mongoose = require('mongoose'),
-config = require('../config')
+const mongoose = require('mongoose');
+import {database} from "../config"
 
-const DB_URL = `mongodb://${config.dbUsername}:${encodeURIComponent(config.dbPassword)}@${config.dbhost}/${config.dbName}`;
+const DB_URL = `mongodb://${database.username}:${encodeURIComponent(database.password)}@${database.host}/${database.name}`;
 mongoose.connect(DB_URL,{useNewUrlParser: true,useUnifiedTopology: true})
 mongoose.connection.on('connected', function () {  /** * 连接成功 */ 
     console.log('Mongoose connection open to ' + DB_URL);
