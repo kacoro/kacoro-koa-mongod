@@ -10,7 +10,7 @@ var NewsSchema = new Schema({
     cate_name : { type:String}, //分类名称
     content:{type: String,required:[true ,'请输入内容']}, //内容
     note:{type: String},    //概述
-    thumbnails:{type: Array},
+    cover:{type: String},   //封面
     sort:{type:Number,default:0},
     addTime: { type:Date, default:Date.now },
     updateTime: { type:Date, default:Date.now },

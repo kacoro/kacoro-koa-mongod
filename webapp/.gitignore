@@ -12,7 +12,8 @@ typings/
 .nyc_output/
 .vscode/
 config.js
-public/upload
+static/upload
+!static/upload/userIcon
 res
 dist/
 webapp/dist/

@@ -18,7 +18,7 @@ class Index extends Component {
         {href:'/admin/',icon:'home',text:'首页'},
         {href:'/admin/news',icon:'md-pricetags',text:'文章管理',type:"ion"},
         {href:'/admin/comment',icon:'md-pricetags',text:'分类管理',type:"ion"},
-        {href:'/admin/comments',icon:'md-pricetags',text:'分类管理',type:"ion"},
+        {href:'/admin/comments',icon:'md-pricetags',text:'评论管理',type:"ion"},
         {href:'/admin/users',icon:'md-pricetags',text:'用户管理',type:"ion"},
         // {href:'/',icon:'archive',text:'归档'},
         {href:'/admin/comment',icon:'account_circle',text:'系统管理'},

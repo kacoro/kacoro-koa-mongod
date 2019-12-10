@@ -7,12 +7,12 @@ import { Flex, FlexItem } from '@app/UI/Layout';
 import classnames from 'classnames'
 import dayjs from 'dayjs'
 import Styles from '@app/UI/Styles'
-import { Input, Textarea, Select,Checkbox } from '@app/UI/Form';
+import { Input, Textarea, Select, Checkbox } from '@app/UI/Form';
 
 import Button from '@app/UI/Buttons';
 import Editor from '@app/UI/Editor';
-import { handleGet,handlePost, handlePut } from '@app/redux/action'
-
+import { handleGet, handlePost, handlePut } from '@app/redux/action'
+import Upload from '@app/UI/Upload';
 class Index extends BasePage {
   constructor(props) {
     super(props);
@@ -22,7 +22,7 @@ class Index extends BasePage {
       text: '',
       id,
       isNew: !id,
-      
+
       cateList: [],
       data: {
         title: '',
@@ -41,29 +41,29 @@ class Index extends BasePage {
   }
 
   handleChange = (value) => {
-    var data = Object.assign(this.state.data,{content:value})
+    var data = Object.assign(this.state.data, { content: value })
 
     this.setState({ data: data })
 
   }
-  handleInputChange =(e) => {
+  handleInputChange = (e) => {
     const target = e.target;
-    const type =  target.typ
-    console.log(target,this)
+    const type = target.typ
+    console.log(target, this)
     const value = type === 'checkbox' ? target.checked : target.value;
     // const value =  target.value;
     const name = target.name;
-    if(target.type === 'select-one'){
+    if (target.type === 'select-one') {
       const returnText = target.attributes.returntext.nodeValue
       const text = target.options[target.selectedIndex].text
-      var data = Object.assign(this.state.data,{[name]: value,[returnText]:text})
-      
-    }else{
-      var data = Object.assign(this.state.data,{[name]: value})
+      var data = Object.assign(this.state.data, { [name]: value, [returnText]: text })
+
+    } else {
+      var data = Object.assign(this.state.data, { [name]: value })
     }
-    
+
     this.setState({
-      data:data
+      data: data
     });
   }
   async componentDidMount() {
@@ -71,18 +71,18 @@ class Index extends BasePage {
     const res = await handleGet.bind(this)({ url: `admin/newscate?size=20` });
     if (res) {
       const data = res.data
-      this.setState({ cateList: data ,data:Object.assign(this.state.data,{cate_id:data[0]._id,cate_name:data[0].name})})
-      
+      this.setState({ cateList: data, data: Object.assign(this.state.data, { cate_id: data[0]._id, cate_name: data[0].name }) })
+
     }
     if (!this.state.isNew) {
       const res = await handleGet.bind(this)({ url: `admin/news/${this.state.id}` });
       if (res) {
         const { title, content, addTime, updateTime, keywords, description, cate_name } = res.data.data
         // this.setState({ content, title, keywords, description, cate_name, addTime, updateTime })
-        this.setState({data:res.data.data})
+        this.setState({ data: res.data.data })
       }
     }
-    
+
   }
 
   async UNSAFE_componentWillMount() {
@@ -100,31 +100,35 @@ class Index extends BasePage {
   changeRouter = () => {
 
   }
+  /*处理图片插入*/
+  imageHandler = ({ url }) => {
+    this.setState({data:{...this.state.data, cover: url} })
+  }
   save = async () => {
-    
-    if(this.state.isNew){
-      const res = await handlePost.bind(this)({url:`admin/news`,data:this.state.data});
-      if(res){
+
+    if (this.state.isNew) {
+      const res = await handlePost.bind(this)({ url: `admin/news`, data: this.state.data });
+      if (res) {
         this.props.history.goBack()
       }
-    }else{
-      const res = await handlePut.bind(this)({url:`admin/news/${ this.props.match.params.id}`,data:this.state.data});
-      if(res){
+    } else {
+      const res = await handlePut.bind(this)({ url: `admin/news/${this.props.match.params.id}`, data: this.state.data });
+      if (res) {
         this.props.history.goBack()
       }
     }
-   
-    
+
+
     // const res = await handlePut.bind(this)({url:`admin/news/${ this.props.match.params.id}`,data:this.state.data});
     // if(res){
     //   this.setState({ data: res.data })
     // } 
-     
+
   }
   render() {
-    
-    const {cateList,data,id} = this.state
-    const { title, content, addTime, cate_name, keywords, description,cate_id } = data
+
+    const { cateList, data, id } = this.state
+    const { title, content, addTime, cate_name, keywords, description, cate_id,cover } = data
     return (
       <article className="post">
         <div className="post-header main-content-wrap text-left">
@@ -140,17 +144,17 @@ class Index extends BasePage {
             value={keywords}
           />
           <Textarea className={classnames(Styles['mt-20'])} name="description" id="description" placeholder="描述不要超过255字" value={description} onChange={this.handleInputChange}></Textarea>
-          <Select  data={cateList} defaultValue={cate_id} value={cate_id} name="cate_id"   returntext="cate_name" onChange={this.handleInputChange} className={classnames(Styles['mt-20'])}  id='category' />
-          
+          <Select data={cateList} defaultValue={cate_id} value={cate_id} name="cate_id" returntext="cate_name" onChange={this.handleInputChange} className={classnames(Styles['mt-20'])} id='category' />
+          <Upload onChange={this.imageHandler} className={classnames(Styles['mt-20'])} preview={cover} />
         </div>
         <div className={classnames("post-content markdown main-content-wrap")}  >
-          <div  className={classnames(Styles['mt-20'])}>
-            <Editor content={content} onChange={this.handleChange} />
+          <div className={classnames(Styles['mt-20'])}>
+            <Editor content={content} onChange={this.handleChange} dispatch={this.props.dispatch} />
           </div>
-          <label><Checkbox  name="status" className={classnames(Styles['mt-20'])}  onChange={this.handleInputChange}  />启用</label>
+          <label><Checkbox name="status" className={classnames(Styles['mt-20'])} onChange={this.handleInputChange} />启用</label>
           {/* <div className={classnames(Styles['py-10'], Styles['text-pre'])} dangerouslySetInnerHTML={{ __html: content }} /> */}
           <div className={classnames(Styles['mt-20'])}>
-         
+
             <Button onClick={this.save}>保存</Button>
             {/* <PrevNext justify="between" prev={prev} next={next} onItemClick={this.getCurrentPage} className={classnames(Styles['my-20'])} ></PrevNext> */}
             {/* <Comments id={this.props.match.params.id} {...this.props} className={classnames(Styles['my-20'])}></Comments> */}

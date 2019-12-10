@@ -70,22 +70,31 @@ class Index extends BasePage {
     const listItems = data.list.map((item, index) =>
     <article className="postShorten" key={index} >
      <div className="post-header text-left" >
-         <h1>{item.title}</h1>
           <Flex  >
-            <FlexItem align="baseline" className={classnames('post-meta')}>
-              <time>{dayjs(item.addTime).format('YYYY-MM-DD ')}</time>
+          <FlexItem >
+          <h1>{item.title}</h1>
+            </FlexItem>
+            <FlexItem >
+            <time>{dayjs(item.addTime).format('YYYY-MM-DD ')}</time>
+            </FlexItem>
+            <FlexItem  >
               <Link className="categorLink" to={`/admin/news`}>新闻</Link> /&nbsp;
               <Link className="categorLink" to={`/admin/news?catename=${item.cate_name}`}>{item.cate_name}</Link>
               {/* <a onClick={this.changeRouter.bind(this,``)} className='categorLink' to="">新闻</a>
                / 
               < a className='categorLink'  onClick={this.changeRouter.bind(this,`?catename=${item.cate_name}`)}>{item.cate_name}</a> */}
             </FlexItem>
+            <FlexItem >
+            <div className="text-break">{item.note}</div>
+            </FlexItem>
+            <FlexItem  >
+              <Button type="link" color="primary"  to={`/admin/news/edit/${item._id}`}>编辑</Button>
+              <Button type="link"  to={`/news/${item._id}`} target="_blank" >预览</Button>
+              <Button  color="warning" onClick={this.handleDelete.bind(this,index)}>删除</Button>
+            </FlexItem>
           </Flex>
           <div className="postShorten-excerpt">
-            <div className="text-break">{item.note}</div>
-            <Button type="link" color="primary"  to={`/admin/news/edit/${item._id}`}>编辑</Button>
-            <Button type="link"  to={`/news/${item._id}`} target="_blank" >预览</Button>
-            <Button  color="warning" onClick={this.handleDelete.bind(this,index)}>删除</Button>
+            
           </div>
         </div>
         </article>

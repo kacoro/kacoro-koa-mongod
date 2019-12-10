@@ -69,8 +69,8 @@ class Index extends Component {
 
     }
     formats = [
-        'header',
-        'bold', 'italic', 'underline', 'strike', 'blockquote',
+        'font','header',
+        'bold', 'italic', 'underline', 'strike', 'blockquote','color','background',
         'list', 'bullet','script', 'indent',
         'align','link', 'image','video','code','code-block'
     ]
@@ -107,7 +107,6 @@ class Index extends Component {
         this.handleCloseModal()
     }
     videoHandler = ({url})=>{
-        console.log(url)
         let quill=this.refs.reactQuillRef.getEditor();//获取到编辑器本身
         const cursorPosition =quill.getSelection().index;//获取当前光标位置
         quill.insertEmbed(cursorPosition, "video",url, Quill.sources.USER);//插入视频
@@ -127,25 +126,25 @@ class Index extends Component {
                 <ReactQuill className={Styles.Editor}  ref="reactQuillRef" value={content} onChange={this.handleChange} modules={this.modules} formats={this.formats} />
                 <Modal
                     title="上传图片"
-                    {...this.props}
+                    dispatch={this.props.dispatch}
                     isOpen={this.state.showModal}
                     contentLabel="Minimal Modal Example"
                     onIconClose={this.handleCloseModal}
                     onRequestClose={this.handleCloseModal}
                     width="300"
                 >
-                <Upload  onChange={this.imageHandler}  />
+                <Upload  onChange={this.imageHandler}  dispatch={this.props.dispatch} />
                 </Modal>
                 <Modal
                     title="选择视频"
-                    {...this.props}
+                    dispatch={this.props.dispatch}
                     isOpen={this.state.showVideoModal}
                     contentLabel="Minimal Modal Example"
                     onIconClose={this.handleCloseVideoModal}
                     onRequestClose={this.handleCloseVideoModal}
                     width="300"
                 >
-                <Upload text="上传视频" type="video" accept='video/*' onChange={this.videoHandler} />
+                <Upload text="上传视频" type="video" accept='video/*' onChange={this.videoHandler} dispatch={this.props.dispatch}/>
                 </Modal>
             </div>
 

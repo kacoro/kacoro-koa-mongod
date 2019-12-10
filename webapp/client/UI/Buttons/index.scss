@@ -17,6 +17,11 @@
     &:hover{
         background-color: lighten($primary,40%);
     }
+    &:disabled{
+        color: $wihteColor;
+        border: 1px solid grey;
+        background-color:grey;
+    }
 }
 
 .link{

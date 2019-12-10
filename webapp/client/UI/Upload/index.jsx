@@ -1,53 +1,36 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 import { handlePost } from '@app/redux/action'
 import Button from '@app/UI/Buttons';
+import classnames from 'classnames'
 class Upload extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            src: "",
-            uploadUrl: 'admin/upload'
+            src: '',
+            uploadUrl: 'admin/upload',
+            uploaded:false,
         }
     }
+    
     //组件中定义选择图片的方法
     selectImage() {
         this.refs.uploadInput.click();//点击modal的html结构中的input标签
     }
-    uploadForImage(url, data, callback, token) {//data是数据列表
-        console.log('post-请求接口:' + url);
-        console.log('请求参数:' + data);
-        let this_ = this;
-        if (!data) {
-            console.log('未选择文件');
-            return;
-        }
-        this_.props.onChange(this_.state.url);
-        let xhr = new XMLHttpRequest();
-        let form = new FormData();
-        form.append('file', data);
-        // xhr.addEventListener('readystatechange',function(e){
-        //     console.log(e);
-        //     let response=e.target.response?JSON.parse(e.target.response):null;
-        //     console.log(response);
-        //     if (e.target.readyState===4&&response) {
-        //         callback(response);
-        //     }
-        // },false);
-        // xhr.open('POST', url, true);  // 第三个参数为async?，异步/同步
-        // xhr.setRequestHeader("token",token);
-        // xhr.send(form);
-    }
+   
     /*开始上传图片*/
-    async handleUpload(uploadUrl, file) {
+     handleUpload = async(uploadUrl, file) => {
         // let this_=this;
         let form = new FormData();
         form.append('file', file)
         /*调用上传图片的封装方法*/
+        console.log(this)
         const res = await handlePost.bind(this)({ url: uploadUrl, data: form })
         if(res){
-            console.log(res)
+           this.setState({selected:false})
             this.props.onChange(res)
+        }else{
+            this.props.onChange({url:''})
         }
     }
     changeImageBeforeUpload(e) {
@@ -70,37 +53,62 @@ class Upload extends Component {
         // }
         this.setState({
             src: src,
-            file: file
+            file: file,
+            selected:true
         })
+        if(this.props.preview){
+            this.props.onChange({url:''})
+        }
+        
 
     }
     render() {
-        const { accept = "image/*", type = "image", text = "选择图片" } = this.props
+        const { accept , type, text ,className,preview} = this.props
+        const {src,selected} = this.state
+        var showSrc = src
+        if(preview){
+            showSrc  = preview
+        }
         return (
-            <div>
-                <Button onClick={this.selectImage.bind(this)} style={{ background: "#18ade4", border: "none", color: "#fff" }}>
-                    {text}
-                </Button>
+            <div className={classnames( className ? className : null)} >
+                
                 <input ref="uploadInput" type='file' accept={accept}
                     style={{ width: "100px", border: "none", visibility: "hidden" }}
                     onChange={this.changeImageBeforeUpload.bind(this)}
                 />
-                <div style={{ textAlign: "center", margin: "10px 0" }}>
-                    {this.state.src ?
+                <div style={{ textAlign: "center", margin: "10px 0", width: "250px", height: "250px" }}>
+                    {showSrc ?
                         type === "image" ?
-                            <img src={this.state.src} alt="" style={{ maxWidth: "100%", height: "300px" }} />
+                            <img src={showSrc} alt="" style={{ maxWidth: "100%", height: 'auto' }} />
                             :
-                            <video src={this.state.src} alt="" style={{ maxWidth: "100%", height: "300px" }}></video>
+                            <video src={showSrc} controls="true" alt="" style={{ maxWidth: "100%", height: 'auto'}}></video>
                         :
                         <div style={{ background: "#f2f2f2", width: "250px", height: "250px" }}>
                         </div>
                     }
                 </div>
-                <Button onClick={this.handleUpload.bind(this, this.state.uploadUrl, this.state.file)}>上传</Button>
+                <Button color="primary" onClick={this.selectImage.bind(this)} >
+                    {text}
+                </Button>
+                <Button disabled={selected?null:"disabled"}onClick={this.handleUpload.bind(this, this.state.uploadUrl, this.state.file)}>上传</Button>
             </div>
 
         )
     }
+}
+
+Upload.propTypes ={
+    type:PropTypes.number.isRequired,
+    accept:PropTypes.number.isRequired,
+    text:PropTypes.number.isRequired,
+    onChange:PropTypes.number.isRequired
+}
+
+Upload.defaultProps ={
+    accept: "image/*",
+    type:"image",
+    text:"选择图片" 
+  
 }
 
 export default Upload;
