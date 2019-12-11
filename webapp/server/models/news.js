@@ -14,7 +14,7 @@ var NewsSchema = new Schema({
     sort:{type:Number,default:0},
     addTime: { type:Date, default:Date.now },
     updateTime: { type:Date, default:Date.now },
-    status:{type:String,default:''},
+    status:{type:Boolean,default:false},
     userId:Schema.Types.ObjectId //用户id 记录是谁创建的
 })
 export default mongoose.model('News',NewsSchema);

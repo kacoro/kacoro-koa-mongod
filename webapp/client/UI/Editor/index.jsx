@@ -4,7 +4,7 @@ import Button from '@app/UI/Buttons';
 import 'react-quill/dist/quill.snow.css'; // ES6
 import Styles from './index.scss'
 import Modal from '@app/UI/Modal';
-import Upload from '@app/UI/Upload';
+import Upload from '@app/UI/Upload/noSSR';
 
 import ImageResize from 'quill-image-resize-module';
 import VideoResize,{Resize,BaseModule } from 'quill-video-resize-module';

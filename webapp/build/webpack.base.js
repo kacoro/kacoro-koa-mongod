@@ -16,6 +16,7 @@ const clientConfig = {
     path: path.resolve(__dirname, '../dist/client'), // 打包文件的输出目录
     // chunkFilename: '[name].bundle.js',
     filename: "js/[name].[hash].js",
+    chunkFilename: 'js/[name].[hash].js',
     publicPath: '/'
     // publicPath:path.resolve(__dirname,'../dist/') // js引用路径或者CDN地址
   },
@@ -82,7 +83,7 @@ const clientConfig = {
   }),
   new MinCssExtractPlugin({
     //为抽取出的独立的CSS文件设置配置参数
-    filename: "css/[name][hash].css"
+    filename: "css/[name].[hash].css"
   }),
   new LoadablePlugin()],
 
@@ -95,12 +96,13 @@ const serverConfig = { // node环境打包
   output: { // 出口配置
     path: path.resolve(__dirname, '../dist/server'), // 打包后的文件存放的地方
     filename: "[name].js" // 打包后输出文件的文件名与入口文件名一致
+    
   },
   externals: [externalPlugins()],
   module: { // 模块：栗子 解读css，图片如何转换、压缩
     rules: [
-      { test: /\.js(x?)$/, use: "babel-loader", exclude: /node_modules/ },
-      { test: /\.ts(x?)$/, use: [{ loader: "babel-loader" }, { loader: "ts-loader" }], exclude: /node_modules/ },
+      { test: /\.js(x?)$/, use: "babel-loader", exclude: /(node_modules|bower_components)/ },
+      { test: /\.ts(x?)$/, use: [{ loader: "babel-loader" }, { loader: "ts-loader" }], exclude:/(node_modules|bower_components)/ },
       {
         test: /\.[(png)|(obj)|(json)]$/,
         loader: "file-loader"

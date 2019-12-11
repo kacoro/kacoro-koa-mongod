@@ -1,3 +1,3 @@
 import loadable from '@loadable/component'
-const NoSSRWrapper = loadable(() => import('./'),{ssr:false});
+const NoSSRWrapper = loadable(() => import(/* webpackChunkName: "Upload" */'./'),{ssr:false});
 export default NoSSRWrapper;

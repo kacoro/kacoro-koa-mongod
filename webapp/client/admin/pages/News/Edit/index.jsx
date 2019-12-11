@@ -12,7 +12,7 @@ import { Input, Textarea, Select, Checkbox } from '@app/UI/Form';
 import Button from '@app/UI/Buttons';
 import Editor from '@app/UI/Editor/noSSR';
 import http from '@app/redux/action'
-// import Upload from '@app/UI/Upload/noSSR';
+import Upload from '@app/UI/Upload/noSSR';
 class Index extends Component {
   constructor(props) {
     super(props);
@@ -45,9 +45,10 @@ class Index extends Component {
   }
   handleInputChange = (e) => {
     const target = e.target;
-    const type = target.typ
+    const type = target.type;
     const value = type === 'checkbox' ? target.checked : target.value;
     // const value =  target.value;
+    console.log(target.checked)
     const name = target.name;
     if (target.type === 'select-one') {
       const returnText = target.attributes.returntext.nodeValue
@@ -56,14 +57,12 @@ class Index extends Component {
     } else {
       var data = Object.assign(this.state.data, { [name]: value })
     }
-
     this.setState({
       data: data
     });
   }
   async componentDidMount() {
     //获取分类信息
-   
     const res = await http.get.bind(this)({ url: `admin/newscate?size=20` });
     if (res) {
       const data = res.data
@@ -73,8 +72,6 @@ class Index extends Component {
     if (!this.state.isNew) {
       const res = await http.get.bind(this)({ url: `admin/news/${this.state.id}` });
       if (res) {
-        const { title, content, addTime, updateTime, keywords, description, cate_name } = res.data.data
-        // this.setState({ content, title, keywords, description, cate_name, addTime, updateTime })
         this.setState({ data: res.data.data })
       }
     }
@@ -101,7 +98,6 @@ class Index extends Component {
     this.setState({data:{...this.state.data, cover: url} })
   }
   save = async () => {
-
     if (this.state.isNew) {
       const res = await http.post.bind(this)({ url: `admin/news`, data: this.state.data });
       if (res) {
@@ -117,7 +113,7 @@ class Index extends Component {
   render() {
 
     const { cateList, data, id } = this.state
-    const { title, content, addTime, cate_name, keywords, description, cate_id,cover } = data
+    const { title, content, addTime, cate_name, keywords, description, cate_id,cover ,status=false} = data
     return (
       <article className="post">
         <div className="post-header main-content-wrap text-left">
@@ -134,13 +130,13 @@ class Index extends Component {
           />
           <Textarea className={classnames(Styles['mt-20'])} name="description" id="description" placeholder="描述不要超过255字" value={description} onChange={this.handleInputChange}></Textarea>
           <Select data={cateList} defaultValue={cate_id} value={cate_id} name="cate_id" returntext="cate_name" onChange={this.handleInputChange} className={classnames(Styles['mt-20'])} id='category' />
-          {/* <Upload onChange={this.imageHandler} className={classnames(Styles['mt-20'])} preview={cover} /> */}
+          <Upload onChange={this.imageHandler} className={classnames(Styles['mt-20'])} preview={cover} />
         </div>
         <div className={classnames("post-content markdown main-content-wrap")}  >
           <div className={classnames(Styles['mt-20'])}>
             <Editor content={content} onChange={this.handleChange} dispatch={this.props.dispatch} />
           </div>
-          <label><Checkbox name="status" className={classnames(Styles['mt-20'])} onChange={this.handleInputChange} />启用</label>
+          <label><Checkbox name="status" value={status} checked={status}  className={classnames(Styles['mt-20'])} onChange={this.handleInputChange} />启用</label>
           {/* <div className={classnames(Styles['py-10'], Styles['text-pre'])} dangerouslySetInnerHTML={{ __html: content }} /> */}
           <div className={classnames(Styles['mt-20'])}>
 

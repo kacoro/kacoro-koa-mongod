@@ -7,14 +7,12 @@ import News from '../models/news'
 // };
 export const getNews = async (ctx, next) => {
   console.log('getnews')
-  var condition = { status: 'on' }; //条件 
+  var condition = { status: true }; //条件 
   if (ctx.state.user && ctx.state.user.status == 10000) {
     condition = {} //管理员不需要过滤
   }
 
-
   //koa-bodyparser解析前端参数
-
   let query = ctx.query;
   const { } = ctx.query
   let page = Number(query.page) || 1;//当前第几页
@@ -38,7 +36,8 @@ export const getNews = async (ctx, next) => {
     let num = Math.ceil(total / size)
 
     ctx.body = {
-      data: { list: result, pagination: { page, size, hasMore, total, num } },
+      data: result,
+      pagination: { page, size, hasMore, total, num } ,
       msg: '成功'
     }
   } catch (err) {
@@ -48,7 +47,7 @@ export const getNews = async (ctx, next) => {
 
 export const getNewsById = async ctx => {
   const { id } = ctx.params
-  var condition = { status: 'on' }; //条件 
+  var condition = { status: true }; //条件 
   if (ctx.state.user && ctx.state.user.status == 10000) {
     condition = {} //管理员不需要过滤
   }

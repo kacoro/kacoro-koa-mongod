@@ -24,7 +24,7 @@ class Index extends BasePage {
     if (search) url += search
     
     const res = await http.get({url,token:opt.token});
-     return { data: res.data }
+     return { data: res.data,pagination:res.pagination }
   }
   
   async componentDidMount() {
@@ -33,7 +33,8 @@ class Index extends BasePage {
     if (!this.isSSR && !this.hasSpaCacheData) { //非服务端渲染需要自身进行数据获取
       const res = await Index.getInitialProps({ params: this.props.match.params, search: location.search })
       this.setState({
-        data: res.data
+        data: res.data,
+        pagination:res.pagination
       })
     }
   }
@@ -45,7 +46,8 @@ class Index extends BasePage {
     if (this.props.history.location !== this.props.location) {
       const res = await Index.getInitialProps({ params: this.props.match.params, search: this.props.history.location.search })
       this.setState({
-        data: res.data
+        data: res.data,
+        pagination:res.pagination
       })
     }
   }
@@ -64,7 +66,7 @@ class Index extends BasePage {
   }
   creatList(){
     const { data } = this.state;
-    const listItems = data.list.map((item, index) =>
+    const listItems = data.map((item, index) =>
     <article className="postShorten" key={index} >
      <div className="post-header text-left" >
          <h1>{item.title}</h1>
@@ -92,18 +94,16 @@ class Index extends BasePage {
     if (!this.state) {
       return (<div className="postShorten-group main-content-wrap">loading...</div>)
     }
-    const { data } = this.state;
+    const { data,pagination } = this.state;
     if (!data) {
       return (<div className="postShorten-group main-content-wrap">loading...</div>)
     }
-    if (!data.list) {
-      return (<div className="postShorten-group main-content-wrap">loading...</div>)
-    }
+   
     
     return (
       <section className="postShorten-group main-content-wrap">
         {this.creatList()}
-        <Pagination className={classnames(Styles['my-20'])} data={data.pagination} onItemClick={this.getCurrentPage} location={this.props.location}/>
+        <Pagination className={classnames(Styles['my-20'])} data={pagination} onItemClick={this.getCurrentPage} location={this.props.location}/>
       </section>
     );
   }
