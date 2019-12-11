@@ -72,6 +72,7 @@ class Notification extends Component {
 }
 
 function createNotification() {
+  
   const div = document.createElement('div')
   document.body.appendChild(div)
   const ref = React.createRef()

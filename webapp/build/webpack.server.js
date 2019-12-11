@@ -8,31 +8,27 @@ const {
 const OptimizeCssAssetsPlugin = require( "optimize-css-assets-webpack-plugin" )
 const serverWebpackConfig = merge(baseWebpackConfig.serverConfig, {
   mode: 'production', // 生产环境
-  optimization:{
-    minimizer: [
-      new UglifyJsPlugin({
-        sourceMap: true,
-        parallel: true,
-        cache: true,
-        uglifyOptions:{
-
-          
-          warnings: false,
-          parse: {},
-          compress: {},
-          mangle: true, // Note `mangle.properties` is `false` by default.
-          output: null,
-          toplevel: false,
-          nameCache: null,
-          ie8: false,
-          keep_fnames: false
-        }
-
-      }),
-      
-      new OptimizeCssAssetsPlugin()
-    ]
-  }
+  // optimization:{
+  //   minimizer: [
+  //     new UglifyJsPlugin({
+  //       sourceMap: true,
+  //       parallel: true,
+  //       cache: true,
+  //       uglifyOptions:{
+  //         warnings: false,
+  //         parse: {},
+  //         compress: {},
+  //         mangle: true, // Note `mangle.properties` is `false` by default.
+  //         output: null,
+  //         toplevel: false,
+  //         nameCache: null,
+  //         ie8: false,
+  //         keep_fnames: false
+  //       }
+  //     }),
+  //     new OptimizeCssAssetsPlugin()
+  //   ]
+  // }
 })
 const plugins = [
   // 删除文件 保留新文件

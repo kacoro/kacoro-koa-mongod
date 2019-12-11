@@ -15,7 +15,7 @@ function getStat(path){
         })
     })
 }
-exports.getStat = getStat
+
 /**
  * 创建路径
  * @param {string} dir 路径
@@ -31,7 +31,7 @@ exports.getStat = getStat
         })
     })
 }
-exports.mkdir = mkdir
+
 /**
  * 路径是否存在，不存在则创建
  * @param {string} dir 路径
@@ -54,4 +54,5 @@ async function dirExists(dir){
     }
     return mkdirStatus;
 }
-exports.dirExists = dirExists
+
+export default dirExists

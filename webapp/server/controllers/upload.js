@@ -5,14 +5,13 @@ fs = require('fs'),
 path = require('path'),
 uuidv1 = require('uuid/v1'),
 dayjs = require('dayjs');
-const { dirExists } = require('../util/dir')
-
+import dirExists  from '../util/dir'
  const single = async ctx => {
   // 上传单个文件
   const datePath = dayjs().format('YYYY-MM-DD/HH/mm/ss/') 
-  console.log(ctx.request.files)
-  var resPath = path.join(__dirname, '../../static/upload/'+datePath) 
-  await dirExists(resPath);
+  var resPath = path.resolve('./static/upload/'+datePath) 
+  const mkdirStatus = await dirExists(resPath);
+ 
   const file = ctx.request.files.file; // 获取上传文件
   // 创建可读流
   const reader = fs.createReadStream(file.path);

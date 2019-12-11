@@ -8,7 +8,7 @@ import dayjs from 'dayjs'
 import { Flex, FlexItem } from '@app/UI/Layout';
 import Styles from '@app/UI/Styles'
 import classnames from 'classnames'
-import {handleGet} from '@app/redux/action'
+import http from '@app/redux/action'
 
 class Index extends BasePage {
   constructor(props, context) {
@@ -23,7 +23,7 @@ class Index extends BasePage {
     if (JSON.stringify(params) !== "{}") url += '/' + params.id
     if (search) url += search
     
-    const res = await handleGet({url,token:opt.token});
+    const res = await http.get({url,token:opt.token});
      return { data: res.data }
   }
   

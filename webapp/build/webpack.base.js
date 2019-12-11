@@ -33,7 +33,7 @@ const clientConfig = {
         use: {
           loader: 'url-loader',
           options: {
-            name: 'imanges/[hash].[ext]',
+            name: 'images/[hash].[ext]',
             limit: 5000,
             mimetype: 'application/font-woff'
           }
@@ -102,11 +102,6 @@ const serverConfig = { // node环境打包
       { test: /\.js(x?)$/, use: "babel-loader", exclude: /node_modules/ },
       { test: /\.ts(x?)$/, use: [{ loader: "babel-loader" }, { loader: "ts-loader" }], exclude: /node_modules/ },
       {
-
-        test: /\.js$/,
-        use: [{ loader: "babel-loader" }, { loader: "ts-loader" }], exclude: /node_modules/
-      },
-      {
         test: /\.[(png)|(obj)|(json)]$/,
         loader: "file-loader"
       },
@@ -115,7 +110,7 @@ const serverConfig = { // node环境打包
         use: {
           loader: 'url-loader',
           options: {
-            name: 'imanges/[hash].[ext]',
+            name: 'images/[hash].[ext]',
             limit: 5000,
             mimetype: 'application/font-woff'
           }

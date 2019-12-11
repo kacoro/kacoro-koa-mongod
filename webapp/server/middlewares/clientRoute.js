@@ -22,7 +22,6 @@ global.__SERVER__=true;
 global.__CLIENT__ = false;
 
 async function clientRoute(ctx, next) {
-  console.log(ctx)
   var pathname = ctx.req._parsedUrl.pathname
   const search = ctx.req._parsedUrl.search
  
@@ -35,15 +34,14 @@ async function clientRoute(ctx, next) {
       com = await com.load()
       com = com.default
     }
-
-    if (com.getInitialProps) {
+    
+    if (com && com.getInitialProps) {
      
       // const opt = {
       //   query: ctx.query,
       //   params:  branch[0].match
       // }
       const token = getCookie(ctx.headers.cookie,'token')
-     
       const opt = {
         isSSR:true,
         search:search,
@@ -73,6 +71,7 @@ async function clientRoute(ctx, next) {
   await next();
 }
 const getCookie = (cookie,name) => {
+  if(!cookie) return null
   var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
   if(arr=cookie.match(reg))
   return unescape(arr[2]);

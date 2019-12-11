@@ -10,14 +10,13 @@ import Styles from '@app/UI/Styles'
 import { Input, Textarea, Select, Checkbox } from '@app/UI/Form';
 
 import Button from '@app/UI/Buttons';
-import Editor from '@app/UI/Editor';
-import { handleGet, handlePost, handlePut } from '@app/redux/action'
-import Upload from '@app/UI/Upload';
-class Index extends BasePage {
+import Editor from '@app/UI/Editor/noSSR';
+import http from '@app/redux/action'
+// import Upload from '@app/UI/Upload/noSSR';
+class Index extends Component {
   constructor(props) {
     super(props);
     const { match: { params: { id } } } = this.props;
-
     this.state = {
       text: '',
       id,
@@ -42,14 +41,11 @@ class Index extends BasePage {
 
   handleChange = (value) => {
     var data = Object.assign(this.state.data, { content: value })
-
     this.setState({ data: data })
-
   }
   handleInputChange = (e) => {
     const target = e.target;
     const type = target.typ
-    console.log(target, this)
     const value = type === 'checkbox' ? target.checked : target.value;
     // const value =  target.value;
     const name = target.name;
@@ -57,7 +53,6 @@ class Index extends BasePage {
       const returnText = target.attributes.returntext.nodeValue
       const text = target.options[target.selectedIndex].text
       var data = Object.assign(this.state.data, { [name]: value, [returnText]: text })
-
     } else {
       var data = Object.assign(this.state.data, { [name]: value })
     }
@@ -68,14 +63,15 @@ class Index extends BasePage {
   }
   async componentDidMount() {
     //获取分类信息
-    const res = await handleGet.bind(this)({ url: `admin/newscate?size=20` });
+   
+    const res = await http.get.bind(this)({ url: `admin/newscate?size=20` });
     if (res) {
       const data = res.data
       this.setState({ cateList: data, data: Object.assign(this.state.data, { cate_id: data[0]._id, cate_name: data[0].name }) })
 
     }
     if (!this.state.isNew) {
-      const res = await handleGet.bind(this)({ url: `admin/news/${this.state.id}` });
+      const res = await http.get.bind(this)({ url: `admin/news/${this.state.id}` });
       if (res) {
         const { title, content, addTime, updateTime, keywords, description, cate_name } = res.data.data
         // this.setState({ content, title, keywords, description, cate_name, addTime, updateTime })
@@ -107,23 +103,16 @@ class Index extends BasePage {
   save = async () => {
 
     if (this.state.isNew) {
-      const res = await handlePost.bind(this)({ url: `admin/news`, data: this.state.data });
+      const res = await http.post.bind(this)({ url: `admin/news`, data: this.state.data });
       if (res) {
         this.props.history.goBack()
       }
     } else {
-      const res = await handlePut.bind(this)({ url: `admin/news/${this.props.match.params.id}`, data: this.state.data });
+      const res = await http.put.bind(this)({ url: `admin/news/${this.props.match.params.id}`, data: this.state.data });
       if (res) {
         this.props.history.goBack()
       }
     }
-
-
-    // const res = await handlePut.bind(this)({url:`admin/news/${ this.props.match.params.id}`,data:this.state.data});
-    // if(res){
-    //   this.setState({ data: res.data })
-    // } 
-
   }
   render() {
 
@@ -145,7 +134,7 @@ class Index extends BasePage {
           />
           <Textarea className={classnames(Styles['mt-20'])} name="description" id="description" placeholder="描述不要超过255字" value={description} onChange={this.handleInputChange}></Textarea>
           <Select data={cateList} defaultValue={cate_id} value={cate_id} name="cate_id" returntext="cate_name" onChange={this.handleInputChange} className={classnames(Styles['mt-20'])} id='category' />
-          <Upload onChange={this.imageHandler} className={classnames(Styles['mt-20'])} preview={cover} />
+          {/* <Upload onChange={this.imageHandler} className={classnames(Styles['mt-20'])} preview={cover} /> */}
         </div>
         <div className={classnames("post-content markdown main-content-wrap")}  >
           <div className={classnames(Styles['mt-20'])}>

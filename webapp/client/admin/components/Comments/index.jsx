@@ -17,7 +17,7 @@ import Lazyload from '@app/components/Lazyload';
 import Signin from '@app/components/Header/Signin';
 import reduxTypes from '@app/redux/types';
 import request from '@app/common/request';
-import {handlePost} from "@app/redux/action"
+import http from "@app/redux/action"
 class Index extends Component {
     constructor(props) {
         super(props);
@@ -109,7 +109,7 @@ class Index extends Component {
             payload.content = this.state.content2
             payload.replyId = item._id
         }
-        const res = await handlePost.bind(this)({url:`/api/comment/article/${this.props.id}`,data:payload})
+        const res = await http.post.bind(this)({url:`/api/comment/article/${this.props.id}`,data:payload})
         if(res){
             var newData = this.state.data
             newData.push(res.data)
@@ -150,9 +150,6 @@ class Index extends Component {
         this.props.dispatch({
             type: reduxTypes.USER_LOGOUT
         });
-        // this.props.dispatch({
-        //     type: reduxTypes.USER_LOGOUT
-        // });
     }
     creatComments(list) {
         if(!list) return null

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
-import { handlePost } from '@app/redux/action'
+import http from '@app/redux/action'
 import Button from '@app/UI/Buttons';
 import classnames from 'classnames'
 class Upload extends Component {
@@ -25,7 +25,7 @@ class Upload extends Component {
         form.append('file', file)
         /*调用上传图片的封装方法*/
         console.log(this)
-        const res = await handlePost.bind(this)({ url: uploadUrl, data: form })
+        const res = await http.post.bind(this)({ url: uploadUrl, data: form })
         if(res){
            this.setState({selected:false})
             this.props.onChange(res)

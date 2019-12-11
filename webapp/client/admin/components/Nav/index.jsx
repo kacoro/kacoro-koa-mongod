@@ -10,6 +10,7 @@ import {
 import { Flex,FlexItem } from '@app/UI/Layout';
 import bg from '@app/assets/images/bg.jpg'
 import logo from '@app/assets/images/logo.png'
+import reduxTypes from '@app/redux/types';
 class Index extends Component {
   constructor(props) {
     super(props);
@@ -22,11 +23,15 @@ class Index extends Component {
         {href:'/admin/users',icon:'md-pricetags',text:'用户管理',type:"ion"},
         // {href:'/',icon:'archive',text:'归档'},
         {href:'/admin/comment',icon:'account_circle',text:'系统管理'},
-      
+        
       ]
     };
   }
-  
+  handleLogout  = () => {
+    this.props.dispatch({
+        type: reduxTypes.USER_LOGOUT
+    });
+}
  componentDidMount(){
   Lazyload(this.refs)
  }
@@ -66,8 +71,11 @@ class Index extends Component {
             </div>
             <ul className="sidebar-buttons">
               {this.creatButton()}
+              
             </ul>
+            <Flex align="center" justify="center" ><a onClick={this.handleLogout}>退出</a></Flex>
           </div>
+      
         </nav>
     );
   }

@@ -1,16 +1,20 @@
-import reduxTypes from './types';
+import reduxTypes from '../types';
 import request from '@app/common/request';
-import Toast from '@app/UI/Toast'
-export async function handlePost (payload){
+// import Toast from '@app/UI/Toast/noSSR'
+// import Toast from '@app/UI/Toast'
+const handlePost = async function(payload) {
+    console.log(this)
     payload.url ='/api/' + payload.url
     try{
         var res = await request.config({ type: 'post',...payload})
-        Toast.success(res.msg)
+        alert(res.msg)
+        // Toast.success(res.msg)
         return res
     }catch(err){
-        console.log(err.response)
-        Toast.error(err.response.data)
+        alert(err.response.data)
+        // Toast.error(err.response.data)
         if(err.response.status==401){
+            console.log(this)
           this.props.dispatch({
                type: reduxTypes.USER_LOGOUT
           });
@@ -18,28 +22,29 @@ export async function handlePost (payload){
         }
     }
 }
-export async function handleDelete (payload){
+
+const handleDelete  = async function(payload) {
     try{
         payload.url ='/api/' + payload.url
         var res = await request.config({ type: 'delete',...payload})
-        Toast.success(res.msg)
+        // Toast.success(res.msg)
         return res
     }catch(err){
         var status = err.response.status
         if(status==401){
           await Toast.error("登陆超时，无权限访问！")
-          this.props.dispatch({
+          await this.props.dispatch({
                type: reduxTypes.USER_LOGOUT
           });
           return null
         }
     }
 }
-export async function handlePut (payload){
+const handlePut = async function(payload){
     try{
         payload.url ='/api/' + payload.url
         var res = await request.config({ type: 'put',...payload})
-        Toast.success(res.msg)
+        // Toast.success(res.msg)
         return res
     }catch(err){
         var status = err.response.status
@@ -52,7 +57,7 @@ export async function handlePut (payload){
         }
     }
 }
-export async function handleGet (payload){
+const handleGet = async function(payload){
     try{
         payload.url ='/api/' + payload.url
         var res = await request.config({type: 'get',...payload})
@@ -60,7 +65,7 @@ export async function handleGet (payload){
     }catch(err){
         var status = err.response.status
         if(status==401){
-            Toast.error("登陆超时，无权限访问！")
+            // Toast.error("登陆超时，无权限访问！")
             try{
                 await this.props.dispatch({
                     type: reduxTypes.USER_LOGOUT
@@ -71,5 +76,12 @@ export async function handleGet (payload){
           return null
         }
     }
+}
+
+export default {
+    get:handleGet,
+    put:handlePut,
+    delete:handleDelete,
+    post:handlePost
 }
 
