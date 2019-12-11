@@ -1,7 +1,7 @@
 import Router from 'koa-router';
 import News,{getNews,getNewsById,putNewsById} from '../controllers/news';
 import NewsCate from '../controllers/newscate';
-import Upload from '../controllers/Upload';
+import Upload from '../controllers/upload';
 import {getUser,signIn,signUp} from '../controllers/user.js';
 import passport from '../module/passport'
 

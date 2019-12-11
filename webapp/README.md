@@ -15,13 +15,20 @@ module.exports = {
 ## add config.js in server directory
 ```
 module.exports = {
-	dbhost: "xxxx:27017",
-	dbName:'yourDB',
-	dbUsername:'yourName',
-	dbPassword:'yourPassword',
 	tokenSecret:'yourtokensecret',
+	secretKey:'sercretKey',
 	saltRounds:10,
-	webapp:'webapp'
+	webapp:'webapp',
+	database:{
+		host:"127.0.0.1:27017",
+		name:'kacoro',
+		username:'',
+		password:''
+	},
+	mail:{
+		username:'kacoro',
+		password:'wsWJ0318.+'
+	}
 }
 ```
 
