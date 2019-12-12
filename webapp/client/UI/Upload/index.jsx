@@ -79,9 +79,9 @@ class Upload extends Component {
                 <div style={{ textAlign: "center", margin: "10px 0", width: "250px", height: "250px" }}>
                     {showSrc ?
                         type === "image" ?
-                            <img src={showSrc} alt="" style={{ maxWidth: "100%", height: 'auto' }} />
+                            <img src={showSrc} alt="" style={{ maxWidth: "100%", height: "250px" }} />
                             :
-                            <video src={showSrc} controls="true" alt="" style={{ maxWidth: "100%", height: 'auto'}}></video>
+                            <video src={showSrc} controls="true" alt="" style={{ maxWidth: "100%", height:  "250px"}}></video>
                         :
                         <div style={{ background: "#f2f2f2", width: "250px", height: "250px" }}>
                         </div>

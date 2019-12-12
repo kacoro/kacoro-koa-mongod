@@ -34,11 +34,13 @@ const path = require('path');
 const views = require('koa-views');
 const convert = require('koa-convert');
 const webpack = require('webpack');
-const config = require('../build/webpack.server.dev');
-const compiler = webpack(config);
+const webpackConfig = require('../build/webpack.server.dev');
+
+const compiler = webpack(webpackConfig);
 const devMiddleware = require('koa-webpack-dev-middleware');
 const hotMiddleware = require('koa-webpack-hot-middleware');
 const app = require('./app.js').default;
+const config = require('./config.js');
 const router = require('./routes').default;
 const clientRoute = require('./middlewares/clientRoute').default;
 
@@ -62,11 +64,11 @@ app.use(router.routes());
 app.use(router.allowedMethods());
 app.use(clientRoute);
 
-app.use(convert(devMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath })));
+app.use(convert(devMiddleware(compiler, { noInfo: true, publicPath: webpackConfig.output.publicPath })));
 app.use(convert(hotMiddleware(compiler)));
 
 app.listen(port, () => {
-    console.log(`\n==> open up http://localhost:${port}/ in your browser.\n`);
+    console.log(`\n==> open up http://${config.host}:${port}/ in your browser.\n`);
 });
 
 module.exports = app;
