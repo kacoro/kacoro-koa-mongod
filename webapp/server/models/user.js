@@ -11,7 +11,10 @@ var UserSchema = new Schema({
     nickname:{type: String},
     website:{type: String},
     email:{type: String},
-    avatar:{type: String},
-    createTime : { type:Date, default:Date.now }
+    avatar:{type: String,default:''},
+    createTime : { type:Date, default:Date.now },
+    keywords: {type: String,default:''}, //关键字 
+    description : { type: String,default:''}, //描述 
+    content:{type: String,default:'',required:[true ,'请输入内容']} //内容
 })
 export default mongoose.model('User',UserSchema);

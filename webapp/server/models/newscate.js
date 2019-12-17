@@ -9,7 +9,7 @@ var NewsCateSchema = new Schema({
     content:{type: String}, //内容
     note:{type: String},    //概述
     cover:{type: String},
-    sort:{type:Number,default:0},
+    sort:{type:Number,default:255},
     addTime: { type:Date, default:Date.now },
     updateTime: { type:Date, default:Date.now },
     pid:{type: String}, //父级id

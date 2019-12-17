@@ -14,7 +14,7 @@ var CommentSchema = new Schema({
     website:{type:String,default:''}, //网站
     avatar:{type:String,default:''}, //头像
 
-    status:{type:String,default:'on'},
+    status:{type:String,default:true},
     addTime: { type:Date, default:Date.now },
     updateTime: { type:Date, default:Date.now }
 

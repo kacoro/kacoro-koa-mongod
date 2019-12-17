@@ -11,10 +11,18 @@ import asyncComponent from '@app/components/AsyncComponent'
 
 const prefix = "/admin"
 const AsyncHome = loadable(() => import('@app/admin/pages/Home'));
+
 const AsyncNews = loadable(() => import('@app/admin/pages/News'));
 const AsyncNewsEdit = loadable(() => import('@app/admin/pages/News/Edit'));
+
 const AsyncNewsCate = loadable(() => import('@app/admin/pages/NewsCate'));
 const AsyncNewsCateEdit = loadable(() => import('@app/admin/pages/NewsCate/Edit'));
+
+const AsyncUser = loadable(() => import('@app/admin/pages/User'));
+const AsyncUserEdit = loadable(() => import('@app/admin/pages/User/Edit'));
+
+const AsyncComment = loadable(() => import('@app/admin/pages/Comment'));
+const AsyncAsyncCommentEdit = loadable(() => import('@app/admin/pages/Comment/Edit'));
 
 var routes = [
   {
@@ -44,7 +52,32 @@ var routes = [
   {
     path: "/newscate/edit/:id",exact:true,
     component: withRouter(AsyncNewsCateEdit)
-  }
+  },
+  {
+    path: "/user",exact:true,
+    component: withRouter(AsyncUser),
+  },
+  {
+    path: "/user/create",exact:true,
+    component: withRouter(AsyncUserEdit)
+  },
+  {
+    path: "/user/edit/:id",exact:true,
+    component: withRouter(AsyncUserEdit)
+  },
+  {
+    path: "/comment",exact:true,
+    component: withRouter(AsyncComment),
+  },
+  {
+    path: "/comment/create",exact:true,
+    component: withRouter(AsyncAsyncCommentEdit)
+  },
+  {
+    path: "/comment/edit/:id",exact:true,
+    component: withRouter(AsyncAsyncCommentEdit)
+  },
+  
 ];
 routes.map( (item)=>{
    item.path = prefix + item.path
