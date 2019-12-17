@@ -58,7 +58,6 @@ class Index extends Component {
     const { data,pagination } = this.state;
     const listItems = data.map((item, index) =>
         <tr key={index+(pagination.page-1)*10+1}>
-        
           <td>{index+(pagination.page-1)*10+1}</td>
           <td><img width="100px" height="100px" src={item.cover} /></td>
           <td><Link to={`/admin/news/edit/${item._id}`}>{item.title}</Link></td>
@@ -88,7 +87,7 @@ class Index extends Component {
    
     
     return (
-      <section className="postShorten-group main-content-wrap">
+      <section className="postShorten-group main-content-wrap" style={{maxWidth:'1920px'}}>
         <Button type="link" color="primary" to={`/admin/news/create`}>添加</Button>
         <table className="table table-striped">
         <thead>

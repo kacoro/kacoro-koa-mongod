@@ -1,4 +1,4 @@
-import React, { Component, PureComponent } from 'react';
+import React, { Component, PureComponent, Fragment } from 'react';
 import ReactQuill, { Quill, Mixin, Toolbar } from 'react-quill';
 import Button from '@app/UI/Buttons';
 import 'react-quill/dist/quill.snow.css'; // ES6
@@ -126,7 +126,7 @@ class Index extends Component {
     render() {
         const { content } = this.state;
         return (
-            <div>
+            <Fragment>
                 <ReactQuill className={Styles.Editor}  ref="reactQuillRef" value={content} onChange={this.handleChange} modules={this.modules} formats={this.formats} />
                 <Modal
                     title="上传图片"
@@ -150,7 +150,7 @@ class Index extends Component {
                 >
                 <Upload text="上传视频" type="video" accept='video/*' onChange={this.videoHandler} dispatch={this.props.dispatch}/>
                 </Modal>
-            </div>
+            </Fragment>
 
         )
     }

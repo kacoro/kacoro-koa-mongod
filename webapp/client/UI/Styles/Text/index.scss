@@ -37,7 +37,9 @@ a.textLink{
 }
 
 .text-pre{
-  
+    img{
+        max-width: 100%;
+    }
     word-break: break-all;
     white-space: pre-wrap;
     word-wrap: break-word;     

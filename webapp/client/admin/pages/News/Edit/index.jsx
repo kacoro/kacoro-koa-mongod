@@ -78,13 +78,6 @@ class Index extends Component {
 
   }
 
-  async UNSAFE_componentWillMount() {
-
-  }
-  UNSAFE_componentWillReceiveProps = async (nextProps) => {
-
-
-  }
   getCurrentPage = async (currentPage) => {
     this.props.history.push({
       pathname: `/admin/news/${currentPage}`
@@ -95,7 +88,7 @@ class Index extends Component {
   }
   /*处理图片插入*/
   imageHandler = ({ url }) => {
-    this.setState({data:{...this.state.data, cover: url} })
+    this.setState({ data: { ...this.state.data, cover: url } })
   }
   save = async () => {
     if (this.state.isNew) {
@@ -111,39 +104,83 @@ class Index extends Component {
     }
   }
   render() {
-
     const { cateList, data, id } = this.state
-    const { title, content, addTime, cate_name, keywords, description, cate_id,cover ,status=false} = data
+    const { title, content, addTime, cate_name, keywords, description, cate_id, cover, status = false } = data
     return (
       <article className="post">
         <div className="post-header main-content-wrap text-left">
-          <h1>
-            <Input placeholder="请输入标题" type="text" name="title" value={title} onChange={this.handleInputChange} autoComplete="off"></Input>
-          </h1>
-          <Input className={classnames(Styles['mt-20'])}
-            name="keywords"
-            id="keywords"
-            placeholder="关键字以英文逗号分隔"
-            autoComplete="off"
-            onChange={this.handleInputChange}
-            value={keywords}
-          />
-          <Textarea className={classnames(Styles['mt-20'])} name="description" id="description" placeholder="描述不要超过255字" value={description} onChange={this.handleInputChange}></Textarea>
-          <Select data={cateList} defaultValue={cate_id} value={cate_id} name="cate_id" returntext="cate_name" onChange={this.handleInputChange} className={classnames(Styles['mt-20'])} id='category' />
-          <Upload onChange={this.imageHandler} className={classnames(Styles['mt-20'])} preview={cover} />
-        </div>
-        <div className={classnames("post-content markdown main-content-wrap")}  >
-          <div className={classnames(Styles['mt-20'])}>
-            <Editor content={content} onChange={this.handleChange} dispatch={this.props.dispatch} />
-          </div>
-          <label><Checkbox name="status" value={status} checked={status}  className={classnames(Styles['mt-20'])} onChange={this.handleInputChange} />启用</label>
-          {/* <div className={classnames(Styles['py-10'], Styles['text-pre'])} dangerouslySetInnerHTML={{ __html: content }} /> */}
-          <div className={classnames(Styles['mt-20'])}>
+          <Flex>
+            <FlexItem style={{ flex: ' 0 0 80px', textAlign: 'right' }}>
+              <label htmlFor="title" >标题： </label>
+            </FlexItem>
+            <FlexItem flex="auto">
+              <Input id="title" placeholder="请输入标题" type="text" name="title" value={title} onChange={this.handleInputChange} autoComplete="off"></Input>
+            </FlexItem>
+          </Flex>
+          <Flex className={classnames(Styles['mt-20'])}>
+            <FlexItem style={{ flex: ' 0 0 80px', textAlign: 'right' }}>
+              <label htmlFor="keywords" >关键字： </label>
+            </FlexItem>
+            <FlexItem flex="auto">
+              <Input
+                name="keywords"
+                id="keywords"
+                placeholder="关键字以英文逗号分隔"
+                autoComplete="off"
+                onChange={this.handleInputChange}
+                value={keywords}
+              />
+            </FlexItem>
+          </Flex>
 
-            <Button onClick={this.save}>保存</Button>
-            {/* <PrevNext justify="between" prev={prev} next={next} onItemClick={this.getCurrentPage} className={classnames(Styles['my-20'])} ></PrevNext> */}
-            {/* <Comments id={this.props.match.params.id} {...this.props} className={classnames(Styles['my-20'])}></Comments> */}
-          </div>
+          <Flex className={classnames(Styles['mt-20'])}>
+            <FlexItem style={{ flex: ' 0 0 80px', textAlign: 'right' }}>
+              <label htmlFor="description" >描述： </label>
+            </FlexItem>
+            <FlexItem flex="auto" >
+              <Textarea name="description" id="description" placeholder="描述不要超过255字" value={description} onChange={this.handleInputChange}></Textarea>
+            </FlexItem>
+          </Flex>
+
+          <Flex className={classnames(Styles['mt-20'])}>
+            <FlexItem style={{ flex: ' 0 0 80px', textAlign: 'right' }}>
+              <label htmlFor="category" >分类： </label>
+            </FlexItem>
+            <FlexItem flex="auto" >
+              <Select data={cateList} defaultValue={cate_id} value={cate_id} name="cate_id" returntext="cate_name" onChange={this.handleInputChange} id='category' />
+            </FlexItem>
+          </Flex>
+          <Flex className={classnames(Styles['mt-20'])}>
+            <FlexItem style={{ flex: ' 0 0 80px', textAlign: 'right' }}>
+              <label htmlFor="cover" >封面： </label>
+            </FlexItem>
+            <FlexItem flex="auto" >
+              <Upload id="cover" onChange={this.imageHandler} preview={cover} />
+            </FlexItem>
+          </Flex>
+          <Flex className={classnames(Styles['mt-20'])}>
+            <FlexItem style={{ flex: ' 0 0 80px', textAlign: 'right' }}>
+              <label htmlFor="content" >内容： </label>
+            </FlexItem>
+            <FlexItem flex="auto" >
+              <Editor content={content} id="content" onChange={this.handleChange} dispatch={this.props.dispatch} />
+            </FlexItem>
+          </Flex>
+          <Flex className={classnames(Styles['mt-20'])}>
+            <FlexItem style={{ flex: ' 0 0 80px', textAlign: 'right' }}>
+              <label htmlFor="content" >启用: </label>
+            </FlexItem>
+            <FlexItem >
+              <Checkbox name="status" id="status" value={status} checked={status} onChange={this.handleInputChange} />
+            </FlexItem>
+          </Flex>
+          <Flex className={classnames(Styles['mt-20'])}>
+            <FlexItem style={{ flex: ' 0 0 80px', textAlign: 'right' }}>
+            </FlexItem>
+            <FlexItem >
+              <Button onClick={this.save}>保存</Button>
+            </FlexItem>
+          </Flex>
         </div>
       </article>
     );

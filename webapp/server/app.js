@@ -11,6 +11,7 @@ app.keys = ['newest secret key', 'older secret key'];
 // app.use(convert(session(app)));
 ;
 import koaBody from 'koa-body'
+// app.use(bodyParser());
 app.use(koaBody({
     multipart: true,
     formidable: {
@@ -24,7 +25,7 @@ app.use(session({
 }, app))
 app.use(compress());
 
-// app.use(bodyParser({multipart: true}));
+
 app.use(cors());
 app.use(json());
 app.use(logger());
