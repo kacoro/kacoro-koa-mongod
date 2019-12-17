@@ -17,6 +17,10 @@ router.delete('/news',News.remove);
 
 // newscate
 router.get('/newscate',NewsCate.get);
+router.get('/newscate/:id',NewsCate.getById);
+router.post('/newscate',NewsCate.post);
+router.put('/newscate/:id',NewsCate.put);
+router.delete('/newscate/:id',NewsCate.remove);
 
 //
 router.post('/upload',Upload.single);

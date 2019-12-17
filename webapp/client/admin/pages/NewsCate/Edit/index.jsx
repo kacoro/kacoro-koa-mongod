@@ -24,11 +24,12 @@ class Index extends Component {
 
       cateList: [],
       data: {
-        title: '',
+        name: '',
         content: '',
         keywords: '',
         addTime: new Date(),
         cate_name: "",
+        sort:255
       },
       fields: {
         _id: { label: "ID" },
@@ -61,17 +62,11 @@ class Index extends Component {
     });
   }
   async componentDidMount() {
-    //获取分类信息
-    const res = await http.get.bind(this)({ url: `admin/newscate?size=20` });
-    if (res) {
-      const data = res.data
-      this.setState({ cateList: data, data: Object.assign(this.state.data, { cate_id: data[0]._id, cate_name: data[0].name }) })
-
-    }
+   
     if (!this.state.isNew) {
-      const res = await http.get.bind(this)({ url: `admin/news/${this.state.id}` });
+      const res = await http.get.bind(this)({ url: `admin/newscate/${this.state.id}` });
       if (res) {
-        this.setState({ data: res.data.data })
+        this.setState({ data: res.data })
       }
     }
 
@@ -79,7 +74,7 @@ class Index extends Component {
 
   getCurrentPage = async (currentPage) => {
     this.props.history.push({
-      pathname: `/admin/news/${currentPage}`
+      pathname: `/admin/newscate/${currentPage}`
     });
   }
   changeRouter = () => {
@@ -91,12 +86,12 @@ class Index extends Component {
   }
   save = async () => {
     if (this.state.isNew) {
-      const res = await http.post.bind(this)({ url: `admin/news`, data: this.state.data });
+      const res = await http.post.bind(this)({ url: `admin/newscate`, data: this.state.data });
       if (res) {
         this.props.history.goBack()
       }
     } else {
-      const res = await http.put.bind(this)({ url: `admin/news/${this.props.match.params.id}`, data: this.state.data });
+      const res = await http.put.bind(this)({ url: `admin/newscate/${this.props.match.params.id}`, data: this.state.data });
       if (res) {
         this.props.history.goBack()
       }
@@ -104,18 +99,19 @@ class Index extends Component {
   }
   render() {
     const { cateList, data, id } = this.state
-    const { title, content, addTime, cate_name, keywords, description, cate_id, cover, status = false } = data
+    const { name, content, sort,  keywords, description,  cover, status = false } = data
     return (
       <article className="post">
         <div className="post-header main-content-wrap text-left">
           <Flex>
             <FlexItem style={{ flex: ' 0 0 80px', textAlign: 'right' }}>
-              <label htmlFor="title" >标题： </label>
+              <label htmlFor="name" >名称： </label>
             </FlexItem>
             <FlexItem flex="auto">
-              <Input id="title" placeholder="请输入标题" type="text" name="title" value={title} onChange={this.handleInputChange} autoComplete="off"></Input>
+              <Input id="name" placeholder="请输入名称" type="text" name="name" value={name} onChange={this.handleInputChange} autoComplete="off"></Input>
             </FlexItem>
           </Flex>
+          
           <Flex className={classnames(Styles['mt-20'])}>
             <FlexItem style={{ flex: ' 0 0 80px', textAlign: 'right' }}>
               <label htmlFor="keywords" >关键字： </label>
@@ -141,14 +137,7 @@ class Index extends Component {
             </FlexItem>
           </Flex>
 
-          <Flex className={classnames(Styles['mt-20'])}>
-            <FlexItem style={{ flex: ' 0 0 80px', textAlign: 'right' }}>
-              <label htmlFor="category" >分类： </label>
-            </FlexItem>
-            <FlexItem flex="auto" >
-              <Select data={cateList} defaultValue={cate_id} value={cate_id} name="cate_id" returntext="cate_name" onChange={this.handleInputChange} id='category' />
-            </FlexItem>
-          </Flex>
+          
           <Flex className={classnames(Styles['mt-20'])}>
             <FlexItem style={{ flex: ' 0 0 80px', textAlign: 'right' }}>
               <label htmlFor="cover" >封面： </label>
@@ -163,6 +152,14 @@ class Index extends Component {
             </FlexItem>
             <FlexItem flex="auto" >
               <Editor content={content} id="content" onChange={this.handleChange} dispatch={this.props.dispatch} />
+            </FlexItem>
+          </Flex>
+          <Flex className={classnames(Styles['mt-20'])}>
+            <FlexItem style={{ flex: ' 0 0 80px', textAlign: 'right' }}>
+              <label htmlFor="sort" >排序： </label>
+            </FlexItem>
+            <FlexItem flex="auto">
+              <Input id="sort" placeholder="请输入排序" type="text" name="sort" value={sort} onChange={this.handleInputChange} autoComplete="off"></Input>
             </FlexItem>
           </Flex>
           <Flex className={classnames(Styles['mt-20'])}>
