@@ -5,8 +5,6 @@ class Third extends Component {
     super(props);
   }
 
-  UNSAFE_componentWillMount () {
-  }
   componentDidMount() {
 
   }

@@ -39,12 +39,9 @@ class Index extends BasePage {
     }
   }
 
-  async UNSAFE_componentWillMount() {
-    // this.setState({ user: await getData('/') });
-  }
-  UNSAFE_componentWillReceiveProps = async(nextProps) => {
-    if (this.props.history.location !== this.props.location) {
-      const res = await Index.getInitialProps({ params: this.props.match.params, search: this.props.history.location.search })
+  shouldComponentUpdate = async(nextProps) => {
+    if (nextProps.location !== this.props.location) {
+      const res = await Index.getInitialProps({ params: this.props.match.params, search: nextProps.location.search })
       this.setState({
         data: res.data,
         pagination:res.pagination

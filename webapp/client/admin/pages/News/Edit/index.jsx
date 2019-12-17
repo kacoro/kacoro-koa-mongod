@@ -48,7 +48,6 @@ class Index extends Component {
     const type = target.type;
     const value = type === 'checkbox' ? target.checked : target.value;
     // const value =  target.value;
-    console.log(target.checked)
     const name = target.name;
     if (target.type === 'select-one') {
       const returnText = target.attributes.returntext.nodeValue

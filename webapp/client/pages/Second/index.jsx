@@ -7,9 +7,6 @@ class Second extends Component {
     super(props);
   }
 
-  UNSAFE_componentWillMount () {
- 
-  }
   componentDidMount() {
     
   }

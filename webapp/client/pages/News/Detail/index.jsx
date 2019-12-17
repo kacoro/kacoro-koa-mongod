@@ -31,20 +31,17 @@ class Index extends BasePage {
     if (window.hljs) { hljs.initHighlightingOnLoad() }
   }
 
-  async UNSAFE_componentWillMount() {
-
-
-    // this.setState({ user: await getData('/') });
+ 
+  shouldComponentUpdate = async (nextProps) => {
+      if(this.props.location!==nextProps.location){
+       const res = await Index.getInitialProps({ params: nextProps.match.params })
+        this.setState({
+          data: res.data
+        })
+        return true
+      }
   }
-  UNSAFE_componentWillReceiveProps = async (nextProps) => {
 
-    if (this.props.history.location !== this.props.location) {
-      const res = await Index.getInitialProps({ params: nextProps.match.params })
-      this.setState({
-        data: res.data
-      })
-    }
-  }
   getCurrentPage = async (currentPage) => {
     this.props.history.push({
       pathname: `/news/${currentPage}`
@@ -59,9 +56,9 @@ class Index extends BasePage {
       return <div className="main-content-wrap">loading</div>
     }
     const { prev, next } = data
-    const { title, content, addTime, updateTime, keywords, description, cate_name } = data.data
+    const { _id,title, content, addTime, updateTime, keywords, description, cate_name } = data.data
     return (
-      <article className="post">
+      <article className="post" >
         <Meta title={title} keywords={keywords} desc={description} >
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" />
           <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>

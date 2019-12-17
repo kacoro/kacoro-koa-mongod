@@ -7,8 +7,7 @@ class Second extends Component {
     super(props);
   }
 
-  UNSAFE_componentWillMount () {
-  }
+ 
 
   changeRouter = () => {
     this.props.history.push({

@@ -26,9 +26,7 @@ class First extends Component {
     }
   }
 
-  async UNSAFE_componentWillMount () {
-    // this.setState({ user: await getData('/') });
-  }
+  
   
   changeRouter = () => {
     

@@ -54,7 +54,7 @@ export const getNewsById = async ctx => {
   var sort = { 'addTime': -1 }; //排序（按登录时间倒序） 
   try {
     const data = await News.findOne(Object.assign({}, condition, { _id: id }))
-    const prev = await News.findOne(condition, '_id title').where('addTime').gt(data.addTime)
+    const prev = await News.findOne(condition, '_id title').where('addTime').gt(data.addTime).sort( { 'addTime': 1 })
     const next = await News.findOne(condition, '_id title').where('addTime').lt(data.addTime).sort(sort)
     ctx.body = {
       data: { data, prev, next },

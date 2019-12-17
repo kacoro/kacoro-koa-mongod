@@ -36,7 +36,7 @@ class Index extends Component {
       }
     }
   }
-  UNSAFE_componentWillReceiveProps = async(nextProps) => {
+  shouldComponentUpdate = async(nextProps) => {
     if (nextProps.location !== this.props.location) {
       const res = await http.get.bind(this)({url:`admin/news${nextProps.location.search}`})
       if(res){
