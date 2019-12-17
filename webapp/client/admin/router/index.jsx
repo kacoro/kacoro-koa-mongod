@@ -13,7 +13,8 @@ const prefix = "/admin"
 const AsyncHome = loadable(() => import('@app/admin/pages/Home'));
 const AsyncNews = loadable(() => import('@app/admin/pages/News'));
 const AsyncNewsEdit = loadable(() => import('@app/admin/pages/News/Edit'));
-
+const AsyncNewsCate = loadable(() => import('@app/admin/pages/NewsCate'));
+const AsyncNewsCateEdit = loadable(() => import('@app/admin/pages/NewsCate/Edit'));
 
 var routes = [
   {
@@ -32,6 +33,18 @@ var routes = [
     path: "/news/edit/:id",exact:true,
     component: withRouter(AsyncNewsEdit)
   },
+  {
+    path: "/newscate",exact:true,
+    component: withRouter(AsyncNewsCate),
+  },
+  {
+    path: "/newscate/create",exact:true,
+    component: withRouter(AsyncNewsCateEdit)
+  },
+  {
+    path: "/newscate/edit/:id",exact:true,
+    component: withRouter(AsyncNewsCateEdit)
+  }
 ];
 routes.map( (item)=>{
    item.path = prefix + item.path

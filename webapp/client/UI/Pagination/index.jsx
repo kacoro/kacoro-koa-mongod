@@ -12,61 +12,30 @@ import Button from '@app/UI/Buttons';
 class Pagination extends React.Component {
     constructor(props) {
         super(props)
-        const {data} = props
-        const {page,hasMore,num,size,total} = data
-        this.state = {
-            currentPage: page || 1, //当前页码
-            groupCount: 5, //页码分组，显示7个页码，其余用省略号显示
-            startPage: page,  //分组开始页码
-            totalPage:num || 1 ,//总页数
-            hasMore:hasMore
-        }
     }
-    shouldComponentUpdate = (nextProps) => {
-        const check = Object.is(this.props.location, nextProps.location)
-        const check2 = Object.is(this.props.data, nextProps.data)
-        if(!(check&&check2)){
-            const {page,hasMore,num,size,total} = nextProps.data
-            this.setState({
-                currentPage: page || 1, //当前页码
-                groupCount: 5, //页码分组，显示7个页码，其余用省略号显示
-                startPage: page,  //分组开始页码
-                totalPage:num || 1 ,//总页数
-                hasMore:hasMore
-            })    
-        }
-      }
+    // UNSAFE_componentWillReceiveProps = (nextProps) => {
+    //     const check = Object.is(this.props.location, nextProps.location)
+    //     const check2 = Object.is(this.props.data, nextProps.data)
+    //     if(!(check&&check2)){
+    //         const {page,hasMore,num,size,total} = nextProps.data
+    //         this.setState({
+    //             currentPage: page || 1, //当前页码
+    //             groupCount: 5, //页码分组，显示7个页码，其余用省略号显示
+    //             startPage: page,  //分组开始页码
+    //             totalPage:num || 1 ,//总页数
+    //             hasMore:hasMore
+    //         })    
+    //     }
+    //   }
   
     //页码点击
     pageClick(currentPage) {
-        const {groupCount} = this.state
         const getCurrentPage = this.props.onItemClick;
-        //当 当前页码 大于 分组的页码 时，使 当前页 前面 显示 两个页码
-        if (currentPage >= groupCount) {
-            this.setState({
-                startPage: currentPage - 2,
-            })
-        }
-        if (currentPage < groupCount) {
-            this.setState({
-                startPage: 1,
-            })
-        }
-        //第一页时重新设置分组的起始页
-        if (currentPage === 1) {
-            this.setState({
-                startPage: 1,
-            })
-        }
-        this.setState({
-            currentPage
-        })
-        //将当前页码返回父组件
         getCurrentPage(currentPage)
     }
         //上一页事件
         prePageHandeler() {
-            let {currentPage} = this.state
+            let {currentPage} = this.props
             if (--currentPage === 0) {
                 return false
             }
@@ -75,7 +44,7 @@ class Pagination extends React.Component {
 
         //下一页事件
         nextPageHandeler() {
-            let {currentPage,totalPage} = this.state
+            let {currentPage,totalPage} = this.props
         // const {totalPage} = this.props.pageConfig;
             if (++currentPage > totalPage) {
                 return false
@@ -84,7 +53,8 @@ class Pagination extends React.Component {
         }
 
         createPage() {
-            const {currentPage, groupCount, startPage,totalPage} = this.state;
+            const {currentPage, groupCount, startPage,totalPage} = this.props;
+            
             let pages = []
             //上一页
             pages.push(<Button className={styles.Button} color={currentPage === 1 ? "nomore" : null} onClick={this.prePageHandeler.bind(this)}
@@ -138,7 +108,7 @@ class Pagination extends React.Component {
         }
     
     render() {
-        const { data, children, className, ...others } = this.props;
+        const { data, children, className } = this.props;
         const pageList = this.createPage();
         return (
             <div  className={classnames(styles.root, className ? className : null)} >
@@ -152,4 +122,11 @@ class Pagination extends React.Component {
     }
 }
 
+Pagination.defaultProps = {
+    currentPage:1,
+    groupCount:5,
+    startPage:1,
+    totalPage:1
+  }
+  
 export default Pagination;

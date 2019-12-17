@@ -98,9 +98,11 @@ class Index extends BasePage {
    
     
     return (
+      
       <section className="postShorten-group main-content-wrap">
         {this.creatList()}
-        <Pagination className={classnames(Styles['my-20'])} data={pagination} onItemClick={this.getCurrentPage} location={this.props.location}/>
+        {pagination&&<Pagination currentPage={pagination.page} groupCount={5} startPage={pagination.page} totalPage={pagination.num} className={classnames(Styles['my-20'])} data={pagination} onItemClick={this.getCurrentPage} location={this.props.location}/>}
+
       </section>
     );
   }

@@ -45,8 +45,6 @@ class Index extends Component {
           pagination:res.pagination
         })
       }
-    }else{
-      return false
     }
   }
   async getCurrentPage(currentPage) {
@@ -108,6 +106,7 @@ class Index extends Component {
         </tbody>
         </table>
         {pagination&&<Pagination currentPage={pagination.page} groupCount={5} startPage={pagination.page} totalPage={pagination.num} className={classnames(Styles['my-20'])} data={pagination} onItemClick={this.getCurrentPage} location={this.props.location}/>}
+
       </section>
     );
   }
