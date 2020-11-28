@@ -27,7 +27,7 @@ module.exports = {
 	},
 	mail:{
 		username:'kacoro',
-		password:'wsWJ0318.+'
+		password:''
 	}
 }
 ```
